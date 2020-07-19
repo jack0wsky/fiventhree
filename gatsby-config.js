@@ -6,7 +6,7 @@ require('dotenv').config({
 
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Shopify Starter`,
+    title: `Fiventhree | Clothing`,
     description: `Kick off your next, ecommerce experience with this Gatsby starter. This starter ships with credentials to a shopify demo store so you can try it out immediately.`,
     author: `@alexanderhorl`,
   },
@@ -22,7 +22,6 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    `gatsby-plugin-layout`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -47,6 +46,20 @@ module.exports = {
         trackingId: 'UA-134421805-1',
         anonymize: true,
         respectDNT: true,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-web-font-loader',
+      options: {
+        typekit: {
+          id: 'pma1aeo',
+        },
+      },
+    },
+    {
+      resolve: `gatsby-plugin-layout`,
+      options: {
+        component: require.resolve(`./src/components/layout`),
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
