@@ -1,10 +1,8 @@
 import React, { useEffect, useRef } from "react"
 import Layout from "../components/layout"
 import styled from "styled-components"
-import Image from "../components/image"
-import SEO from "../components/seo"
-import stars from "../assets/stars.svg"
 import logo from "../assets/logo.svg"
+import { small, medium, large, extraLarge } from "../breakpoints"
 import gsap from "gsap"
 import { CSSPlugin } from "gsap/CSSPlugin"
 gsap.registerPlugin(CSSPlugin)
@@ -16,6 +14,10 @@ const Wrapper = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media all and (max-width: ${small}) {
+    overflow: hidden;
+  }
 `
 const Container = styled.div`
   width: 60vw;
@@ -28,6 +30,24 @@ const Container = styled.div`
   justify-content: space-between;
   -webkit-justify-content: space-between;
   position: relative;
+
+  @media all and (max-width: ${small}) {
+    width: 90%;
+    height: 90%;
+    & > svg {
+      width: 50vw;
+    }
+  }
+  @media all and (min-width: ${small}) and (max-width: ${medium}) {
+    & > svg {
+      width: 40vw;
+    }
+  }
+  @media all and (min-width: ${medium}) and (max-width: ${large}) {
+    & > svg {
+      width: 35vw;
+    }
+  }
 `
 const Title = styled.h1`
   font-size: 4em;
@@ -36,15 +56,45 @@ const Title = styled.h1`
   font-weight: 700;
   opacity: 0;
   transform: translateY(30px);
+
+  @media all and (max-width: ${medium}) {
+    font-size: 3em;
+    text-align: center;
+  }
 `
 const Footer = styled.div`
   width: 50%;
   height: auto;
   display: flex;
   justify-content: space-between;
+
+  @media all and (max-width: ${small}) {
+    width: 100%;
+    height: 15vw;
+    flex-flow: column;
+    -webkit-flex-flow: column;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+  }
+  @media all and (min-width: ${small}) and (max-width: ${large}) {
+    width: 100%;
+  }
+  @media all and (min-width: ${large}) and (max-width: ${extraLarge}) {
+    width: 80%;
+  }
 `
 const Logo = styled.img`
   width: 8vw;
+
+  @media all and (max-width: ${small}) {
+    width: 30vw;
+  }
+  @media all and (min-width: ${small}) and (max-width: ${medium}) {
+    width: 20vw;
+  }
+  @media all and (min-width: ${medium}) and (max-width: ${large}) {
+    width: 15vw;
+  }
 `
 const SM = styled.div`
   width: 45%;
@@ -54,6 +104,13 @@ const SM = styled.div`
   -webkit-justify-content: space-between;
   align-items: center;
   -webkit-align-items: center;
+
+  @media all and (max-width: ${small}) {
+    width: 100%;
+  }
+  @media all and (min-width: ${large}) and (max-width: ${extraLarge}) {
+    width: 30%;
+  }
 `
 const Label = styled.p`
   font-size: 0.8em;
@@ -66,6 +123,10 @@ const Link = styled.a`
     transform: scale(1.1);
     transition: 0.3s ease-in-out;
   }
+
+  @media all and (max-width: ${small}) {
+    width: 20vw;
+  }
 `
 
 const IndexPage = () => {
@@ -77,7 +138,7 @@ const IndexPage = () => {
     tl.to(title.current, {
       opacity: 1,
       translateY: 0,
-      duration: 1,
+      duration: 0.4,
     })
     tl.from(stars.current.children, {
       duration: 0.5,
