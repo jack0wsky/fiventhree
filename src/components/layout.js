@@ -3,13 +3,19 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import { createGlobalStyle } from "styled-components"
 import { Helmet } from "react-helmet"
+import "../layout.css"
+import "../font.css"
 
 const Global = createGlobalStyle`
   *, *:before, *:after {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: "Aktiv Grotesk Ex", sans-serif;
+    font-family: aktiv-grotesk-extended, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    background-color: #000;
+    @import url("https://use.typekit.net/pma1aeo.css");
   }
 `
 
@@ -32,7 +38,6 @@ const Layout = ({ children }) => {
   const {
     allSite: { edges },
   } = data
-  console.log(edges)
   return (
     <>
       <Global />

@@ -75,6 +75,7 @@ const Footer = styled.div`
     -webkit-flex-flow: column;
     justify-content: space-between;
     -webkit-justify-content: space-between;
+    margin: 0 0 10vh;
   }
   @media all and (min-width: ${small}) and (max-width: ${large}) {
     width: 100%;
