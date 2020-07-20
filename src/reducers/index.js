@@ -1,6 +1,7 @@
 const initState = {
   toggleMenu: false,
   handleCart: [],
+  toggleCart: false,
 }
 
 export const handleMenu = (state = initState.toggleMenu, action) => {
@@ -24,6 +25,17 @@ export const handleCart = (state = initState.handleCart, action) => {
         return prod.key !== action.payload
       })
       return removed
+    }
+    default: {
+      return state
+    }
+  }
+}
+
+export const toggleCart = (state = initState.toggleCart, action) => {
+  switch (action.type) {
+    case 'TOGGLE_CART': {
+      return !state
     }
     default: {
       return state

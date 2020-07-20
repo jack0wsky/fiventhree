@@ -13,7 +13,7 @@ export const Length = styled.div`
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: ${(props) => (props.toggle ? '#000' : '#fff')};
   margin: 0 0 0 20px;
   display: flex;
   justify-content: center;
@@ -22,6 +22,8 @@ export const Length = styled.div`
   -webkit-align-items: center;
   font-size: 1em;
   font-weight: 600;
+  color: ${(props) => (props.toggle ? '#fff' : '#000')};
+  transition: 0.3s ease-in-out;
 `
 export const Cart = styled.button`
   width: 30px;

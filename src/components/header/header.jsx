@@ -1,17 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import { Wrapper, Background } from './header.styled'
+import React, { useEffect, useState, useRef } from 'react'
+import { Wrapper, Background, Nav } from './header.styled'
+import { Link } from 'gatsby'
 import Logo from '../header/logo/logo'
 import CartStatus from './cartStatus/cartStatus'
+import gsap from 'gsap'
+import { CSSPlugin } from 'gsap/CSSPlugin'
+gsap.registerPlugin(CSSPlugin)
 
 const Header = () => {
   const [scrolled, setScrolled] = useState()
+  const background = useRef()
   useEffect(() => {
     if (window) {
       window.addEventListener('scroll', () => {
         if (window.pageYOffset > 50) {
-          setScrolled(true)
+          gsap.to(background.current, {
+            bottom: 0,
+            duration: 0.1,
+          })
         } else {
-          setScrolled(false)
+          gsap.to(background.current, {
+            height: 0,
+            duration: 0.1,
+          })
         }
       })
     }
@@ -19,8 +30,12 @@ const Header = () => {
   return (
     <Wrapper>
       <Logo color={'#fff'} height={'10px'} />
+      <Nav>
+        <Link to="/produkty">Produkty</Link>
+        <Link to="/kontakt">Kontakt</Link>
+      </Nav>
       <CartStatus />
-      <Background scrolled={scrolled} />
+      <Background ref={background} />
     </Wrapper>
   )
 }

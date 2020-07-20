@@ -6,10 +6,38 @@ export const MenuWrapper = styled.section`
   @media all and (max-width: ${small}) {
     width: 100vw;
     height: 50vh;
-    background-color: #dedede;
+    background-color: #ffffff;
     position: fixed;
     z-index: 45;
     transition: 0.3s ease-in-out;
-    bottom: 50%;
+    display: flex;
+    flex-flow: column;
+    -webkit-flex-flow: column;
+    bottom: ${(props) => (props.toggle ? 0 : '-100%')};
+    padding: 5vw;
+
+    a {
+      text-decoration: none;
+      color: #000;
+      text-transform: uppercase;
+      font-size: 1.2em;
+      line-height: 50px;
+    }
   }
 `
+export const SocialMedia = styled.div`
+  width: 25%;
+  height: 5vh;
+  position: absolute;
+  bottom: 5vw;
+  left: 5vw;
+  display: flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+`
+export const SMItem = styled.img`
+  height: 30px;
+`
+export const Ahref = styled.a``

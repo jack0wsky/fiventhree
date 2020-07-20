@@ -12,14 +12,30 @@ export const Wrapper = styled.header`
   -webkit-justify-content: space-between;
   position: fixed;
   z-index: 99;
+  overflow: hidden;
 `
 export const Background = styled.div`
   position: absolute;
-  height: ${(props) => (props.scrolled ? '100px' : 0)};
+  height: 100%;
   width: 100%;
   background-color: #000;
   left: 0;
   z-index: -1;
   transition: 0.3s ease-in-out;
-  transform-origin: center 100%;
+  transform-origin: 0 0;
+  bottom: -100%;
+`
+export const Nav = styled.nav`
+  width: 30%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+
+  a {
+    text-decoration: none;
+    color: #fff;
+  }
 `
