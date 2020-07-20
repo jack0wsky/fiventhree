@@ -2,7 +2,7 @@
 <h1 align="center">
   <img alt="Gatsby" src="resources/shopify+gatsby.png" height="60px" />
   <br/>
-  Gatsby Shopify starter
+  Fiventhree E-commerce
 </h1>
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/d374a159-9ee3-4b02-91a3-ee3053990fcb/deploy-status)](https://app.netlify.com/sites/gatsby-shopify-starter/deploys)
@@ -15,16 +15,6 @@ If you have questions feel free to message me on [Twitter](https://twitter.com/a
 
 Checkout [nureineburg.netlify.app](https://nureineburg.netlify.app) for a real public shop built with this starter, the code is also [public](https://github.com/AlexanderProd/nureineburg.de/).  
 
-## 💎 Features
-
-- Cart
-- Product grid
-- Product page
-- Dynamic Inventory Checking
-- Image optimization with Gatsby Image
-- Styled Components with Emotion
-- Google Analytics
-- SEO
 
 ### 📦 Dynamic Inventory Checking
 The Shopify product inventory is being checked in realtime, therefore no rebuilding and redeploy is needed when a product goes out of stock. This avoids problems where products could still be available even though they're out of stock due to redeploy delay.
