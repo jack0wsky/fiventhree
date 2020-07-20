@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button, Container, Line } from './burgerMenu.styled'
+import { useSelector, useDispatch } from 'react-redux'
+import { toggleMenu } from '../../actions/toggleMenu'
 
 const BurgerMenu = () => {
-  const [toggle, setToogle] = useState(false)
+  const toggle = useSelector((state) => state.toggleMenu)
+  const dispatch = useDispatch()
   return (
-    <Button onClick={() => setToogle(!toggle)}>
+    <Button onClick={() => dispatch(toggleMenu())}>
       <Container toggle={toggle}>
         <Line />
         <Line />

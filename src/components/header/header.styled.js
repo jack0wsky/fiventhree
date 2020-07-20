@@ -13,3 +13,13 @@ export const Wrapper = styled.header`
   position: fixed;
   z-index: 99;
 `
+export const Background = styled.div`
+  position: absolute;
+  height: ${(props) => (props.scrolled ? '100px' : 0)};
+  width: 100%;
+  background-color: #000;
+  left: 0;
+  z-index: -1;
+  transition: 0.3s ease-in-out;
+  transform-origin: center 100%;
+`

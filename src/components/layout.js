@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { useStaticQuery, graphql } from 'gatsby'
 import Header from './header/header'
 import BurgerMenu from './burgerMenu/burgerMenu'
+import Menu from './menu/menu'
 import { createGlobalStyle } from 'styled-components'
 import './layout.css'
 import '../fonts/medium.css'
@@ -34,6 +35,7 @@ const Layout = ({ children }) => {
       <GlobalStyle />
       <Header />
       <BurgerMenu />
+      <Menu />
       {children}
     </>
   )

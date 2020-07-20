@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { small } from '../breakpoints'
 
 export const Button = styled.button`
+  display: none;
   @media all and (max-width: ${small}) {
     width: 70px;
     height: 70px;
