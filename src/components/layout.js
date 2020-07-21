@@ -7,7 +7,9 @@ import BurgerMenu from './burgerMenu/burgerMenu'
 import Menu from './menu/menu'
 import Cart from './cart/cart'
 import RedOverlay from './overlays/redOverlay'
+import Footer from './footer/footer'
 import styled, { createGlobalStyle } from 'styled-components'
+import { Helmet } from 'react-helmet'
 import './layout.css'
 import '../fonts/medium.css'
 import '../fonts/bold.css'
@@ -39,15 +41,23 @@ const Layout = ({ children }) => {
     }
   `)
 
+  const {
+    site: { siteMetadata },
+  } = data
   return (
     <Wrapper>
       <GlobalStyle />
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{siteMetadata.title}</title>
+      </Helmet>
       <Header />
       <BurgerMenu />
       <Menu />
       {toggleCart ? <Cart /> : null}
       {toggleCart ? <RedOverlay /> : null}
       {children}
+      <Footer />
     </Wrapper>
   )
 }

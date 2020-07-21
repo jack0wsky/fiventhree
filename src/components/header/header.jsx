@@ -14,6 +14,7 @@ const Header = () => {
     if (window) {
       window.addEventListener('scroll', () => {
         if (window.pageYOffset > 50) {
+          console.log('more')
           gsap.to(background.current, {
             bottom: 0,
             duration: 0.1,

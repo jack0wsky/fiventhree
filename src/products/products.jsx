@@ -8,16 +8,19 @@ const Products = () => {
       key: 1,
       name: '***** *** Koszulka',
       price: 39.99,
+      slug: 'osiem-gwiazd-t-shirt',
     },
     {
       key: 2,
       name: '***** *** PRIDE Koszulka',
       price: 39.99,
+      slug: 'osiem-gwiazd-pride-t-shirt',
     },
     {
       key: 3,
       name: '***** *** BOGO Koszulka',
       price: 39.99,
+      slug: 'osiem-gwiazd-bogo-t-shirt',
     },
   ])
   return (
