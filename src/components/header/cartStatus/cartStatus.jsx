@@ -8,7 +8,6 @@ const CartStatus = () => {
   const dispatch = useDispatch()
   const toggle = useSelector((state) => state.toggleCart)
   const cart = useSelector((state) => state.handleCart)
-  console.log(cart.length)
   return (
     <Wrapper>
       <Cart onClick={() => dispatch(toggleCart())}>

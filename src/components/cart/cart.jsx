@@ -7,6 +7,7 @@ import { EasePack } from 'gsap/EasePack'
 import { Power2 } from 'gsap/all'
 import { toggleCart } from '../../actions/toggleCart'
 import CartProduct from './cartProduct/cartProduct'
+import Summary from './summary/summary'
 
 gsap.registerPlugin(CSSPlugin, EasePack, Power2)
 
@@ -35,8 +36,17 @@ class Cart extends Component {
     })
   }
 
+  //TODO total for more than 2
+  getTotalPrice = () => {
+    const { cart } = this.props
+    return cart.reduce((acc, item) => {
+      return (acc.price += item.price * item.quantity)
+    })
+  }
+
   render() {
     const { dispatch, cart } = this.props
+    console.log(cart)
     return (
       <CartWrapper ref={this.cart} toggle={this.props.toggleCart}>
         <Header>
@@ -54,6 +64,7 @@ class Cart extends Component {
             })
           )}
         </Grid>
+        {cart.length > 0 ? <Summary total={this.getTotalPrice} /> : null}
       </CartWrapper>
     )
   }

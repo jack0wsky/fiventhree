@@ -23,7 +23,11 @@ const Product = ({ product }) => {
         <Price>{product.price} PLN</Price>
         <SecondLine>
           <Name>{product.name}</Name>
-          <AddToCart onClick={() => dispatch(addToCart(product))}>
+          <AddToCart
+            onClick={() =>
+              dispatch(addToCart(product.key, product.name, product.price, 1))
+            }
+          >
             Kup teraz
           </AddToCart>
         </SecondLine>

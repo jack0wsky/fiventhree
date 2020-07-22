@@ -16,18 +16,16 @@ import {
 } from './cartProduct.styled'
 
 const CartProduct = ({ product }) => {
-  const { name, price } = product
   const dispatch = useDispatch()
-  const [quantity, setQuantity] = useState(1)
   return (
     <Wrapper>
       <Preview></Preview>
       <Data>
-        <Name>{name}</Name>
-        <Price>{price} PLN</Price>
+        <Name>{product.name}</Name>
+        <Price>{product.price} PLN</Price>
         <Quantity>
           <Decrement>-</Decrement>
-          <Value>{quantity}</Value>
+          <Value>{product.quantity}</Value>
           <Increment>+</Increment>
         </Quantity>
       </Data>
