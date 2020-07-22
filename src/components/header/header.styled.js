@@ -37,5 +37,8 @@ export const Nav = styled.nav`
   a {
     text-decoration: none;
     color: #fff;
+    text-transform: uppercase;
+    font-size: 1em;
+    font-weight: 600;
   }
 `

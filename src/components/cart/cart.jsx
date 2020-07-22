@@ -6,6 +6,7 @@ import { CSSPlugin } from 'gsap/CSSPlugin'
 import { EasePack } from 'gsap/EasePack'
 import { Power2 } from 'gsap/all'
 import { toggleCart } from '../../actions/toggleCart'
+import CartProduct from './cartProduct/cartProduct'
 
 gsap.registerPlugin(CSSPlugin, EasePack, Power2)
 
@@ -44,8 +45,14 @@ class Cart extends Component {
             <Line />
           </Exit>
         </Header>
-        <Grid>
-          {cart.length === 0 ? <p>No items, find something special</p> : null}
+        <Grid length={cart.length}>
+          {cart.length === 0 ? (
+            <p>No items, find something special</p>
+          ) : (
+            cart.map((product) => {
+              return <CartProduct key={product.key} product={product} />
+            })
+          )}
         </Grid>
       </CartWrapper>
     )

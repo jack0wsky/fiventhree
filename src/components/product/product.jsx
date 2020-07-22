@@ -9,8 +9,11 @@ import {
   SecondLine,
   AddToCart,
 } from './product.styled'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../../actions/addToCart'
 
 const Product = ({ product }) => {
+  const dispatch = useDispatch()
   return (
     <ProductWrapper>
       <ImageSlider>
@@ -20,7 +23,9 @@ const Product = ({ product }) => {
         <Price>{product.price} PLN</Price>
         <SecondLine>
           <Name>{product.name}</Name>
-          <AddToCart>Kup teraz</AddToCart>
+          <AddToCart onClick={() => dispatch(addToCart(product))}>
+            Kup teraz
+          </AddToCart>
         </SecondLine>
       </Details>
     </ProductWrapper>

@@ -78,7 +78,6 @@ export const Movement = styled.div`
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
-  position: absolute;
   left: 35%;
 
   @media all and (max-width: ${small}) {

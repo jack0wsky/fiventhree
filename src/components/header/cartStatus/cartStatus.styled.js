@@ -20,8 +20,6 @@ export const Length = styled.div`
   -webkit-justify-content: center;
   align-content: center;
   -webkit-align-items: center;
-  font-size: 1em;
-  font-weight: 600;
   color: ${(props) => (props.toggle ? '#fff' : '#000')};
   transition: 0.3s ease-in-out;
 `
@@ -40,4 +38,9 @@ export const Cart = styled.button`
   &:focus {
     outline: none;
   }
+`
+export const Value = styled.p`
+  font-size: 1em;
+  font-weight: 600;
+  margin: 5px 0 0;
 `
