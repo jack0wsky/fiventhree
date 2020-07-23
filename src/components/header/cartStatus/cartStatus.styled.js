@@ -42,5 +42,5 @@ export const Cart = styled.button`
 export const Value = styled.p`
   font-size: 1em;
   font-weight: 600;
-  margin: 5px 0 0;
+  margin: 0;
 `

@@ -9,6 +9,7 @@ export const CartWrapper = styled.section`
   right: 0;
   top: 0;
   z-index: 100;
+  padding: 0 0 5vw;
 `
 export const Header = styled.div`
   width: 100%;
