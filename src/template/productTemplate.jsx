@@ -36,7 +36,7 @@ const ProductTemplate = ({ pageContext: { product } }) => {
           })}
         </RestImages>
         <ImageContainer>
-          <Img fixed={defaultImage} />
+          <MainImage src={defaultImage} />
         </ImageContainer>
       </Gallery>
       <Content setImage={setImage} product={product} />

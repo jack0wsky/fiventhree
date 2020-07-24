@@ -5,7 +5,7 @@ const client = Client.buildClient({
   storefrontAccessToken: process.env.SHOPIFY_ACCESS_TOKEN,
   domain: `${process.env.SHOP_NAME}.myshopify.com`,
 })
-/*
+
 const ContextProvider = ({ children }) => {
   let initialStoreState = {
     client,
@@ -126,6 +126,3 @@ const ContextProvider = ({ children }) => {
   )
 }
 export default ContextProvider
-
-
- */

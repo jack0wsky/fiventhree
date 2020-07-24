@@ -30,3 +30,14 @@ export const Text = styled(Label)`
 export const Price = styled(Value)`
   font-size: 1.2em;
 `
+export const ContinueBtn = styled.button`
+  padding: 15px 30px 15px;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+`
