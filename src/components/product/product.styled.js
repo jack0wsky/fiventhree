@@ -15,6 +15,7 @@ export const ImageSlider = styled.section`
   height: 80%;
   background-color: #ccc;
   position: relative;
+  border: none;
 `
 export const LastestLabel = styled.p`
   font-size: 0.7em;
@@ -36,17 +37,25 @@ export const Details = styled.section`
 export const Name = styled.h3`
   font-size: 1em;
   font-family: 'Aktiv Grotesk Ex', sans-serif;
+  text-decoration: none;
+  color: #000;
 `
 export const Price = styled.p`
   font-size: 1em;
+  text-decoration: none;
+  color: #000;
 `
 export const SecondLine = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  -webkit-justify-content: space-between;
-  align-items: center;
-  -webkit-align-items: center;
+
+  a {
+    display: flex;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+    align-items: center;
+    -webkit-align-items: center;
+    text-decoration: none;
+  }
 
   @media all and (max-width: ${small}) {
     flex-flow: column;
@@ -62,6 +71,7 @@ export const AddToCart = styled.button`
   background-color: ${colors.action};
   color: #fff;
   cursor: pointer;
+  text-decoration: none;
 
   &:focus {
     outline: none;

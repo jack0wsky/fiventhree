@@ -8,11 +8,12 @@ module.exports = {
   siteMetadata: {
     title: `Fiventhree | Clothing`,
     description: `Kick off your next, ecommerce experience with this Gatsby starter. This starter ships with credentials to a shopify demo store so you can try it out immediately.`,
-    author: `@alexanderhorl`,
+    author: `45human`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-styled-components`,
+    `gatsby-plugin-transition-link`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -63,16 +64,14 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-shopify2`,
+      resolve: `gatsby-source-shopify`,
       options: {
-        shopName: process.env.GATSBY_SHOP_NAME,
-        accessToken: process.env.GATSBY_STOREFRONT_ACCESS_TOKEN,
-        apiVersion: '2020-07',
+        shopName: `fiventhree`,
+        accessToken: `a4c2019ba733587b174a498f66dd2be9`,
+        apiVersion: '2020-04',
         verbose: true,
+        includeCollections: ['shop', 'content'],
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.app/offline
-    // 'gatsby-plugin-offline',
   ],
 }

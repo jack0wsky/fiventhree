@@ -36,13 +36,13 @@ class Cart extends Component {
     })
   }
 
-  //TODO total for more than 2
   getTotalPrice = () => {
     const { cart } = this.props
-    const reduced = cart.reduce((acc, cur) => {
-      return (acc.product.price += cur.product.price * cur.quantity)
-    })
-    console.log(reduced)
+    let sum = cart.reduce((acc, cur) => {
+      return (acc += cur.price * cur.quantity)
+    }, 0)
+    sum += 8.99
+    return sum.toFixed(2)
   }
 
   render() {
@@ -60,7 +60,7 @@ class Cart extends Component {
             <p>No items, find something special</p>
           ) : (
             cart.map((product) => {
-              return <CartProduct key={product.product.key} product={product} />
+              return <CartProduct key={product.key} product={product} />
             })
           )}
         </Grid>

@@ -1,4 +1,5 @@
 import React from 'react'
+import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import {
   ProductWrapper,
   ImageSlider,
@@ -9,23 +10,21 @@ import {
   SecondLine,
   AddToCart,
 } from './product.styled'
-import { useDispatch } from 'react-redux'
-import { addToCart } from '../../actions/addToCart'
 
 const Product = ({ product }) => {
-  const dispatch = useDispatch()
+  const { node: item } = product
   return (
     <ProductWrapper>
       <ImageSlider>
         <LastestLabel>Nowosc</LastestLabel>
       </ImageSlider>
       <Details>
-        <Price>{product.price} PLN</Price>
+        <Price>{item.variants[0].price} PLN</Price>
         <SecondLine>
-          <Name>{product.name}</Name>
-          <AddToCart onClick={() => dispatch(addToCart(product, 1))}>
-            Kup teraz
-          </AddToCart>
+          <AniLink cover to={`/produkty/${item.shopifyId}`}>
+            <Name>{item.title}</Name>
+            <AddToCart>Kup teraz</AddToCart>
+          </AniLink>
         </SecondLine>
       </Details>
     </ProductWrapper>

@@ -8,5 +8,5 @@ export const TemplateWrapper = styled.main`
 export const Gallery = styled.section`
   width: 50%;
   height: 100%;
+  background-color: #ccc;
 `
-export const Content = styled(Gallery)``

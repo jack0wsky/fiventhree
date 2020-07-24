@@ -22,8 +22,7 @@ export const handleCart = (state = initState.handleCart, action) => {
     }
     case 'REMOVE_FROM_CART': {
       const filtered = state.filter((prod) => {
-        console.log(action.payload)
-        return prod.product.key !== action.payload
+        return prod.key !== action.payload
       })
       return filtered
     }

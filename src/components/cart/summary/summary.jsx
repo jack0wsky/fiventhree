@@ -20,7 +20,7 @@ const Summary = ({ total }) => {
       </Shipping>
       <Total>
         <Text>Suma</Text>
-        <Price>{total()}</Price>
+        <Price>{total()} PLN</Price>
       </Total>
     </Wrapper>
   )

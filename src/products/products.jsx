@@ -1,33 +1,34 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useStaticQuery, graphql } from 'gatsby'
 import { ProductsWrapper, ProductsGrid } from './products.styled'
 import Product from '../components/product/product'
 
 const Products = () => {
-  const [products] = useState([
+  const products = useStaticQuery(graphql`
     {
-      key: 1,
-      name: '***** *** Koszulka',
-      price: 39.99,
-      slug: 'osiem-gwiazd-t-shirt',
-    },
-    {
-      key: 2,
-      name: '***** *** PRIDE Koszulka',
-      price: 39.99,
-      slug: 'osiem-gwiazd-pride-t-shirt',
-    },
-    {
-      key: 3,
-      name: '***** *** BOGO Koszulka',
-      price: 39.99,
-      slug: 'osiem-gwiazd-bogo-t-shirt',
-    },
-  ])
+      allShopifyProduct {
+        edges {
+          node {
+            title
+            productType
+            shopifyId
+            variants {
+              price
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  const {
+    allShopifyProduct: { edges },
+  } = products
   return (
     <ProductsWrapper>
       <ProductsGrid>
-        {products.map((product) => {
-          return <Product key={product.key} product={product} />
+        {edges.map((product) => {
+          return <Product key={product.shopifyId} product={product} />
         })}
       </ProductsGrid>
     </ProductsWrapper>
@@ -35,3 +36,9 @@ const Products = () => {
 }
 
 export default Products
+
+/*
+{products.map((product) => {
+          return <Product key={product.key} product={product} />
+        })}
+ */

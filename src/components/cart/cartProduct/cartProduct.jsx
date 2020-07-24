@@ -17,21 +17,23 @@ import {
 
 const CartProduct = ({ product }) => {
   const dispatch = useDispatch()
-  const { product: item, quantity } = product
+  const [quantity, setQuantity] = useState(1)
+  const [increment, setIncrement] = useState(quantity)
+  const [decrement, setDecrement] = useState(quantity)
   return (
     <Wrapper>
       <Preview></Preview>
       <Data>
-        <Name>{item.name}</Name>
-        <Price>{item.price} PLN</Price>
+        <Name>{product.name}</Name>
+        <Price>{product.price} PLN</Price>
         <Quantity>
           <Decrement>-</Decrement>
-          <Value>{quantity}</Value>
+          <Value>{product.quantity}</Value>
           <Increment>+</Increment>
         </Quantity>
       </Data>
       <Remove>
-        <RemoveBtn onClick={() => dispatch(removeFromCart(item.key))}>
+        <RemoveBtn onClick={() => dispatch(removeFromCart(product.key))}>
           Usuń
         </RemoveBtn>
       </Remove>

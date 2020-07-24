@@ -1,11 +1,12 @@
 import React from 'react'
-import { TemplateWrapper, Gallery, Content } from './productTemplate.styled'
+import { TemplateWrapper, Gallery } from './productTemplate.styled'
+import Content from './content/content'
 
-const ProductTemplate = () => {
+const ProductTemplate = ({ pageContext: { product } }) => {
   return (
     <TemplateWrapper>
       <Gallery></Gallery>
-      <Content></Content>
+      <Content product={product} />
     </TemplateWrapper>
   )
 }
