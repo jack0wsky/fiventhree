@@ -13,8 +13,19 @@ import Content from './content/content'
 import hero from '../../assets/hero.jpg'
 import { Controller, Scene } from 'react-scrollmagic'
 import { Tween } from 'react-gsap'
+import { small } from '../breakpoints'
 
 const Hero = () => {
+  const ifMobile = () => {
+    if (window) {
+      if (window.innerWidth <= small) {
+        console.log(true)
+        return 100
+      } else {
+        return -100
+      }
+    }
+  }
   return (
     <HeroWrapper>
       <Content />
@@ -38,7 +49,7 @@ const Hero = () => {
           <Scene indicators={false} duration={700} offset={-200}>
             <Tween
               from={{
-                x: -100,
+                x: ifMobile(),
               }}
             >
               <Movement>

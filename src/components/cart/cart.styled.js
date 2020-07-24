@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { colors } from '../../theme'
+import { small } from '../breakpoints'
 
 export const CartWrapper = styled.section`
   width: 35vw;
@@ -10,6 +11,10 @@ export const CartWrapper = styled.section`
   top: 0;
   z-index: 100;
   padding: 0 0 5vw;
+
+  @media all and (max-width: ${small}) {
+    width: 100vw;
+  }
 `
 export const Header = styled.div`
   width: 100%;

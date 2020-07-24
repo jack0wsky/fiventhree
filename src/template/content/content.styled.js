@@ -1,17 +1,38 @@
 import styled from 'styled-components'
+import { colors } from '../../theme'
+import { small } from '../../components/breakpoints'
 
 export const ContentWrapper = styled.section`
   width: 50%;
-  height: 100%;
+  height: auto;
   padding: 100px;
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
   justify-content: space-between;
   -webkit-justify-content: space-between;
+
+  @media all and (max-width: ${small}) {
+    width: 100%;
+    height: 50%;
+    padding: 5vw;
+  }
+  & > a {
+    @media all and (max-width: ${small}) {
+      display: none;
+    }
+  }
+`
+export const Reviews = styled.div`
+  width: 50%;
+  height: 50px;
 `
 export const Name = styled.h3`
   font-size: 2em;
+
+  @media all and (max-width: ${small}) {
+    font-size: 1.2em;
+  }
 `
 export const Price = styled(Name)``
 
@@ -23,32 +44,71 @@ export const Sizes = styled.section`
   -webkit-justify-content: space-between;
   align-items: center;
   -webkit-align-items: center;
-`
-export const Size = styled.button`
-  width: 30px;
-  height: 30px;
-  border: 1px solid #000;
-  background: transparent;
-  cursor: pointer;
 
-  &:focus {
-    outline: none;
+  @media all and (max-width: ${small}) {
+    height: 10vh;
   }
 `
 export const Description = styled.section`
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
+  width: 50%;
+  font-weight: 500;
+
+  @media all and (max-width: ${small}) {
+    width: 100%;
+    height: auto;
+    padding: 0 0 2vh;
+  }
 `
 export const Title = styled.h4`
   font-size: 1.1em;
+  margin: 0 0 20px;
 `
 export const Text = styled.p`
   font-size: 1em;
   font-family: 'Roboto', sans-serif;
 `
-export const AddToCart = styled.button`
-  text-transform: uppercase;
-  padding: 20px 40px 20px;
+export const AddToCart = styled.section`
   width: max-content;
+  display: flex;
+  align-items: center;
+  -webkit-align-items: center;
+`
+export const DecrementQuantity = styled.button`
+  height: 60px;
+  width: 60px;
+  border: none;
+  background-color: ${colors.action};
+  font-size: 1.2em;
+  &:focus {
+    outline: none;
+  }
+  cursor: pointer;
+`
+export const Add = styled.button`
+  height: 60px;
+  padding: 15px 30px 15px;
+  font-size: 1em;
+  background-color: ${colors.darkRed};
+  border: none;
+  cursor: pointer;
+  color: #fff;
+
+  &:focus {
+    outline: none;
+  }
+`
+export const IncrementQuantity = styled(DecrementQuantity)``
+
+export const MobileGallery = styled.section`
+  display: none;
+
+  @media all and (max-width: ${small}) {
+    display: flex;
+    width: 100%;
+    height: 15vh;
+    background-color: #ccc;
+  }
 `

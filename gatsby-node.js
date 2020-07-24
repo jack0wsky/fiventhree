@@ -22,8 +22,13 @@ exports.createPages = async ({ graphql, actions }) => {
           node {
             id
             title
+            handle
             options {
               values
+            }
+            images {
+              originalSrc
+              id
             }
             description
             productType
@@ -39,7 +44,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   result.data.allShopifyProduct.edges.forEach(({ node }) => {
     createPage({
-      path: `/produkty/${node.shopifyId}`,
+      path: `/produkty/${node.handle}`,
       component: path.resolve(`./src/template/productTemplate.jsx`),
       context: {
         // Data passed to context is available

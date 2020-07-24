@@ -90,6 +90,6 @@ export const MovementText = styled(Text)`
   line-height: 80px;
   @media all and (max-width: ${small}) {
     font-size: 3em;
-    line-height: 20px;
+    line-height: 40px;
   }
 `

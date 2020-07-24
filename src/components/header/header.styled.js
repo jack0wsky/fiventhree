@@ -1,9 +1,10 @@
 import styled from 'styled-components'
+import { small } from '../breakpoints'
 
 export const Wrapper = styled.header`
   height: 100px;
   width: 100vw;
-  background-color: transparent;
+  background-color: #000;
   display: flex;
   align-items: center;
   -webkit-align-items: center;
@@ -40,5 +41,8 @@ export const Nav = styled.nav`
     text-transform: uppercase;
     font-size: 1em;
     font-weight: 600;
+  }
+  @media all and (max-width: ${small}) {
+    display: none;
   }
 `

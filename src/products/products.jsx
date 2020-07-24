@@ -12,6 +12,10 @@ const Products = () => {
             title
             productType
             shopifyId
+            handle
+            images {
+              originalSrc
+            }
             variants {
               price
             }

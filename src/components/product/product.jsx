@@ -4,6 +4,7 @@ import {
   ProductWrapper,
   ImageSlider,
   LastestLabel,
+  Image,
   Details,
   Name,
   Price,
@@ -16,12 +17,14 @@ const Product = ({ product }) => {
   return (
     <ProductWrapper>
       <ImageSlider>
-        <LastestLabel>Nowosc</LastestLabel>
+        {item.images.map((img) => {
+          return <Image src={img.originalSrc} />
+        })}
       </ImageSlider>
       <Details>
         <Price>{item.variants[0].price} PLN</Price>
         <SecondLine>
-          <AniLink cover to={`/produkty/${item.shopifyId}`}>
+          <AniLink cover to={`/produkty/${item.handle}`}>
             <Name>{item.title}</Name>
             <AddToCart>Kup teraz</AddToCart>
           </AniLink>

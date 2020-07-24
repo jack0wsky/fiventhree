@@ -2,13 +2,27 @@ import styled from 'styled-components'
 import { colors } from '../../theme'
 import { small } from '../breakpoints'
 
-export const ProductWrapper = styled.div`
+export const Image = styled.img`
+  height: 100%;
   width: 100%;
+  object-fit: cover;
+  transition: 0.3s ease-in-out;
+`
+export const ProductWrapper = styled.div`
+  width: 40vw;
   height: 100vh;
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
   font-family: 'Aktiv Grotesk Ex', sans-serif;
+
+  &:hover ${Image} {
+    transform: scale(1.05);
+    transition: 0.3s ease-in-out;
+  }
+  @media all and (max-width: ${small}) {
+    width: 90vw;
+  }
 `
 export const ImageSlider = styled.section`
   width: 100%;
@@ -16,6 +30,8 @@ export const ImageSlider = styled.section`
   background-color: #ccc;
   position: relative;
   border: none;
+  display: flex;
+  overflow: hidden;
 `
 export const LastestLabel = styled.p`
   font-size: 0.7em;
@@ -33,6 +49,12 @@ export const Details = styled.section`
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
+
+  @media all and (max-width: ${small}) {
+    height: 15vh;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+  }
 `
 export const Name = styled.h3`
   font-size: 1em;
@@ -55,12 +77,12 @@ export const SecondLine = styled.div`
     align-items: center;
     -webkit-align-items: center;
     text-decoration: none;
-  }
 
-  @media all and (max-width: ${small}) {
-    flex-flow: column;
-    -webkit-flex-flow: column;
-    align-items: flex-start;
+    @media all and (max-width: ${small}) {
+      flex-flow: column;
+      -webkit-flex-flow: column;
+      align-items: flex-start;
+    }
   }
 `
 export const AddToCart = styled.button`

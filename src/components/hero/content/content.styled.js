@@ -53,7 +53,7 @@ export const Stars = styled.img`
   }};
 
   @media all and (max-width: ${small}) {
-    margin: 50px 0 0;
+    margin: 10px 0 0;
     width: 40vw;
 
     ${(props) => {
