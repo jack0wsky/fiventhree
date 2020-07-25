@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { small } from '../breakpoints'
 
 export const Wrapper = styled.header`
-  height: 100px;
+  height: ${({ minify }) => (minify ? '80px' : '100px')};
   width: 100vw;
   background-color: #000;
   display: flex;
@@ -14,6 +14,14 @@ export const Wrapper = styled.header`
   position: fixed;
   z-index: 99;
   overflow: hidden;
+  transition: 0.3s ease-in-out;
+  ${({ scrolled }) => {
+    if (scrolled) {
+      return `
+            transform: translateY(-100px);
+          `
+    }
+  }};
 `
 export const Background = styled.div`
   position: absolute;

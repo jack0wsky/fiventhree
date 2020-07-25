@@ -4,7 +4,6 @@ import { small } from '../components/breakpoints'
 export const TemplateWrapper = styled.main`
   width: 100vw;
   height: 100vh;
-  padding: 100px 0 0;
   display: flex;
 
   @media all and (max-width: ${small}) {

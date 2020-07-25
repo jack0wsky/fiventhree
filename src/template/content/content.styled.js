@@ -23,6 +23,10 @@ export const ContentWrapper = styled.section`
     }
   }
 `
+export const Cart = styled.section`
+  width: 100%;
+  height: 100px;
+`
 export const Reviews = styled.div`
   width: 50%;
   height: 50px;

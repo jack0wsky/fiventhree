@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Wrapper, Background, Nav } from './header.styled'
-import { Link } from 'gatsby'
+import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import Logo from '../header/logo/logo'
 import CartStatus from './cartStatus/cartStatus'
 import gsap from 'gsap'
@@ -8,31 +8,37 @@ import { CSSPlugin } from 'gsap/CSSPlugin'
 gsap.registerPlugin(CSSPlugin)
 
 const Header = () => {
-  const [scrolled, setScrolled] = useState()
+  const [scrolled, setScrolled] = useState(false)
+  const [minify, setMinified] = useState(false)
   const background = useRef()
   useEffect(() => {
     if (window) {
+      if (window.location.href.includes('/produkty/')) {
+        setMinified(true)
+      } else {
+        setMinified(false)
+      }
       window.addEventListener('scroll', () => {
         if (window.pageYOffset > 50) {
-          gsap.to(background.current, {
-            bottom: 0,
-            duration: 0.1,
-          })
+          setScrolled(true)
         } else {
-          gsap.to(background.current, {
-            height: 0,
-            duration: 0.1,
-          })
+          setScrolled(false)
         }
       })
     }
   })
   return (
-    <Wrapper>
-      <Logo color={'#fff'} height={'10px'} />
+    <Wrapper minify={minify} scrolled={scrolled}>
+      <AniLink cover to="/">
+        <Logo color={'#fff'} height={'10px'} />
+      </AniLink>
       <Nav>
-        <Link to="/produkty">Produkty</Link>
-        <Link to="/kontakt">Kontakt</Link>
+        <AniLink cover to="/produkty">
+          Produkty
+        </AniLink>
+        <AniLink cover to="/kontakt">
+          Kontakt
+        </AniLink>
       </Nav>
       <CartStatus />
       <Background ref={background} />

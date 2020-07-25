@@ -2,6 +2,7 @@ const initState = {
   toggleMenu: false,
   handleCart: [],
   toggleCart: false,
+  handleCheckout: '',
 }
 
 export const handleMenu = (state = initState.toggleMenu, action) => {
@@ -36,6 +37,17 @@ export const toggleCart = (state = initState.toggleCart, action) => {
   switch (action.type) {
     case 'TOGGLE_CART': {
       return !state
+    }
+    default: {
+      return state
+    }
+  }
+}
+
+export const handleCheckout = (state = initState.handleCheckout, action) => {
+  switch (action.type) {
+    case 'HANDLE_CHECKOUT': {
+      return action.payload
     }
     default: {
       return state

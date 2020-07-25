@@ -3,10 +3,15 @@ import SEO from '~/components/seo'
 import Hero from '../components/hero/hero'
 import Products from '../products/products'
 import { createStore, combineReducers } from 'redux'
-import { handleMenu, handleCart, toggleCart } from '../reducers'
+import { handleMenu, handleCart, toggleCart, handleCheckout } from '../reducers'
 import styled from 'styled-components'
 
-const combine = combineReducers({ handleMenu, handleCart, toggleCart })
+const combine = combineReducers({
+  handleMenu,
+  handleCart,
+  toggleCart,
+  handleCheckout,
+})
 
 export const store = createStore(combine)
 

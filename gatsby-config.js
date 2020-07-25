@@ -73,16 +73,5 @@ module.exports = {
         includeCollections: ['shop', 'content'],
       },
     },
-    {
-      resolve: `gatsby-plugin-modal-routing`,
-      options: {
-        stores: {
-          anyKeyForYourStore: {
-            domain: `fiventhree.myshopify.com`,
-            accessToken: `a4c2019ba733587b174a498f66dd2be9`,
-          },
-        },
-      },
-    },
   ],
 }

@@ -66,20 +66,14 @@ export const Grid = styled.section`
   width: 100%;
   height: 80%;
   padding: 0 2vw 0;
-  display: flex;
-  flex-flow: column;
-  -webkit-flex-flow: column;
-`
-
-/*
-${(props) => {
-    if (props.length > 0) {
+  ${({ length }) => {
+    if (length > 0) {
       return `
             display: grid;
             grid-template-columns: 1fr;
             grid-row-gap: 5px;
         `
-    } else if (props.length === 0) {
+    } else if (length === 0) {
       return `
             display: flex;
               justify-content: center;
@@ -89,4 +83,4 @@ ${(props) => {
         `
     }
   }};
- */
+`
