@@ -25,7 +25,7 @@ const Summary = ({ total }) => {
     //  TODO better storing cart data
     const cartVal = localStorage.getItem('cart')
     console.log(localStorage, JSON.parse(cartVal))
-  })
+  }, [cart])
   console.log(client)
   const checkoutId = 'Z2lkOi8vc2hvcGlmeS9DaGVja291dC9kMTZmM2EzMDM4Yjc4N='
   const handleCheckout = () => {

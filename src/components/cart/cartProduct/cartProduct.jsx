@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { removeFromCart } from '../../../actions/removeFromCart'
 import {
@@ -19,9 +19,8 @@ import {
 
 const CartProduct = ({ product }) => {
   const dispatch = useDispatch()
-  const [quantity, setQuantity] = useState(1)
-  const [increment, setIncrement] = useState(quantity)
-  const [decrement, setDecrement] = useState(quantity)
+  const [quantity, setQuantity] = useState(product.quantity)
+  useEffect(() => {}, [quantity])
   return (
     <Wrapper>
       <Preview>
@@ -32,9 +31,18 @@ const CartProduct = ({ product }) => {
         <Price>{product.price} PLN</Price>
         <Size>Rozmiar: {product.size}</Size>
         <Quantity>
-          <Decrement>-</Decrement>
-          <Value>{product.quantity}</Value>
-          <Increment>+</Increment>
+          <Decrement onClick={() => setQuantity(Math.max(1, quantity - 1))}>
+            -
+          </Decrement>
+          <Value>{quantity}</Value>
+          <Increment
+            onClick={() => {
+              console.log(quantity)
+              setQuantity(Math.max(1, quantity + 1))
+            }}
+          >
+            +
+          </Increment>
         </Quantity>
       </Data>
       <Remove>
