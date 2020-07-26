@@ -19,6 +19,9 @@ const mapStateToProps = (state) => ({
 class Cart extends Component {
   constructor() {
     super()
+    this.state = {
+      quantityUpdate: false,
+    }
     this.cart = createRef()
   }
   componentDidMount() {
@@ -34,6 +37,10 @@ class Cart extends Component {
       opacity: 0,
       ease: Power2.easeOut,
     })
+  }
+
+  handleQuantityUpdate = () => {
+    this.setState({ quantityUpdate: !this.state.quantityUpdate })
   }
 
   getTotalPrice = () => {
@@ -60,11 +67,22 @@ class Cart extends Component {
             <p>No items, find something special</p>
           ) : (
             cart.map((product) => {
-              return <CartProduct key={product.key} product={product} />
+              return (
+                <CartProduct
+                  handleQuantityUpdate={this.handleQuantityUpdate}
+                  key={product.key}
+                  product={product}
+                />
+              )
             })
           )}
         </Grid>
-        {cart.length > 0 ? <Summary total={this.getTotalPrice} /> : null}
+        {cart.length > 0 ? (
+          <Summary
+            quantityUpdate={this.state.quantityUpdate}
+            total={this.getTotalPrice}
+          />
+        ) : null}
       </CartWrapper>
     )
   }

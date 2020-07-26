@@ -16,11 +16,21 @@ import {
   RemoveBtn,
   Image,
 } from './cartProduct.styled'
+import Cancel from './removeIcon/removeIcon'
 
-const CartProduct = ({ product }) => {
+const CartProduct = ({ product, handleQuantityUpdate }) => {
   const dispatch = useDispatch()
   const [quantity, setQuantity] = useState(product.quantity)
-  useEffect(() => {}, [quantity])
+  useEffect(() => {
+    handleQuantityUpdate()
+  }, [quantity])
+  const ifLowestQuantity = () => {
+    if (quantity < 1) {
+      dispatch(removeFromCart(product.key))
+    } else {
+      setQuantity(Math.max(1, quantity - 1))
+    }
+  }
   return (
     <Wrapper>
       <Preview>
@@ -31,13 +41,10 @@ const CartProduct = ({ product }) => {
         <Price>{product.price} PLN</Price>
         <Size>Rozmiar: {product.size}</Size>
         <Quantity>
-          <Decrement onClick={() => setQuantity(Math.max(1, quantity - 1))}>
-            -
-          </Decrement>
+          <Decrement onClick={() => ifLowestQuantity()}>-</Decrement>
           <Value>{quantity}</Value>
           <Increment
             onClick={() => {
-              console.log(quantity)
               setQuantity(Math.max(1, quantity + 1))
             }}
           >
@@ -47,6 +54,7 @@ const CartProduct = ({ product }) => {
       </Data>
       <Remove>
         <RemoveBtn onClick={() => dispatch(removeFromCart(product.key))}>
+          <Cancel height={'30px'} color={'#000'} />
           Usuń
         </RemoveBtn>
       </Remove>

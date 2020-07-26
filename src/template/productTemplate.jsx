@@ -16,7 +16,6 @@ const ProductTemplate = ({ pageContext: { product } }) => {
   const [defaultImage, setDefaultImage] = useState(
     product.images[0].originalSrc
   )
-
   const setImage = (src) => {
     setDefaultImage(src)
   }

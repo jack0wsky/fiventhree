@@ -1,5 +1,6 @@
 import React from 'react'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
+import { colors } from '../../theme'
 import {
   ProductWrapper,
   ImageSlider,
@@ -24,7 +25,7 @@ const Product = ({ product }) => {
       <Details>
         <Price>{item.variants[0].price} PLN</Price>
         <SecondLine>
-          <AniLink cover to={`/produkty/${item.handle}`}>
+          <AniLink cover bg={colors.darkRed} to={`/produkty/${item.handle}`}>
             <Name>{item.title}</Name>
             <AddToCart>Kup teraz</AddToCart>
           </AniLink>

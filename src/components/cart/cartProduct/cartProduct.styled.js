@@ -65,6 +65,14 @@ export const Decrement = styled.button`
   -webkit-justify-content: center;
   align-items: center;
   -webkit-align-items: center;
+  border: none;
+  background: transparent;
+  font-size: 1em;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
 `
 export const Increment = styled(Decrement)``
 export const Value = styled.p`
@@ -77,7 +85,18 @@ export const Remove = styled.div`
   align-items: center;
   -webkit-align-items: center;
 `
-export const RemoveBtn = styled.button``
+export const RemoveBtn = styled.button`
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  -webkit-align-items: center;
+
+  &:focus {
+    outline: none;
+  }
+`
 export const Image = styled.img`
   width: 100%;
   height: 100%;

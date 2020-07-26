@@ -23,13 +23,14 @@ export const ContentWrapper = styled.section`
     }
   }
 `
-export const Cart = styled.section`
-  width: 100%;
-  height: 100px;
+export const Head = styled.div`
+  display: flex;
+  flex-flow: column;
+  -webkit-flex-flow: column;
 `
-export const Reviews = styled.div`
-  width: 50%;
-  height: 50px;
+export const Type = styled.p`
+  opacity: 0.5;
+  font-size: 0.9em;
 `
 export const Name = styled.h3`
   font-size: 2em;
@@ -38,20 +39,23 @@ export const Name = styled.h3`
     font-size: 1.2em;
   }
 `
-export const Price = styled(Name)``
+export const Price = styled(Name)`
+  font-size: 1.3em;
+`
 
 export const Sizes = styled.section`
-  width: 50%;
+  width: 40%;
   height: 5vh;
-  display: flex;
-  justify-content: space-between;
-  -webkit-justify-content: space-between;
-  align-items: center;
-  -webkit-align-items: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 
   @media all and (max-width: ${small}) {
     height: 10vh;
   }
+`
+export const Error = styled.p`
+  font-size: 0.8em;
+  color: #ff0043;
 `
 export const Description = styled.section`
   display: flex;
@@ -95,7 +99,7 @@ export const Add = styled.button`
   height: 60px;
   padding: 15px 30px 15px;
   font-size: 1em;
-  background-color: ${colors.darkRed};
+  background-color: ${colors.action};
   border: none;
   cursor: pointer;
   color: #fff;

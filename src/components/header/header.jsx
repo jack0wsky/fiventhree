@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Wrapper, Background, Nav } from './header.styled'
+import { colors } from '../../theme'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import Logo from '../header/logo/logo'
 import CartStatus from './cartStatus/cartStatus'
@@ -29,14 +30,14 @@ const Header = () => {
   })
   return (
     <Wrapper minify={minify} scrolled={scrolled}>
-      <AniLink cover to="/">
+      <AniLink cover bg={colors.darkRed} to="/">
         <Logo color={'#fff'} height={'10px'} />
       </AniLink>
       <Nav>
-        <AniLink cover to="/produkty">
+        <AniLink cover bg={'#000000'} direction="top" to="/produkty">
           Produkty
         </AniLink>
-        <AniLink cover to="/kontakt">
+        <AniLink cover bg={'#000000'} direction="top" to="/kontakt">
           Kontakt
         </AniLink>
       </Nav>
