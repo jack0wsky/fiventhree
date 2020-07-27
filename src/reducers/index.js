@@ -19,7 +19,29 @@ export const handleMenu = (state = initState.toggleMenu, action) => {
 export const handleCart = (state = initState.handleCart, action) => {
   switch (action.type) {
     case 'ADD_TO_CART': {
-      return [...state, action.payload]
+      const found = state.find((product) => {
+        return (
+          product.product.product.shopifyId, action.payload.product.shopifyId
+        )
+      })
+      const differentSize = state.find((product) => {
+        return product.size.find((size) => {
+          return size === action.payload.size
+        })
+      })
+      if (differentSize) {
+        found.quantity += 1
+        return state
+      } else {
+        return [
+          ...state,
+          {
+            product: action.payload,
+            size: [...action.payload.size],
+            quantity: action.payload.quantity,
+          },
+        ]
+      }
     }
     case 'REMOVE_FROM_CART': {
       const filtered = state.filter((prod) => {

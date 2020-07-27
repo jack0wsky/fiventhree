@@ -31,15 +31,16 @@ const CartProduct = ({ product, handleQuantityUpdate }) => {
       setQuantity(Math.max(1, quantity - 1))
     }
   }
+  console.log(product)
   return (
     <Wrapper>
       <Preview>
-        <Image src={product.image} />
+        <Image src={product.product.product.images[0].originalSrc} />
       </Preview>
       <Data>
-        <Name>{product.name}</Name>
-        <Price>{product.price} PLN</Price>
-        <Size>Rozmiar: {product.size}</Size>
+        <Name>{product.product.product.title}</Name>
+        <Price>{product.product.product.variants[0].price} PLN</Price>
+        <Size>Rozmiar: {product.product.size}</Size>
         <Quantity>
           <Decrement onClick={() => ifLowestQuantity()}>-</Decrement>
           <Value>{quantity}</Value>
@@ -53,7 +54,9 @@ const CartProduct = ({ product, handleQuantityUpdate }) => {
         </Quantity>
       </Data>
       <Remove>
-        <RemoveBtn onClick={() => dispatch(removeFromCart(product.key))}>
+        <RemoveBtn
+          onClick={() => dispatch(removeFromCart(product.product.product.key))}
+        >
           <Cancel height={'30px'} color={'#000'} />
           Usuń
         </RemoveBtn>

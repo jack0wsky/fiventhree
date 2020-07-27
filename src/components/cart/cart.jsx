@@ -46,7 +46,7 @@ class Cart extends Component {
   getTotalPrice = () => {
     const { cart } = this.props
     let sum = cart.reduce((acc, cur) => {
-      return (acc += cur.price * cur.quantity)
+      return (acc += cur.product.product.variants[0].price * cur.quantity)
     }, 0)
     sum += 8.99
     return sum.toFixed(2)
@@ -54,6 +54,7 @@ class Cart extends Component {
 
   render() {
     const { dispatch, cart } = this.props
+    console.log(cart)
     return (
       <CartWrapper ref={this.cart} toggle={this.props.toggleCart}>
         <Header>

@@ -3,7 +3,7 @@ import { small } from '../../breakpoints'
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 18vh;
+  height: 15vh;
   display: flex;
   margin: 0 0 2px;
 `

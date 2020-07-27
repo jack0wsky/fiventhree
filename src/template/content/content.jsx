@@ -40,38 +40,10 @@ class Content extends Component {
   }
   handleAddToCart = (product) => {
     const { dispatch, cart } = this.props
-    console.log(cart)
-    const found = cart.find((_product) => {
-      return _product.key === _product.shopifyId
-    })
-    console.log(found)
     if (this.state.size === '') {
       this.setState({ error: 'You must choose size' })
     } else {
-      this.setState({ error: '' })
-      if (found !== undefined) {
-        dispatch(
-          addToCart(
-            product.shopifyId,
-            product.images[0].originalSrc,
-            product.title,
-            product.variants[0].price,
-            this.state.size,
-            this.state.quantity + 1
-          )
-        )
-      } else {
-        dispatch(
-          addToCart(
-            product.shopifyId,
-            product.images[0].originalSrc,
-            product.title,
-            product.variants[0].price,
-            this.state.size,
-            this.state.quantity
-          )
-        )
-      }
+      dispatch(addToCart(product, this.state.size, this.state.quantity))
     }
   }
 
