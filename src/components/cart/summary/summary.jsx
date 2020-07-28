@@ -18,15 +18,8 @@ const client = Client.buildClient({
   domain: `fiventhree.myshopify.com`,
 })
 
-const Summary = ({ total, quantityUpdate }) => {
+const Summary = ({ total }) => {
   const cart = useSelector((state) => state.handleCart)
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart))
-    //  TODO better storing cart data
-    const cartVal = localStorage.getItem('cart')
-    console.log(quantityUpdate)
-  }, [quantityUpdate])
-  console.log(client)
   const checkoutId = 'Z2lkOi8vc2hvcGlmeS9DaGVja291dC9kMTZmM2EzMDM4Yjc4N='
   const handleCheckout = () => {
     client.product.fetchAll().then((products) => {

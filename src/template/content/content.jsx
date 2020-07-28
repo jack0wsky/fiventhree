@@ -1,6 +1,8 @@
 import React, { Component, createRef } from 'react'
 import { connect } from 'react-redux'
 import { addToCart } from '../../actions/addToCart'
+import { removeFromCart } from '../../actions/removeFromCart'
+import { toggleCart } from '../../actions/toggleCart'
 import {
   ContentWrapper,
   Head,
@@ -28,27 +30,37 @@ class Content extends Component {
   constructor() {
     super()
     this.state = {
-      size: '',
       selected: false,
       quantity: 1,
       error: '',
     }
     this.sizes = createRef()
   }
-  selectSize = (size) => {
-    this.setState({ size })
-  }
-  handleAddToCart = (product) => {
+  handleAddToCart = (product, variant) => {
     const { dispatch, cart } = this.props
-    if (this.state.size === '') {
-      this.setState({ error: 'You must choose size' })
+    dispatch(
+      addToCart(
+        product,
+        variant.price,
+        variant.title,
+        variant.shopifyId,
+        this.state.quantity
+      )
+    )
+  }
+  decrementQuantity = (variant) => {
+    const { dispatch } = this.props
+    if (this.state.quantity === 1) {
+      dispatch(removeFromCart(variant.shopifyId))
     } else {
-      dispatch(addToCart(product, this.state.size, this.state.quantity))
+      this.setState((prevState) => ({
+        quantity: Math.max(prevState.quantity - 1, 1),
+      }))
     }
   }
 
   render() {
-    const { dispatch, product, setImage } = this.props
+    const { dispatch, product, setImage, variant } = this.props
     return (
       <ContentWrapper>
         <AniLink cover to="/">
@@ -57,7 +69,10 @@ class Content extends Component {
         <MobileGallery>
           {product.images.map((img) => {
             return (
-              <PreviewContainer onClick={() => setImage(img.originalSrc)}>
+              <PreviewContainer
+                key={img.id}
+                onClick={() => setImage(img.originalSrc)}
+              >
                 <Preview src={img.originalSrc} />
               </PreviewContainer>
             )
@@ -67,14 +82,12 @@ class Content extends Component {
           <Type>{product.productType}</Type>
           <Name>{product.title}</Name>
         </Head>
-        <Price>{product.variants[0].price} PLN</Price>
+        <Price>{variant.price} PLN</Price>
         <Sizes id="sizes" ref={this.sizes}>
-          {product.options.map((option) => {
-            return option.values.map((size) => {
-              return (
-                <Size selectSize={this.selectSize} size={size} key={size} />
-              )
-            })
+          {product.variants.map((variant) => {
+            return (
+              <Size title={variant.title} sku={variant.sku} key={variant.sku} />
+            )
           })}
         </Sizes>
         <Error>{this.state.error}</Error>
@@ -83,16 +96,10 @@ class Content extends Component {
           <Text>{product.description}</Text>
         </Description>
         <AddToCart>
-          <DecrementQuantity
-            onClick={() =>
-              this.setState((prevState) => ({
-                quantity: Math.max(prevState.quantity - 1, 1),
-              }))
-            }
-          >
+          <DecrementQuantity onClick={() => this.decrementQuantity(variant)}>
             -
           </DecrementQuantity>
-          <Add onClick={() => this.handleAddToCart(product)}>
+          <Add onClick={() => this.handleAddToCart(product, variant)}>
             Dodaj {this.state.quantity} do koszyka
           </Add>
           <IncrementQuantity

@@ -34,7 +34,10 @@ exports.createPages = async ({ graphql, actions }) => {
             productType
             shopifyId
             variants {
+              sku
               price
+              title
+              shopifyId
             }
           }
         }
@@ -43,14 +46,15 @@ exports.createPages = async ({ graphql, actions }) => {
   `)
 
   result.data.allShopifyProduct.edges.forEach(({ node }) => {
-    createPage({
-      path: `/produkty/${node.handle}`,
-      component: path.resolve(`./src/template/productTemplate.jsx`),
-      context: {
-        // Data passed to context is available
-        // in page queries as GraphQL variables.
-        product: node,
-      },
+    node.variants.forEach((variant) => {
+      createPage({
+        path: `/produkty/${variant.sku}`,
+        component: path.resolve(`./src/template/productTemplate.jsx`),
+        context: {
+          product: node,
+          variant: variant,
+        },
+      })
     })
   })
 }

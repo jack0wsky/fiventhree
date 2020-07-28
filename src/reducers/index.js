@@ -19,35 +19,26 @@ export const handleMenu = (state = initState.toggleMenu, action) => {
 export const handleCart = (state = initState.handleCart, action) => {
   switch (action.type) {
     case 'ADD_TO_CART': {
-      const found = state.find((product) => {
-        return (
-          product.product.product.shopifyId, action.payload.product.shopifyId
-        )
+      const found = state.filter((product) => {
+        return product.shopifyId === action.payload.shopifyId
       })
-      const differentSize = state.find((product) => {
-        return product.size.find((size) => {
-          return size === action.payload.size
+      if (found.length > 0) {
+        found.forEach((product) => {
+          product.quantity += 1
         })
-      })
-      if (differentSize) {
-        found.quantity += 1
         return state
-      } else {
-        return [
-          ...state,
-          {
-            product: action.payload,
-            size: [...action.payload.size],
-            quantity: action.payload.quantity,
-          },
-        ]
       }
+      return [...state, action.payload]
     }
     case 'REMOVE_FROM_CART': {
       const filtered = state.filter((prod) => {
-        return prod.key !== action.payload
+        return prod.shopifyId !== action.payload
       })
       return filtered
+    }
+    case 'GET_DATA': {
+      const data = localStorage.getItem('cart')
+      return (state = data)
     }
     default: {
       return state

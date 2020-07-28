@@ -30,13 +30,21 @@ class Cart extends Component {
       x: '100%',
       ease: Power2.easeOut,
     })
+    this.checkIfDataExist()
   }
+  componentDidUpdate() {
+    const { cart } = this.props
+  }
+
   componentWillUnmount() {
-    console.log('unmount')
     gsap.to(this.cart.current, {
       opacity: 0,
       ease: Power2.easeOut,
     })
+  }
+
+  checkIfDataExist = (cart) => {
+    const data = localStorage.getItem('cart')
   }
 
   handleQuantityUpdate = () => {
@@ -46,7 +54,7 @@ class Cart extends Component {
   getTotalPrice = () => {
     const { cart } = this.props
     let sum = cart.reduce((acc, cur) => {
-      return (acc += cur.product.product.variants[0].price * cur.quantity)
+      return (acc += cur.price * cur.quantity)
     }, 0)
     sum += 8.99
     return sum.toFixed(2)
@@ -54,7 +62,7 @@ class Cart extends Component {
 
   render() {
     const { dispatch, cart } = this.props
-    console.log(cart)
+    const cartData = JSON.parse(localStorage.getItem('cart'))
     return (
       <CartWrapper ref={this.cart} toggle={this.props.toggleCart}>
         <Header>

@@ -32,8 +32,8 @@ const Logo = ({ color, height }) => {
         height={height}
         viewBox="0 0 889.06 63.23"
       >
-        <g id="Warstwa_2" dataName="Warstwa 2">
-          <g id="Warstwa_1-2" dataName="Warstwa 1">
+        <g id="Warstwa_2" dataname="Warstwa 2">
+          <g id="Warstwa_1-2" dataname="Warstwa 1">
             <path
               d="M0,0H69.55V14.17H26.88V26H67.13V40.21H26.88v23H0Z"
               fill={color}

@@ -35,12 +35,12 @@ const CartProduct = ({ product, handleQuantityUpdate }) => {
   return (
     <Wrapper>
       <Preview>
-        <Image src={product.product.product.images[0].originalSrc} />
+        <Image src={product.product.images[0].originalSrc} />
       </Preview>
       <Data>
-        <Name>{product.product.product.title}</Name>
-        <Price>{product.product.product.variants[0].price} PLN</Price>
-        <Size>Rozmiar: {product.product.size}</Size>
+        <Name>{product.product.title}</Name>
+        <Price>{product.product.variants[0].price} PLN</Price>
+        <Size>Rozmiar: {product.size}</Size>
         <Quantity>
           <Decrement onClick={() => ifLowestQuantity()}>-</Decrement>
           <Value>{quantity}</Value>
@@ -54,9 +54,7 @@ const CartProduct = ({ product, handleQuantityUpdate }) => {
         </Quantity>
       </Data>
       <Remove>
-        <RemoveBtn
-          onClick={() => dispatch(removeFromCart(product.product.product.key))}
-        >
+        <RemoveBtn onClick={() => dispatch(removeFromCart(product.shopifyId))}>
           <Cancel height={'30px'} color={'#000'} />
           Usuń
         </RemoveBtn>

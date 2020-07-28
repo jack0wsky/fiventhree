@@ -10,9 +10,8 @@ import {
 } from './productTemplate.styled'
 import Content from './content/content'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
-import Img from 'gatsby-image'
 
-const ProductTemplate = ({ pageContext: { product } }) => {
+const ProductTemplate = ({ pageContext: { product, variant } }) => {
   const [defaultImage, setDefaultImage] = useState(
     product.images[0].originalSrc
   )
@@ -28,7 +27,10 @@ const ProductTemplate = ({ pageContext: { product } }) => {
         <RestImages>
           {product.images.map((img) => {
             return (
-              <PreviewContainer onClick={() => setImage(img.originalSrc)}>
+              <PreviewContainer
+                key={img.id}
+                onClick={() => setImage(img.originalSrc)}
+              >
                 <Preview src={img.originalSrc} />
               </PreviewContainer>
             )
@@ -38,7 +40,12 @@ const ProductTemplate = ({ pageContext: { product } }) => {
           <MainImage src={defaultImage} />
         </ImageContainer>
       </Gallery>
-      <Content setImage={setImage} product={product} />
+      <Content
+        key={variant.shopifyId}
+        setImage={setImage}
+        product={product}
+        variant={variant}
+      />
     </TemplateWrapper>
   )
 }

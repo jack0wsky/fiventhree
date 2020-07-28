@@ -18,6 +18,9 @@ const Products = () => {
             }
             variants {
               price
+              sku
+              title
+              shopifyId
             }
           }
         }

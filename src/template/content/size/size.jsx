@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
-import { SizeWrapper, Radio, Label } from './size.styled'
+import { Link } from 'gatsby'
+import { SizeWrapper, SizeContainer } from './size.styled'
 
 class Size extends Component {
   render() {
-    const { size: sizeValue, selectSize } = this.props
+    const { title, sku } = this.props
     return (
       <SizeWrapper>
-        <Radio
-          onChange={() => selectSize(sizeValue)}
-          sizeValue={sizeValue}
-          name="size"
-          type="radio"
-        />
+        <Link to={`/produkty/${sku}`}>
+          <SizeContainer>{title}</SizeContainer>
+        </Link>
       </SizeWrapper>
     )
   }

@@ -4,7 +4,6 @@ import { colors } from '../../theme'
 import {
   ProductWrapper,
   ImageSlider,
-  LastestLabel,
   Image,
   Details,
   Name,
@@ -25,7 +24,11 @@ const Product = ({ product }) => {
       <Details>
         <Price>{item.variants[0].price} PLN</Price>
         <SecondLine>
-          <AniLink cover bg={colors.darkRed} to={`/produkty/${item.handle}`}>
+          <AniLink
+            cover
+            bg={colors.darkRed}
+            to={`/produkty/${item.variants[0].sku}`}
+          >
             <Name>{item.title}</Name>
             <AddToCart>Kup teraz</AddToCart>
           </AniLink>

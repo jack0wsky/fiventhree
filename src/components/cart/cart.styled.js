@@ -64,7 +64,7 @@ export const Line = styled.span`
 `
 export const Grid = styled.section`
   width: 100%;
-  height: 80%;
+  height: auto;
   padding: 0 2vw 0;
   display: grid;
   grid-template-columns: 100%;

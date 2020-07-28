@@ -2,11 +2,16 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.section`
   width: 100%;
-  height: 20vh;
+  height: 15vh;
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
-  padding: 0 2vw 0;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  padding: 0 2vw 2vw;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 `
 export const Divider = styled.span`
   width: 100%;

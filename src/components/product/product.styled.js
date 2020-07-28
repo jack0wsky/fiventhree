@@ -4,7 +4,7 @@ import { small } from '../breakpoints'
 
 export const Image = styled.img`
   height: 100%;
-  width: 100%;
+  width: 40vw;
   object-fit: cover;
   transition: 0.3s ease-in-out;
 `
