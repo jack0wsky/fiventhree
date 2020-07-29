@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { small } from '../breakpoints'
+import { small, medium } from '../breakpoints'
 
 export const Wrapper = styled.header`
   height: ${({ minify }) => (minify ? '80px' : '100px')};
@@ -50,7 +50,7 @@ export const Nav = styled.nav`
     font-size: 1em;
     font-weight: 600;
   }
-  @media all and (max-width: ${small}) {
+  @media all and (max-width: ${medium}) {
     display: none;
   }
 `

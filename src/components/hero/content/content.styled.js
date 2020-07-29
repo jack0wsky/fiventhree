@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { small } from '../../breakpoints'
+import { small, medium, large } from '../../breakpoints'
 
 export const Wrapper = styled.section`
   width: 100%;
@@ -13,8 +13,14 @@ export const Wrapper = styled.section`
   z-index: 10;
   padding: 10vw 5vw 5vw;
   @media all and (max-width: ${small}) {
-    padding: 40vw 5vw 0;
+    padding: 40vw 5vw 5vw;
     height: 55vh;
+  }
+  @media all and (min-width: ${small}) and (max-width: ${medium}) {
+    padding: 30vw 5vw 5vw;
+  }
+  @media all and (min-width: ${medium}) and (max-width: ${large}) {
+    padding: 20vw 5vw 5vw;
   }
 `
 export const TitlesWrapper = styled.div`
@@ -33,6 +39,9 @@ export const Title = styled.h2`
 
   @media all and (max-width: ${small}) {
     font-size: 3em;
+  }
+  @media all and (min-width: ${small}) and (max-width: ${medium}) {
+    font-size: 4em;
   }
 `
 export const Stars = styled.img`

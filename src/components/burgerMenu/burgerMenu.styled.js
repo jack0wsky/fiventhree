@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import { small } from '../breakpoints'
+import { small, medium } from '../breakpoints'
 
 export const Button = styled.button`
   display: none;
-  @media all and (max-width: ${small}) {
+  @media all and (max-width: ${medium}) {
     width: 70px;
     height: 70px;
     border-radius: 50%;
@@ -17,6 +17,7 @@ export const Button = styled.button`
     -webkit-justify-content: center;
     align-items: center;
     -webkit-align-items: center;
+    border: none;
 
     &:focus {
       outline: none;

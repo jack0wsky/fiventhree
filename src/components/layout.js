@@ -13,6 +13,7 @@ import { Helmet } from 'react-helmet'
 import '../fonts/medium.css'
 import '../fonts/bold.css'
 import '../fonts/xbold.css'
+import { Overlay } from './hero/hero.styled'
 
 const GlobalStyle = createGlobalStyle`
   *, *:before, *:after {
@@ -30,6 +31,7 @@ const Wrapper = styled.main`
 
 const Layout = ({ children }) => {
   const toggleCart = useSelector((state) => state.toggleCart)
+  const toggleMenu = useSelector((state) => state.handleMenu)
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -55,6 +57,7 @@ const Layout = ({ children }) => {
       <Menu />
       {toggleCart ? <Cart /> : null}
       {toggleCart ? <RedOverlay /> : null}
+      {toggleMenu ? <RedOverlay /> : null}
       {children}
       <Footer />
     </Wrapper>

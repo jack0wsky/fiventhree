@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { colors } from '../../theme'
-import { small } from '../breakpoints'
+import { small, medium, large, xlarge } from '../breakpoints'
 
 export const CartWrapper = styled.section`
   width: 35vw;
@@ -12,8 +12,14 @@ export const CartWrapper = styled.section`
   z-index: 100;
   padding: 0 0 5vw;
 
-  @media all and (max-width: ${small}) {
+  @media all and (max-width: ${medium}) {
     width: 100vw;
+  }
+  @media all and (min-width: ${medium}) and (max-width: ${large}) {
+    width: 50vw;
+  }
+  @media all and (min-width: ${large}) and (max-width: ${xlarge}) {
+    width: 40vw;
   }
 `
 export const Header = styled.div`

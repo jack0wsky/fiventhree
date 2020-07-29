@@ -18,7 +18,7 @@ export const Length = styled.div`
   display: flex;
   justify-content: center;
   -webkit-justify-content: center;
-  align-content: center;
+  align-items: center;
   -webkit-align-items: center;
   color: ${(props) => (props.toggle ? '#fff' : '#000')};
   transition: 0.3s ease-in-out;

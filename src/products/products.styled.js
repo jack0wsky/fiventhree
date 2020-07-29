@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { small } from '../components/breakpoints'
+import { small, medium } from '../components/breakpoints'
 
 export const ProductsWrapper = styled.main`
   width: 100vw;
@@ -22,7 +22,7 @@ export const ProductsGrid = styled.section`
   grid-column-gap: 2vw;
   grid-row-gap: 2vw;
 
-  @media all and (max-width: ${small}) {
+  @media all and (max-width: ${medium}) {
     grid-template-columns: 1fr;
     grid-row-gap: 5vw;
   }

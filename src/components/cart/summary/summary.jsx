@@ -20,19 +20,29 @@ const client = Client.buildClient({
 
 const Summary = ({ total }) => {
   const cart = useSelector((state) => state.handleCart)
-  const checkoutId = 'Z2lkOi8vc2hvcGlmeS9DaGVja291dC9kMTZmM2EzMDM4Yjc4N='
+  const checkoutId = useSelector((state) => state.id)
   const handleCheckout = () => {
-    client.product.fetchAll().then((products) => {
-      // Do something with the products
-      console.log(products)
+    console.log(checkoutId)
+    const lineItems = cart.forEach((item) => {
+      return item.shopifyId
     })
+    console.log(lineItems)
+    const items = [
+      {
+        variantId:
+          'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zNTIxNjg1ODU0NjMzOQ==',
+        quantity: 1,
+      },
+    ]
+    console.log('clicked')
     client.checkout.create().then((checkout) => {
+      // Do something with the checkout
       console.log(checkout.webUrl)
     })
 
-    client.checkout.fetch(checkoutId).then((checkout) => {
-      // Do something with the checkout
-      console.log(checkout)
+    client.checkout.addLineItems(checkoutId, items).then((checkout) => {
+      // Do something with the updated checkout
+      console.log(checkout.lineItems) // Array with one additional line item
     })
   }
   return (

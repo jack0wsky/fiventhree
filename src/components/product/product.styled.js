@@ -1,12 +1,17 @@
 import styled from 'styled-components'
 import { colors } from '../../theme'
-import { small } from '../breakpoints'
+import { small, medium } from '../breakpoints'
 
 export const Image = styled.img`
   height: 100%;
   width: 40vw;
   object-fit: cover;
   transition: 0.3s ease-in-out;
+
+  @media all and (max-width: ${medium}) {
+    width: 100%;
+    height: 100%;
+  }
 `
 export const ProductWrapper = styled.div`
   width: 40vw;
@@ -23,6 +28,19 @@ export const ProductWrapper = styled.div`
   @media all and (max-width: ${small}) {
     width: 90vw;
   }
+  @media all and (min-width: ${small}) and (max-width: ${medium}) {
+    width: 100%;
+  }
+`
+export const OnHover = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: ${colors.darkRed};
+  mix-blend-mode: multiply;
+  transition: 0.3s ease-in-out;
+  opacity: 0;
+  z-index: 5;
 `
 export const ImageSlider = styled.section`
   width: 100%;
@@ -32,16 +50,11 @@ export const ImageSlider = styled.section`
   border: none;
   display: flex;
   overflow: hidden;
-`
-export const LastestLabel = styled.p`
-  font-size: 0.7em;
-  position: absolute;
-  top: 2vw;
-  text-transform: uppercase;
-  width: max-content;
-  padding: 10px 20px 10px;
-  background-color: ${colors.action};
-  color: #fff;
+
+  &:hover ${OnHover} {
+    transition: 0.3s ease-in-out;
+    opacity: 1;
+  }
 `
 export const Details = styled.section`
   width: 100%;

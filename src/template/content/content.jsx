@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { addToCart } from '../../actions/addToCart'
 import { removeFromCart } from '../../actions/removeFromCart'
 import { toggleCart } from '../../actions/toggleCart'
+import Client from 'shopify-buy'
 import {
   ContentWrapper,
   Head,
@@ -19,12 +20,20 @@ import {
   Add,
   IncrementQuantity,
   MobileGallery,
+  MobileAddToCart,
+  Button,
+  MobileIncrement,
+  MobileDecrement,
 } from './content.styled'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import Size from './size/size'
 import { Preview, PreviewContainer } from '../productTemplate.styled'
+import { setCheckoutId } from '../../actions/setCheckoutId'
 
-const mapStateToProps = (state) => ({ cart: state.handleCart })
+const mapStateToProps = (state) => ({
+  cart: state.handleCart,
+  checkoutId: state.id,
+})
 
 class Content extends Component {
   constructor() {
@@ -33,11 +42,25 @@ class Content extends Component {
       selected: false,
       quantity: 1,
       error: '',
+      checkoutId: '',
     }
     this.sizes = createRef()
   }
+  componentDidMount() {
+    this.client = Client.buildClient({
+      storefrontAccessToken: 'a4c2019ba733587b174a498f66dd2be9',
+      domain: `fiventhree.myshopify.com`,
+    })
+  }
+
   handleAddToCart = (product, variant) => {
-    const { dispatch, cart } = this.props
+    const { dispatch } = this.props
+    this.client.product.fetch(product.shopifyId).then((product) => {
+      console.log(product)
+    })
+    this.client.checkout.create().then((checkout) => {
+      dispatch(setCheckoutId(checkout.attrs.id.value))
+    })
     dispatch(
       addToCart(
         product,
@@ -48,21 +71,34 @@ class Content extends Component {
       )
     )
   }
-  decrementQuantity = (variant) => {
-    const { dispatch } = this.props
-    if (this.state.quantity === 1) {
-      dispatch(removeFromCart(variant.shopifyId))
-    } else {
-      this.setState((prevState) => ({
-        quantity: Math.max(prevState.quantity - 1, 1),
-      }))
-    }
-  }
 
   render() {
     const { dispatch, product, setImage, variant } = this.props
     return (
       <ContentWrapper>
+        <MobileAddToCart>
+          <MobileDecrement
+            onClick={() =>
+              this.setState((prevState) => ({
+                quantity: Math.max(prevState.quantity - 1, 1),
+              }))
+            }
+          >
+            -
+          </MobileDecrement>
+          <Button onClick={() => this.handleAddToCart(product, variant)}>
+            Kup
+          </Button>
+          <MobileIncrement
+            onClick={() =>
+              this.setState((prevState) => ({
+                quantity: Math.max(prevState.quantity + 1, 1),
+              }))
+            }
+          >
+            +
+          </MobileIncrement>
+        </MobileAddToCart>
         <AniLink cover to="/">
           Powrót
         </AniLink>
@@ -96,7 +132,13 @@ class Content extends Component {
           <Text>{product.description}</Text>
         </Description>
         <AddToCart>
-          <DecrementQuantity onClick={() => this.decrementQuantity(variant)}>
+          <DecrementQuantity
+            onClick={() =>
+              this.setState((prevState) => ({
+                quantity: Math.max(prevState.quantity - 1, 1),
+              }))
+            }
+          >
             -
           </DecrementQuantity>
           <Add onClick={() => this.handleAddToCart(product, variant)}>

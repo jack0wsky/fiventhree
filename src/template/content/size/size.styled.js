@@ -6,6 +6,7 @@ export const SizeWrapper = styled.div`
   cursor: pointer;
   position: relative;
   display: flex;
+  justify-self: center;
   justify-content: center;
   -webkit-justify-content: center;
   align-items: center;

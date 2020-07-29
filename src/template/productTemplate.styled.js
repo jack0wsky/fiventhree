@@ -1,12 +1,12 @@
 import styled from 'styled-components'
-import { small } from '../components/breakpoints'
+import { small, medium, large, xlarge } from '../components/breakpoints'
 
 export const TemplateWrapper = styled.main`
   width: 100vw;
   height: 100vh;
   display: flex;
 
-  @media all and (max-width: ${small}) {
+  @media all and (max-width: ${medium}) {
     flex-flow: column;
     -webkit-flex-flow: column;
     height: auto;
@@ -20,7 +20,7 @@ export const Gallery = styled.section`
   justify-content: space-between;
   position: relative;
 
-  @media all and (max-width: ${small}) {
+  @media all and (max-width: ${medium}) {
     width: 100%;
     height: 70vh;
     overflow: hidden;
@@ -60,7 +60,7 @@ export const RestImages = styled.section`
   flex-flow: column;
   -webkit-flex-flow: column;
 
-  @media all and (max-width: ${small}) {
+  @media all and (max-width: ${medium}) {
     display: none;
   }
 `

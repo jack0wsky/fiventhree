@@ -10,6 +10,7 @@ import {
   Price,
   SecondLine,
   AddToCart,
+  OnHover,
 } from './product.styled'
 
 const Product = ({ product }) => {
@@ -17,9 +18,8 @@ const Product = ({ product }) => {
   return (
     <ProductWrapper>
       <ImageSlider>
-        {item.images.map((img) => {
-          return <Image src={img.originalSrc} />
-        })}
+        <OnHover />
+        <Image src={item.images[0].originalSrc} />
       </ImageSlider>
       <Details>
         <Price>{item.variants[0].price} PLN</Price>
