@@ -27,8 +27,14 @@ exports.createPages = async ({ graphql, actions }) => {
               values
             }
             images {
-              originalSrc
               id
+              localFile {
+                childImageSharp {
+                  fluid {
+                    src
+                  }
+                }
+              }
             }
             description
             productType

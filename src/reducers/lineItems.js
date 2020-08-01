@@ -8,10 +8,15 @@ export const handleLineItems = (state = initState.lineItems, action) => {
       return [
         ...state,
         {
-          shopifyId: action.payload.shopifyId,
+          variantId: action.payload.shopifyId,
           quantity: action.payload.quantity,
         },
       ]
+    }
+    case 'REMOVE_LINE_ITEMS': {
+      return state.filter((product) => {
+        console.log(product)
+      })
     }
     default: {
       return state

@@ -72,8 +72,23 @@ export const Grid = styled.section`
   width: 100%;
   height: auto;
   padding: 0 2vw 0;
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: repeat(${({ length }) => length}, 1fr);
-  grid-row-gap: 5px;
+
+  ${({ length }) => {
+    if (length > 0) {
+      return `
+          display: grid;
+          grid-template-columns: 100%;
+          grid-template-rows: repeat(${length}, 1fr);
+          grid-row-gap: 5px;
+          `
+    } else {
+      return `
+        display: flex;
+      justify-content: center;
+      -webkit-justify-content: center;
+      align-items: center;
+      -webkit-align-items: center;
+        `
+    }
+  }};
 `

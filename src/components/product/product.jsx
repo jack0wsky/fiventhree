@@ -1,6 +1,7 @@
 import React from 'react'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import { colors } from '../../theme'
+import Img from 'gatsby-image'
 import {
   ProductWrapper,
   ImageSlider,
@@ -19,7 +20,10 @@ const Product = ({ product }) => {
     <ProductWrapper>
       <ImageSlider>
         <OnHover />
-        <Image src={item.images[0].originalSrc} />
+        <Img
+          fluid={item.images[0].localFile.childImageSharp.fluid}
+          alt={item.images[0].localFile.childImageSharp.fluid}
+        />
       </ImageSlider>
       <Details>
         <Price>{item.variants[0].price} PLN</Price>

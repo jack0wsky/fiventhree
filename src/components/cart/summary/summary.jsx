@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Wrapper,
   Divider,
@@ -11,39 +11,33 @@ import {
   ContinueBtn,
 } from './summary.styled'
 import Client from 'shopify-buy'
+import Spinner from '../../loadingSpinner/spinner'
 import { useSelector } from 'react-redux'
 
-const client = Client.buildClient({
-  storefrontAccessToken: 'a4c2019ba733587b174a498f66dd2be9',
-  domain: `fiventhree.myshopify.com`,
-})
+let client
 
 const Summary = ({ total }) => {
+  const lineItems = useSelector((state) => state.handleLineItems)
   const cart = useSelector((state) => state.handleCart)
   const checkoutId = useSelector((state) => state.id)
-  const handleCheckout = () => {
-    console.log(checkoutId)
-    const lineItems = cart.forEach((item) => {
-      return item.shopifyId
+  const [request, setRequest] = useState(false)
+  useEffect(() => {
+    client = Client.buildClient({
+      storefrontAccessToken: process.env.GATSBY_STOREFRONT_ACCESS_TOKEN,
+      domain: `${process.env.GATSBY_SHOP_NAME}.myshopify.com`,
     })
-    console.log(lineItems)
-    const items = [
-      {
-        variantId:
-          'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zNTIxNjg1ODU0NjMzOQ==',
-        quantity: 1,
-      },
-    ]
-    console.log('clicked')
-    client.checkout.create().then((checkout) => {
-      // Do something with the checkout
-      console.log(checkout.webUrl)
-    })
-
-    client.checkout.addLineItems(checkoutId, items).then((checkout) => {
-      // Do something with the updated checkout
-      console.log(checkout.lineItems) // Array with one additional line item
-    })
+  }, [cart])
+  const handleRequest = () => {
+    setRequest(!request)
+  }
+  const handleCheckout = async () => {
+    handleRequest()
+    await client.checkout
+      .addLineItems(checkoutId, lineItems)
+      .then((checkout) => {
+        window.open(checkout.webUrl)
+        handleRequest()
+      })
   }
   return (
     <Wrapper>
@@ -56,7 +50,12 @@ const Summary = ({ total }) => {
         <Text>Suma</Text>
         <Price>{total()} PLN</Price>
       </Total>
-      <ContinueBtn onClick={() => handleCheckout()}>Checkout</ContinueBtn>
+      <ContinueBtn onClick={() => handleCheckout()}>
+        {request ? (
+          <Spinner width={'30px'} borderColor={'#fff'} color={'#000'} />
+        ) : null}
+        Checkout
+      </ContinueBtn>
     </Wrapper>
   )
 }

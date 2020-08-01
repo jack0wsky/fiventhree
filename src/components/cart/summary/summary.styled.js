@@ -40,9 +40,26 @@ export const ContinueBtn = styled.button`
   border: none;
   background-color: #000;
   color: #fff;
+  font-size: 1em;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  -webkit-justify-content: center;
+  align-items: center;
+  -webkit-align-items: center;
+  transition: 0.3s ease-in-out;
 
   &:focus {
     outline: none;
+  }
+  &:hover {
+    transform: translateY(-5px);
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 2.9px 2.2px -9px rgba(0, 0, 0, 0.017),
+      0 6.9px 5.3px -9px rgba(0, 0, 0, 0.024),
+      0 13px 10px -9px rgba(0, 0, 0, 0.03),
+      0 23.2px 17.9px -9px rgba(0, 0, 0, 0.036),
+      0 43.4px 33.4px -9px rgba(0, 0, 0, 0.043),
+      0 104px 80px -9px rgba(0, 0, 0, 0.06);
   }
 `

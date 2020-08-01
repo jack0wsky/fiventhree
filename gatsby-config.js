@@ -66,8 +66,8 @@ module.exports = {
     {
       resolve: `gatsby-source-shopify`,
       options: {
-        shopName: `fiventhree`,
-        accessToken: `a4c2019ba733587b174a498f66dd2be9`,
+        shopName: 'fiventhree',
+        accessToken: 'a4c2019ba733587b174a498f66dd2be9',
         apiVersion: '2020-04',
         verbose: true,
         includeCollections: ['shop', 'content'],

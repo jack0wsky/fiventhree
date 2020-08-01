@@ -1,8 +1,8 @@
 import React, { Component, createRef } from 'react'
 import { connect } from 'react-redux'
 import { addToCart } from '../../actions/addToCart'
-import { removeFromCart } from '../../actions/removeFromCart'
 import { toggleCart } from '../../actions/toggleCart'
+import { setLineItems } from '../../actions/setLineItems'
 import Client from 'shopify-buy'
 import {
   ContentWrapper,
@@ -47,20 +47,18 @@ class Content extends Component {
     this.sizes = createRef()
   }
   componentDidMount() {
+    const { dispatch } = this.props
     this.client = Client.buildClient({
       storefrontAccessToken: 'a4c2019ba733587b174a498f66dd2be9',
       domain: `fiventhree.myshopify.com`,
+    })
+    this.client.checkout.create().then((checkout) => {
+      dispatch(setCheckoutId(checkout.attrs.id.value))
     })
   }
 
   handleAddToCart = (product, variant) => {
     const { dispatch } = this.props
-    this.client.product.fetch(product.shopifyId).then((product) => {
-      console.log(product)
-    })
-    this.client.checkout.create().then((checkout) => {
-      dispatch(setCheckoutId(checkout.attrs.id.value))
-    })
     dispatch(
       addToCart(
         product,
@@ -70,6 +68,7 @@ class Content extends Component {
         this.state.quantity
       )
     )
+    dispatch(setLineItems(variant.shopifyId, this.state.quantity))
   }
 
   render() {

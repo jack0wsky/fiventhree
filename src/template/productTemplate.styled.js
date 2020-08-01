@@ -54,7 +54,7 @@ export const MainImage = styled.img`
   overflow: hidden;
 `
 export const RestImages = styled.section`
-  width: 30%;
+  width: auto;
   height: 100%;
   display: flex;
   flex-flow: column;

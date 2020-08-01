@@ -96,6 +96,9 @@ export const RemoveBtn = styled.button`
   &:focus {
     outline: none;
   }
+  &:hover svg g path {
+    stroke: #ff0043;
+  }
 `
 export const Image = styled.img`
   width: 100%;

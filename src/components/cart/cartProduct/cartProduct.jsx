@@ -31,7 +31,6 @@ const CartProduct = ({ product, handleQuantityUpdate }) => {
       setQuantity(Math.max(1, quantity - 1))
     }
   }
-  console.log(product)
   return (
     <Wrapper>
       <Preview>

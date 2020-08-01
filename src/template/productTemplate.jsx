@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import {
   TemplateWrapper,
   Gallery,
@@ -10,12 +10,19 @@ import {
 } from './productTemplate.styled'
 import Content from './content/content'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
+import Img from 'gatsby-image'
 
 const ProductTemplate = ({ pageContext: { product, variant } }) => {
   const [defaultImage, setDefaultImage] = useState(
-    product.images[0].originalSrc
+    product.images[0].localFile.childImageSharp.fluid.src
   )
-  const setImage = (src) => {
+  const rest = useRef()
+  const setImage = (src, e) => {
+    const images = [...rest.current.children]
+    images.forEach((img) => {
+      img.style.border = 'none'
+    })
+    e.currentTarget.style.border = '4px solid #ff0043'
     setDefaultImage(src)
   }
   return (
@@ -24,14 +31,16 @@ const ProductTemplate = ({ pageContext: { product, variant } }) => {
         <AniLink cover to="/">
           Powrót
         </AniLink>
-        <RestImages>
+        <RestImages ref={rest}>
           {product.images.map((img) => {
             return (
               <PreviewContainer
                 key={img.id}
-                onClick={() => setImage(img.originalSrc)}
+                onClick={(e) =>
+                  setImage(img.localFile.childImageSharp.fluid.src, e)
+                }
               >
-                <Preview src={img.originalSrc} />
+                <Img fluid={img.localFile.childImageSharp.fluid} />
               </PreviewContainer>
             )
           })}
