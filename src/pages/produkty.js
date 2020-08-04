@@ -17,7 +17,17 @@ const Produkty = () => {
             shopifyId
             handle
             images {
-              originalSrc
+              id
+              localFile {
+                childImageSharp {
+                  fluid {
+                    src
+                  }
+                  fixed {
+                    src
+                  }
+                }
+              }
             }
             variants {
               price

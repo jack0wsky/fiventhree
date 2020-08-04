@@ -2,11 +2,11 @@ import React from 'react'
 import { Wrapper, HeadTitle } from './contactUs.styled'
 import ContactForm from '../contactForm/contactForm'
 
-const ContactUs = () => {
+const ContactUs = ({ handleEmail }) => {
   return (
     <Wrapper>
       <HeadTitle>Kontakt</HeadTitle>
-      <ContactForm />
+      <ContactForm handleEmail={handleEmail} />
     </Wrapper>
   )
 }

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { small, medium } from '../breakpoints'
 
 export const Wrapper = styled.header`
-  height: ${({ minify }) => (minify ? '80px' : '100px')};
+  height: ${({ minify }) => (minify ? '0' : '100px')};
   width: 100vw;
   background-color: #000;
   display: flex;
@@ -49,6 +49,10 @@ export const Nav = styled.nav`
     text-transform: uppercase;
     font-size: 1em;
     font-weight: 600;
+
+    &:focus {
+      outline: none;
+    }
   }
   @media all and (max-width: ${medium}) {
     display: none;

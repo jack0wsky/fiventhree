@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { small, medium } from '../breakpoints'
+import { medium } from '../breakpoints'
 
 export const Button = styled.button`
   display: none;
@@ -33,7 +33,6 @@ export const Container = styled.div`
   justify-content: space-between;
   -webkit-justify-content: space-between;
   transition: 0.2s ease-in-out;
-  //transform: rotate(${(props) => (props.toggle ? '-45deg' : 0)});
 
   ${(props) => {
     if (props.toggle) {

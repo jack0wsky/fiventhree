@@ -6,6 +6,7 @@ import { setLineItems } from '../../actions/setLineItems'
 import Client from 'shopify-buy'
 import {
   ContentWrapper,
+  CartHeader,
   Head,
   Type,
   Name,
@@ -24,11 +25,17 @@ import {
   Button,
   MobileIncrement,
   MobileDecrement,
+  DescriptionHead,
+  ToggleBtn,
+  Icon,
+  Line,
 } from './content.styled'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import Size from './size/size'
 import { Preview, PreviewContainer } from '../productTemplate.styled'
 import { setCheckoutId } from '../../actions/setCheckoutId'
+import CartStatus from '../../components/header/cartStatus/cartStatus'
+import SizesTable from './sizesTable/sizesTable'
 
 const mapStateToProps = (state) => ({
   cart: state.handleCart,
@@ -43,22 +50,31 @@ class Content extends Component {
       quantity: 1,
       error: '',
       checkoutId: '',
+      switchTabs: false,
     }
     this.sizes = createRef()
   }
   componentDidMount() {
     const { dispatch } = this.props
     this.client = Client.buildClient({
-      storefrontAccessToken: 'a4c2019ba733587b174a498f66dd2be9',
-      domain: `fiventhree.myshopify.com`,
+      storefrontAccessToken: process.env.GATSBY_STOREFRONT_ACCESS_TOKEN,
+      domain: `${process.env.GATSBY_SHOP_NAME}.myshopify.com`,
     })
     this.client.checkout.create().then((checkout) => {
       dispatch(setCheckoutId(checkout.attrs.id.value))
     })
   }
 
-  handleAddToCart = (product, variant) => {
+  handleAddToCart = async (product, variant) => {
     const { dispatch } = this.props
+    await this.client.product
+      .fetch(product.shopifyId)
+      .then((fetchedProduct) => {
+        const fetchedVariant = fetchedProduct.variants.find((option) => {
+          return option.id === variant.shopifyId
+        })
+        console.log(fetchedVariant.available)
+      })
     dispatch(
       addToCart(
         product,
@@ -75,6 +91,9 @@ class Content extends Component {
     const { dispatch, product, setImage, variant } = this.props
     return (
       <ContentWrapper>
+        <CartHeader>
+          <CartStatus />
+        </CartHeader>
         <MobileAddToCart>
           <MobileDecrement
             onClick={() =>
@@ -106,9 +125,11 @@ class Content extends Component {
             return (
               <PreviewContainer
                 key={img.id}
-                onClick={() => setImage(img.originalSrc)}
+                onClick={(e) =>
+                  setImage(img.localFile.childImageSharp.fluid.src, e)
+                }
               >
-                <Preview src={img.originalSrc} />
+                <Preview src={img.localFile.childImageSharp.fluid.src} />
               </PreviewContainer>
             )
           })}
@@ -127,8 +148,19 @@ class Content extends Component {
         </Sizes>
         <Error>{this.state.error}</Error>
         <Description>
-          <Title>Opis</Title>
-          <Text>{product.description}</Text>
+          <DescriptionHead switch={this.state.switchTabs}>
+            <Title onClick={() => this.setState({ switchTabs: false })}>
+              Opis
+            </Title>
+            <Title onClick={() => this.setState({ switchTabs: true })}>
+              Tabela rozmiarów
+            </Title>
+          </DescriptionHead>
+          {this.state.switchTabs ? (
+            <SizesTable />
+          ) : (
+            <Text>{product.description}</Text>
+          )}
         </Description>
         <AddToCart>
           <DecrementQuantity

@@ -5,6 +5,7 @@ export const TemplateWrapper = styled.main`
   width: 100vw;
   height: 100vh;
   display: flex;
+  overflow: hidden;
 
   @media all and (max-width: ${medium}) {
     flex-flow: column;
@@ -55,10 +56,10 @@ export const MainImage = styled.img`
 `
 export const RestImages = styled.section`
   width: auto;
-  height: 100%;
-  display: flex;
-  flex-flow: column;
-  -webkit-flex-flow: column;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: 100%;
 
   @media all and (max-width: ${medium}) {
     display: none;

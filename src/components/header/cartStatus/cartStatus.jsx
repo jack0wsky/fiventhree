@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Wrapper, Length, Cart, Value } from './cartStatus.styled'
 import CartIcon from './cartIcon/cartIcon'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,24 +6,36 @@ import { toggleCart } from '../../../actions/toggleCart'
 
 const CartStatus = () => {
   const dispatch = useDispatch()
+  const [switchColor, setColor] = useState(false)
   const toggle = useSelector((state) => state.toggleCart)
   const cart = useSelector((state) => state.handleCart)
+  useEffect(() => {
+    if (window) {
+      if (window.location.href.includes('/produkty/')) {
+        setColor(true)
+      } else {
+        setColor(false)
+      }
+    }
+  }, [cart])
   const getProductsAmount = () => {
-    console.log(cart)
     if (cart.length > 0) {
-      cart.reduce((acc, cur) => {
+      return cart.reduce((acc, cur) => {
         return (acc += cur.quantity)
       }, 0)
     }
+    return 0
   }
-  console.log(getProductsAmount())
   return (
     <Wrapper>
       <Cart onClick={() => dispatch(toggleCart())}>
-        <CartIcon color={toggle ? '#000' : '#fff'} height={'30px'} />
+        <CartIcon
+          color={toggle || switchColor ? '#000' : '#fff'}
+          height={'30px'}
+        />
       </Cart>
-      <Length toggle={toggle}>
-        <Value>{cart.length}</Value>
+      <Length toggle={toggle} switchColor={switchColor}>
+        <Value>{getProductsAmount()}</Value>
       </Length>
     </Wrapper>
   )

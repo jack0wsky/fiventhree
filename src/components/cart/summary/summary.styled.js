@@ -53,7 +53,6 @@ export const ContinueBtn = styled.button`
     outline: none;
   }
   &:hover {
-    transform: translateY(-5px);
     transition: 0.3s ease-in-out;
     box-shadow: 0 2.9px 2.2px -9px rgba(0, 0, 0, 0.017),
       0 6.9px 5.3px -9px rgba(0, 0, 0, 0.024),

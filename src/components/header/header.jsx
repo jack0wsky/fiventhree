@@ -34,10 +34,22 @@ const Header = () => {
         <Logo color={'#fff'} height={'10px'} />
       </AniLink>
       <Nav>
-        <AniLink cover bg={'#000000'} direction="top" to="/produkty">
+        <AniLink
+          cover
+          bg={'#000000'}
+          direction="top"
+          to="/produkty"
+          activeStyle={{ color: colors.action }}
+        >
           Produkty
         </AniLink>
-        <AniLink cover bg={'#000000'} direction="top" to="/kontakt">
+        <AniLink
+          cover
+          bg={'#000000'}
+          direction="top"
+          to="/kontakt"
+          activeStyle={{ color: colors.action }}
+        >
           Kontakt
         </AniLink>
       </Nav>

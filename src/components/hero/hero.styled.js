@@ -50,6 +50,7 @@ export const HeroText = styled.section`
   height: 40vh;
   display: flex;
   align-items: center;
+  -webkit-align-items: center;
   padding: 0 10vw 0;
   position: relative;
 
@@ -70,6 +71,9 @@ export const Text = styled.h1`
   font-family: 'Aktiv Grotesk Ex', sans-serif;
   color: transparent;
   -webkit-text-stroke: 1px #000;
+  display: flex;
+  align-items: center;
+  -webkit-align-items: center;
 
   @media all and (max-width: ${small}) {
     font-size: 2.5em;
@@ -77,14 +81,17 @@ export const Text = styled.h1`
 `
 export const Movement = styled.div`
   width: auto;
-  height: auto;
+  height: 18vh;
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
   left: 35%;
 
   @media all and (max-width: ${small}) {
     position: static;
+    height: 10vh;
   }
 `
 export const MovementText = styled(Text)`

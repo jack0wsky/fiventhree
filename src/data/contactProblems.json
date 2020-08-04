@@ -1,22 +1,14 @@
 [
   {
     "key": 1,
-    "title": "pierwszy"
+    "title": "Problem z płatnościami"
   },
   {
     "key": 2,
-    "title": "drugi"
+    "title": "Problem z zamówieniem"
   },
   {
     "key": 3,
-    "title": "trzeci"
-  },
-  {
-    "key": 4,
-    "title": "czwarty"
-  },
-  {
-    "key": 5,
-    "title": "piąty"
+    "title": "Inny"
   }
 ]

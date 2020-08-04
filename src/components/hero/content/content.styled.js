@@ -49,7 +49,6 @@ export const Stars = styled.img`
   transform-origin: 0 0;
   transition: 0.3s ease-in-out;
   margin: 5px 0 0;
-  //position: absolute;
 
   ${(props) => {
     if (!props.scrolled) {
@@ -84,6 +83,26 @@ export const CTASection = styled.div`
   -webkit-justify-content: center;
   align-items: center;
   -webkit-align-items: center;
+
+  a {
+    text-decoration: none;
+    text-transform: uppercase;
+    background-color: #ff0707;
+    padding: 20px 40px 20px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1em;
+    transition: 0.3s ease-in-out;
+
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      transition: 0.3s ease-in-out;
+      transform: translateY(-5px);
+    }
+  }
 `
 export const CTA = styled.button`
   text-transform: uppercase;

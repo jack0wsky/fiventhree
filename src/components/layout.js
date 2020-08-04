@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import Header from './header/header'
 import BurgerMenu from './burgerMenu/burgerMenu'
 import Menu from './menu/menu'
+import MobileCart from './mobileCart/mobileCart'
 import Cart from './cart/cart'
 import RedOverlay from './overlays/redOverlay'
 import Footer from './footer/footer'
@@ -53,6 +54,7 @@ const Layout = ({ children }) => {
         <title>{siteMetadata.title}</title>
       </Helmet>
       <Header />
+      <MobileCart />
       <BurgerMenu />
       <Menu />
       {toggleCart ? <Cart /> : null}

@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { removeFromCart } from '../../../actions/removeFromCart'
+import { removeLineItems } from '../../../actions/removeLineItems'
+import { decrementQuantity } from '../../../actions/decrementQuantity'
+import { incrementQuantity } from '../../../actions/incrementQuantity'
 import {
   Wrapper,
   Preview,
@@ -18,48 +21,62 @@ import {
 } from './cartProduct.styled'
 import Cancel from './removeIcon/removeIcon'
 
-const CartProduct = ({ product, handleQuantityUpdate }) => {
-  const dispatch = useDispatch()
-  const [quantity, setQuantity] = useState(product.quantity)
-  useEffect(() => {
-    handleQuantityUpdate()
-  }, [quantity])
-  const ifLowestQuantity = () => {
-    if (quantity < 1) {
-      dispatch(removeFromCart(product.key))
-    } else {
-      setQuantity(Math.max(1, quantity - 1))
-    }
+const mapStateToProps = (state) => ({ cart: state.handleCart })
+
+class CartProduct extends Component {
+  state = {
+    quantity: this.props.product.quantity,
   }
-  return (
-    <Wrapper>
-      <Preview>
-        <Image src={product.product.images[0].originalSrc} />
-      </Preview>
-      <Data>
-        <Name>{product.product.title}</Name>
-        <Price>{product.product.variants[0].price} PLN</Price>
-        <Size>Rozmiar: {product.size}</Size>
-        <Quantity>
-          <Decrement onClick={() => ifLowestQuantity()}>-</Decrement>
-          <Value>{quantity}</Value>
-          <Increment
-            onClick={() => {
-              setQuantity(Math.max(1, quantity + 1))
-            }}
-          >
-            +
-          </Increment>
-        </Quantity>
-      </Data>
-      <Remove>
-        <RemoveBtn onClick={() => dispatch(removeFromCart(product.shopifyId))}>
-          <Cancel height={'30px'} color={'#000'} />
-          Usuń
-        </RemoveBtn>
-      </Remove>
-    </Wrapper>
-  )
+
+  ifLowestQuantity = (id) => {
+    const { dispatch, handleQuantityUpdate } = this.props
+    dispatch(decrementQuantity(id))
+    handleQuantityUpdate()
+  }
+  incrementProductQuantity = (id) => {
+    const { dispatch, handleQuantityUpdate } = this.props
+    dispatch(incrementQuantity(id))
+    handleQuantityUpdate()
+  }
+  removeCartItem = (id) => {
+    const { dispatch } = this.props
+    dispatch(removeFromCart(id))
+    dispatch(removeLineItems(id))
+  }
+  render() {
+    const { product } = this.props
+    return (
+      <Wrapper>
+        <Preview>
+          <Image
+            src={product.product.images[0].localFile.childImageSharp.fluid.src}
+          />
+        </Preview>
+        <Data>
+          <Name>{product.product.title}</Name>
+          <Price>{product.product.variants[0].price} PLN</Price>
+          <Size>Rozmiar: {product.size}</Size>
+          <Quantity>
+            <Decrement onClick={() => this.ifLowestQuantity(product.shopifyId)}>
+              -
+            </Decrement>
+            <Value>{product.quantity}</Value>
+            <Increment
+              onClick={() => this.incrementProductQuantity(product.shopifyId)}
+            >
+              +
+            </Increment>
+          </Quantity>
+        </Data>
+        <Remove>
+          <RemoveBtn onClick={() => this.removeCartItem(product.shopifyId)}>
+            <Cancel height={'30px'} color={'#000'} />
+            Usuń
+          </RemoveBtn>
+        </Remove>
+      </Wrapper>
+    )
+  }
 }
 
-export default CartProduct
+export default connect(mapStateToProps)(CartProduct)

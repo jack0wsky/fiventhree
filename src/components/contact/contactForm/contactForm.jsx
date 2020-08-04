@@ -11,7 +11,8 @@ import {
   Error,
 } from './contactForm.styled'
 import contactProblems from '../../../data/contactProblems.json'
-import email from 'emailjs-com'
+import emailjs from 'emailjs-com'
+import Success from './success/success'
 
 class ContactForm extends Component {
   state = {
@@ -25,6 +26,7 @@ class ContactForm extends Component {
     problemError: false,
     content: '',
     contentError: '',
+    successfulSent: false,
   }
   handleInput = (e) => {
     e.preventDefault()
@@ -58,12 +60,12 @@ class ContactForm extends Component {
     }
   }
   validateOrder = (order) => {
-    if (!isNaN(order)) {
-      this.setState({ orderError: false })
-      return true
-    } else {
+    if (order === '' || isNaN(order)) {
       this.setState({ orderError: true })
       return false
+    } else {
+      this.setState({ orderError: false })
+      return true
     }
   }
   validateTextArea = (content) => {
@@ -79,17 +81,51 @@ class ContactForm extends Component {
     e.preventDefault()
     this.setState({ problem: item })
   }
-  handleSubmit = async (e, name, email, orderId, problem, content) => {
+  handleSubmit = (e, name, email, orderId, problem, content) => {
     e.preventDefault()
+    const templateParams = {
+      subject: problem,
+      user_name: name,
+      user_email: email,
+      order_id: orderId,
+      message: content,
+    }
     if (
       this.validateName(name) &&
       this.validateEmail(email) &&
-      this.validateProblem(problem) &&
       this.validateOrder(orderId) &&
+      this.validateProblem(problem) &&
       this.validateTextArea(content)
     ) {
+      emailjs
+        .send(
+          'fiventhree',
+          'clients_support',
+          templateParams,
+          process.env.GATSBY_EMAILJS_USER_ID
+        )
+        .then(
+          (res) => {
+            if (res === 200) {
+              this.setState({ successfulSent: true })
+            } else {
+              this.setState({ successfulSent: false })
+            }
+          },
+          () => {
+            this.setState({ successfulSent: false })
+          }
+        )
+      this.setState({
+        name: '',
+        email: '',
+        content: '',
+        orderId: '',
+        problem: '',
+      })
     } else {
       console.error('not valid')
+      this.props.handleEmail()
     }
   }
   render() {
@@ -106,12 +142,9 @@ class ContactForm extends Component {
             value={this.state.name}
             onChange={(e) => this.handleInput(e)}
             type="text"
-            placeholder="IMIĘ"
             name="name"
           />
-          {this.state.nameError ? (
-            <Error>Twoje imię jest nieprawidłowe</Error>
-          ) : null}
+          {this.state.nameError ? <Error>Jak masz na imię?</Error> : null}
         </InputWrapper>
         <InputWrapper>
           <Label>E-mail</Label>
@@ -122,7 +155,7 @@ class ContactForm extends Component {
             name="email"
           />
           {this.state.emailError ? (
-            <Error>Twój adres e-mail jest nieprawidłowy</Error>
+            <Error>Twój e-mail wygląda na nieprawidłowy</Error>
           ) : null}
         </InputWrapper>
         <InputWrapper>
@@ -134,7 +167,10 @@ class ContactForm extends Component {
             name="orderId"
           />
           {this.state.orderError ? (
-            <Error>Twój numer zamówienia jest nieprawidłowy</Error>
+            <Error>
+              Zapomniałeś podac numer zamówienia lub zawiera on nieprawidłowe
+              znaki
+            </Error>
           ) : null}
         </InputWrapper>
         <InputWrapper>
@@ -165,7 +201,7 @@ class ContactForm extends Component {
             name="content"
           />
           {this.state.contentError ? (
-            <Error>Musisz opisac szczegóły problemy, abyśmy mogli pomóc</Error>
+            <Error>Potrzebujemy więcej informacji, żeby pomóc</Error>
           ) : null}
         </InputWrapper>
         <SubmitBtn>Wyślij</SubmitBtn>

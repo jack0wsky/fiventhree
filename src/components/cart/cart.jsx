@@ -32,9 +32,6 @@ class Cart extends Component {
     })
     this.checkIfDataExist()
   }
-  componentDidUpdate() {
-    const { cart } = this.props
-  }
 
   componentWillUnmount() {
     gsap.to(this.cart.current, {
@@ -78,6 +75,7 @@ class Cart extends Component {
             cart.map((product) => {
               return (
                 <CartProduct
+                  quantityUpdate={this.state.quantityUpdate}
                   handleQuantityUpdate={this.handleQuantityUpdate}
                   key={product.key}
                   product={product}

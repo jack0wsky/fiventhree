@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import {
   HeroWrapper,
   ImageContainer,
@@ -11,15 +11,45 @@ import {
 } from './hero.styled'
 import Content from './content/content'
 import hero from '../../assets/hero.jpg'
-import { Controller, Scene } from 'react-scrollmagic'
-import { Tween } from 'react-gsap'
 import { small } from '../breakpoints'
+import gsap from 'gsap'
+import { CSSPlugin } from 'gsap/CSSPlugin'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+gsap.registerPlugin(CSSPlugin, ScrollTrigger)
 
 const Hero = () => {
+  const joinTo = useRef()
+  useEffect(() => {
+    gsap.fromTo(
+      '.joinTo',
+      {
+        xPercent: 30,
+        duration: 2,
+      },
+      {
+        xPercent: -10,
+        scrollTrigger: {
+          trigger: '.knowWhom',
+          start: 'top top',
+          end: '+=100',
+          scrub: 1,
+        },
+      }
+    )
+    gsap.to('.movement', {
+      xPercent: 10,
+      duration: 2,
+      scrollTrigger: {
+        trigger: '.knowWhom',
+        start: 'top top',
+        end: '+=100',
+        scrub: 1,
+      },
+    })
+  })
   const ifMobile = () => {
     if (window) {
       if (window.innerWidth <= small) {
-        console.log(true)
         return 100
       } else {
         return -100
@@ -34,31 +64,13 @@ const Hero = () => {
         <Image src={hero} />
       </ImageContainer>
       <HeroText>
-        <Controller>
-          <Scene indicators={false} duration={700} offset={-200}>
-            <Tween
-              from={{
-                x: 100,
-              }}
-            >
-              <Text>Dołącz do</Text>
-            </Tween>
-          </Scene>
-        </Controller>
-        <Controller>
-          <Scene indicators={false} duration={700} offset={-200}>
-            <Tween
-              from={{
-                x: ifMobile(),
-              }}
-            >
-              <Movement>
-                <MovementText>Ruchu</MovementText>
-                <MovementText>8 gwiazd</MovementText>
-              </Movement>
-            </Tween>
-          </Scene>
-        </Controller>
+        <Text ref={joinTo} className="joinTo">
+          Dołącz do
+        </Text>
+        <Movement className="movement">
+          <MovementText>Ruchu</MovementText>
+          <MovementText>8 gwiazd</MovementText>
+        </Movement>
       </HeroText>
     </HeroWrapper>
   )

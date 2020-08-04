@@ -6,16 +6,20 @@ import {
   CTA,
   TitlesWrapper,
 } from './content.styled'
+import AniLink from 'gatsby-plugin-transition-link/AniLink'
+import { colors } from '../../../theme'
 
 const Content = () => {
   return (
     <Wrapper>
       <TitlesWrapper>
         <Title>Wiesz co</Title>
-        <Title>Wiesz kogo</Title>
+        <Title className="knowWhom">Wiesz kogo</Title>
       </TitlesWrapper>
       <CTASection>
-        <CTA>Sprawdź ofertę</CTA>
+        <AniLink cover bg={colors.darkRed} to={'/produkty'}>
+          Sprawdź ofertę
+        </AniLink>
       </CTASection>
     </Wrapper>
   )

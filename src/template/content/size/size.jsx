@@ -5,9 +5,13 @@ import { SizeWrapper, SizeContainer } from './size.styled'
 class Size extends Component {
   render() {
     const { title, sku } = this.props
+    const ifActive = {
+      color: '#fff',
+      backgroundColor: '#000',
+    }
     return (
       <SizeWrapper>
-        <Link to={`/produkty/${sku}`}>
+        <Link to={`/produkty/${sku}`} activeStyle={ifActive}>
           <SizeContainer>{title}</SizeContainer>
         </Link>
       </SizeWrapper>

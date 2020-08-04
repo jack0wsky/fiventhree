@@ -40,7 +40,7 @@ const ProductTemplate = ({ pageContext: { product, variant } }) => {
                   setImage(img.localFile.childImageSharp.fluid.src, e)
                 }
               >
-                <Img fluid={img.localFile.childImageSharp.fluid} />
+                <Preview src={img.localFile.childImageSharp.fluid.src} />
               </PreviewContainer>
             )
           })}
