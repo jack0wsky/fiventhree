@@ -4,7 +4,8 @@ import { small, medium } from '../breakpoints'
 export const Wrapper = styled.header`
   height: ${({ minify }) => (minify ? '0' : '100px')};
   width: 100vw;
-  background-color: #000;
+  background-color: ${({ background }) =>
+    background ? '#000' : 'transparent'};
   display: flex;
   align-items: center;
   -webkit-align-items: center;

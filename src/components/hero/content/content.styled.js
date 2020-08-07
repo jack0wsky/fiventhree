@@ -7,11 +7,12 @@ export const Wrapper = styled.section`
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
-  justify-content: space-between;
-  -webkit-justify-content: space-between;
+  justify-content: flex-end;
+  -webkit-justify-content: flex-end;
   position: absolute;
-  z-index: 10;
+  z-index: 22;
   padding: 10vw 5vw 5vw;
+
   @media all and (max-width: ${small}) {
     padding: 40vw 5vw 5vw;
     height: 55vh;
@@ -21,27 +22,6 @@ export const Wrapper = styled.section`
   }
   @media all and (min-width: ${medium}) and (max-width: ${large}) {
     padding: 20vw 5vw 5vw;
-  }
-`
-export const TitlesWrapper = styled.div`
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-flow: column;
-  -webkit-flex-flow: column;
-`
-export const Title = styled.h2`
-  font-size: 5.5em;
-  font-weight: 800;
-  color: #fff;
-  text-transform: uppercase;
-  font-family: 'Aktiv Grotesk Ex', sans-serif;
-
-  @media all and (max-width: ${small}) {
-    font-size: 3em;
-  }
-  @media all and (min-width: ${small}) and (max-width: ${medium}) {
-    font-size: 4em;
   }
 `
 export const Stars = styled.img`
@@ -81,8 +61,8 @@ export const CTASection = styled.div`
   display: flex;
   justify-content: center;
   -webkit-justify-content: center;
-  align-items: center;
-  -webkit-align-items: center;
+  align-items: flex-end;
+  -webkit-align-items: flex-end;
 
   a {
     text-decoration: none;
@@ -102,18 +82,5 @@ export const CTASection = styled.div`
       transition: 0.3s ease-in-out;
       transform: translateY(-5px);
     }
-  }
-`
-export const CTA = styled.button`
-  text-transform: uppercase;
-  background-color: #ff0707;
-  padding: 20px 40px 20px;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  font-size: 1em;
-
-  &:focus {
-    outline: none;
   }
 `

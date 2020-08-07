@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const SizeWrapper = styled.div`
   width: 40px;
   height: 40px;
-  cursor: pointer;
+  cursor: ${({ available }) => (available ? 'pointer' : 'default')};
   position: relative;
   display: flex;
   justify-self: center;
@@ -11,7 +11,8 @@ export const SizeWrapper = styled.div`
   -webkit-justify-content: center;
   align-items: center;
   -webkit-align-items: center;
-  border: 1px solid #000;
+  border: ${({ available }) =>
+    available ? '1px solid #000' : '1px solid #ccc'};
 
   a {
     width: 40px;
@@ -23,9 +24,10 @@ export const SizeWrapper = styled.div`
     -webkit-align-items: center;
     text-decoration: none;
     color: #000;
+    cursor: ${({ available }) => (available ? 'pointer' : 'default')};
   }
 `
-export const SizeContainer = styled.div`
+export const SizeContainer = styled.p`
   width: 100%;
   height: 100%;
   display: flex;

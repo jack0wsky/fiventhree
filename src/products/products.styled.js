@@ -13,6 +13,9 @@ export const ProductsWrapper = styled.main`
   @media all and (max-width: ${small}) {
     padding: 0 5vw 0;
   }
+  @media all and (min-width: ${small}) and (max-width: ${medium}) {
+    padding: 0 2vw 0;
+  }
 `
 export const ProductsGrid = styled.section`
   width: 100%;
@@ -22,7 +25,7 @@ export const ProductsGrid = styled.section`
   grid-column-gap: 2vw;
   grid-row-gap: 2vw;
 
-  @media all and (max-width: ${medium}) {
+  @media all and (max-width: ${small}) {
     grid-template-columns: 1fr;
     grid-row-gap: 5vw;
   }

@@ -4,6 +4,7 @@ const initState = {
   toggleCart: false,
   handleCheckout: '',
   checkoutId: '',
+  modal: '',
 }
 
 export const handleMenu = (state = initState.toggleMenu, action) => {
@@ -82,6 +83,17 @@ export const handleCheckout = (state = initState.handleCheckout, action) => {
 export const handleCheckoutId = (state = initState.checkoutId, action) => {
   switch (action.type) {
     case 'SET_ID': {
+      return (state = action.payload)
+    }
+    default: {
+      return state
+    }
+  }
+}
+
+export const handleModal = (state = initState.modal, action) => {
+  switch (action.type) {
+    case 'HANDLE_MODAL': {
       return (state = action.payload)
     }
     default: {

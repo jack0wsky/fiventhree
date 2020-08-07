@@ -11,7 +11,7 @@ gsap.registerPlugin(CSSPlugin)
 const Header = () => {
   const [scrolled, setScrolled] = useState(false)
   const [minify, setMinified] = useState(false)
-  const background = useRef()
+  const [background, setBackground] = useState(false)
   useEffect(() => {
     if (window) {
       if (window.location.href.includes('/produkty/')) {
@@ -26,10 +26,15 @@ const Header = () => {
           setScrolled(false)
         }
       })
+      if (window.location.href.includes('/produkty')) {
+        setBackground(true)
+      } else {
+        setBackground(false)
+      }
     }
   })
   return (
-    <Wrapper minify={minify} scrolled={scrolled}>
+    <Wrapper background={background} minify={minify} scrolled={scrolled}>
       <AniLink cover bg={colors.darkRed} to="/">
         <Logo color={'#fff'} height={'10px'} />
       </AniLink>
@@ -54,7 +59,7 @@ const Header = () => {
         </AniLink>
       </Nav>
       <CartStatus />
-      <Background ref={background} />
+      <Background />
     </Wrapper>
   )
 }

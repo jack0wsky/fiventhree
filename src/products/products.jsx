@@ -18,10 +18,10 @@ const Products = () => {
               localFile {
                 childImageSharp {
                   fluid {
-                    src
-                  }
-                  fixed {
-                    src
+                    srcWebp
+                    tracedSVG
+                    base64
+                    srcSetWebp
                   }
                 }
               }
@@ -45,7 +45,10 @@ const Products = () => {
     <ProductsWrapper>
       <ProductsGrid>
         {edges.map((product) => {
-          return <Product key={product.shopifyId} product={product} />
+          const {
+            node: { shopifyId },
+          } = product
+          return <Product key={shopifyId} product={product} />
         })}
       </ProductsGrid>
     </ProductsWrapper>
@@ -53,9 +56,3 @@ const Products = () => {
 }
 
 export default Products
-
-/*
-{products.map((product) => {
-          return <Product key={product.key} product={product} />
-        })}
- */

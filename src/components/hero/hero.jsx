@@ -4,74 +4,50 @@ import {
   ImageContainer,
   Image,
   Overlay,
-  HeroText,
-  Text,
-  Movement,
-  MovementText,
+  FloatingContainer,
+  FloatingImg,
 } from './hero.styled'
 import Content from './content/content'
-import hero from '../../assets/hero.jpg'
-import { small } from '../breakpoints'
+import landscape from '../../assets/background.jpeg'
+import woman from '../../assets/woman-floating.png'
 import gsap from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(CSSPlugin, ScrollTrigger)
 
 const Hero = () => {
-  const joinTo = useRef()
+  const floating = useRef()
+  const background = useRef()
   useEffect(() => {
-    gsap.fromTo(
-      '.joinTo',
-      {
-        xPercent: 30,
-        duration: 2,
-      },
-      {
-        xPercent: -10,
-        scrollTrigger: {
-          trigger: '.knowWhom',
-          start: 'top top',
-          end: '+=100',
-          scrub: 1,
-        },
-      }
-    )
-    gsap.to('.movement', {
-      xPercent: 10,
-      duration: 2,
+    gsap.to(floating.current, {
+      yPercent: 10,
+      duration: 0.4,
       scrollTrigger: {
-        trigger: '.knowWhom',
+        trigger: '.wrapper',
         start: 'top top',
-        end: '+=100',
         scrub: 1,
       },
     })
-  })
-  const ifMobile = () => {
-    if (window) {
-      if (window.innerWidth <= small) {
-        return 100
-      } else {
-        return -100
-      }
-    }
-  }
+    gsap.to(background.current, {
+      yPercent: -15,
+      duration: 0.6,
+      scrollTrigger: {
+        trigger: '.wrapper',
+        start: 'top top',
+        scrub: 1,
+      },
+    })
+  }, [])
   return (
-    <HeroWrapper>
+    <HeroWrapper className="wrapper">
       <Content />
+      <FloatingContainer>
+        <FloatingImg ref={floating} src={woman} />
+      </FloatingContainer>
       <Overlay />
       <ImageContainer id="imageContainer">
-        <Image src={hero} />
+        <Image ref={background} src={landscape} />
       </ImageContainer>
-      <HeroText>
-        <Text ref={joinTo} className="joinTo">
-          Dołącz do
-        </Text>
-        <Movement className="movement">
-          <MovementText>Ruchu</MovementText>
-          <MovementText>8 gwiazd</MovementText>
-        </Movement>
-      </HeroText>
     </HeroWrapper>
   )
 }

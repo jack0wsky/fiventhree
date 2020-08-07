@@ -51,6 +51,11 @@ export const ImageSlider = styled.section`
   display: flex;
   overflow: hidden;
 
+  div {
+    width: 100%;
+    height: 100%;
+  }
+
   &:hover ${OnHover} {
     transition: 0.3s ease-in-out;
     opacity: 1;

@@ -61,7 +61,6 @@ const Layout = ({ children }) => {
       {toggleCart ? <RedOverlay /> : null}
       {toggleMenu ? <RedOverlay /> : null}
       {children}
-      <Footer />
     </Wrapper>
   )
 }

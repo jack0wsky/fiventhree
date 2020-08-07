@@ -8,6 +8,7 @@ import { Power2 } from 'gsap/all'
 import { toggleCart } from '../../actions/toggleCart'
 import CartProduct from './cartProduct/cartProduct'
 import Summary from './summary/summary'
+import cartProduct from './cartProduct/cartProduct'
 
 gsap.registerPlugin(CSSPlugin, EasePack, Power2)
 
@@ -30,7 +31,6 @@ class Cart extends Component {
       x: '100%',
       ease: Power2.easeOut,
     })
-    this.checkIfDataExist()
   }
 
   componentWillUnmount() {
@@ -38,10 +38,6 @@ class Cart extends Component {
       opacity: 0,
       ease: Power2.easeOut,
     })
-  }
-
-  checkIfDataExist = (cart) => {
-    const data = localStorage.getItem('cart')
   }
 
   handleQuantityUpdate = () => {
@@ -57,9 +53,27 @@ class Cart extends Component {
     return sum.toFixed(2)
   }
 
+  showCartProducts = () => {
+    const { cart } = this.props
+    const cartData = localStorage.getItem('cart')
+    if (cart.length === 0) {
+      return <p>No items, find something special</p>
+    } else {
+      cart.map((product) => {
+        return (
+          <CartProduct
+            quantityUpdate={this.state.quantityUpdate}
+            handleQuantityUpdate={this.handleQuantityUpdate}
+            key={product.key}
+            product={product}
+          />
+        )
+      })
+    }
+  }
+
   render() {
     const { dispatch, cart } = this.props
-    const cartData = JSON.parse(localStorage.getItem('cart'))
     return (
       <CartWrapper ref={this.cart} toggle={this.props.toggleCart}>
         <Header>
@@ -69,20 +83,18 @@ class Cart extends Component {
           </Exit>
         </Header>
         <Grid length={cart.length}>
-          {cart.length === 0 ? (
-            <p>No items, find something special</p>
-          ) : (
-            cart.map((product) => {
-              return (
-                <CartProduct
-                  quantityUpdate={this.state.quantityUpdate}
-                  handleQuantityUpdate={this.handleQuantityUpdate}
-                  key={product.key}
-                  product={product}
-                />
-              )
-            })
-          )}
+          {cart.length > 0
+            ? cart.map((product) => {
+                return (
+                  <CartProduct
+                    quantityUpdate={this.state.quantityUpdate}
+                    handleQuantityUpdate={this.handleQuantityUpdate}
+                    key={product.key}
+                    product={product}
+                  />
+                )
+              })
+            : null}
         </Grid>
         {cart.length > 0 ? (
           <Summary

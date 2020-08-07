@@ -24,6 +24,7 @@ const CartStatus = () => {
         return (acc += cur.quantity)
       }, 0)
     }
+
     return 0
   }
   return (

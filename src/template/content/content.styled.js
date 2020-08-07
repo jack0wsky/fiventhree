@@ -3,17 +3,26 @@ import { colors } from '../../theme'
 import { small, medium, large, xlarge } from '../../components/breakpoints'
 
 export const ContentWrapper = styled.section`
-  width: 50%;
-  height: auto;
-  padding: 0 100px 100px;
+  width: 30%;
+  height: 100vh;
+  padding: 0 2vw 2vw;
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
   justify-content: space-between;
   -webkit-justify-content: space-between;
-  position: relative;
+  position: fixed;
+  right: 0;
+  top: 0;
 
-  @media all and (max-width: ${medium}) {
+  @media all and (max-width: ${small}) {
+    position: relative;
+    width: 100%;
+    padding: 0 5vw 5vw;
+    height: 80vh;
+  }
+  @media all and (min-width: ${small}) and (max-width: ${medium}) {
+    position: relative;
     width: 100%;
     height: 50%;
     padding: 5vw;
@@ -42,7 +51,23 @@ export const CartHeader = styled.div`
   height: 100px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  -webkit-align-items: center;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+
+  & > a {
+    text-decoration: none;
+    color: #000;
+    transition: 0.3s ease-in-out;
+    &:hover {
+      transition: 0.3s ease-in-out;
+      color: ${colors.action};
+    }
+  }
+
+  @media all and (max-width: ${small}) {
+    display: none;
+  }
 `
 export const Head = styled.div`
   display: flex;
@@ -69,15 +94,20 @@ export const Price = styled(Name)`
 `
 
 export const Sizes = styled.section`
-  width: 40%;
+  width: 80%;
   height: 5vh;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
   align-items: center;
+  -webkit-align-items: center;
 
   @media all and (max-width: ${small}) {
     height: 10vh;
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
   }
   @media all and (min-width: ${medium}) and (max-width: ${large}) {
     width: 60%;
@@ -136,7 +166,7 @@ export const Description = styled.section`
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
-  width: 50%;
+  width: 100%;
   font-weight: 500;
 
   @media all and (max-width: ${small}) {
@@ -165,27 +195,34 @@ export const ToggleBtn = styled.button`
   }
 `
 export const Icon = styled.div`
-  width: 40%;
-  height: 40%;
-  display: flex;
-  justify-content: center;
-  -webkit-justify-content: center;
-  align-items: center;
-  -webkit-align-items: center;
-  position: relative;
+  display: none;
 
-  & > span:nth-child(2) {
-    transform: rotate(90deg);
-    width: ${({ toggle }) => (toggle ? 0 : '100%')};
-    transition: 0.3s ease-in-out;
+  span:nth-child(2) {
     position: absolute;
+    transform: rotate(90deg);
+  }
+
+  @media all and (max-width: ${small}) {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    -webkit-justify-content: center;
+    align-items: center;
+    -webkit-align-items: center;
+    position: relative;
   }
 `
 export const Line = styled.span`
-  display: block;
-  height: 2px;
-  width: 100%;
-  background-color: #fff;
+  display: none;
+
+  @media all and (max-width: ${small}) {
+    display: block;
+    height: 3px;
+    border-radius: 20px;
+    width: 100%;
+    background-color: #fff;
+  }
 `
 export const Title = styled.button`
   font-size: 1.1em;
@@ -240,32 +277,20 @@ export const Add = styled.button`
   }
 `
 export const IncrementQuantity = styled(DecrementQuantity)``
-
-export const MobileGallery = styled.section`
-  display: none;
-
-  @media all and (max-width: ${small}) {
-    display: flex;
-    width: 100%;
-    height: 15vh;
-    background-color: #ccc;
-    margin: 5vh 0 0;
-  }
-`
 export const MobileAddToCart = styled.section`
   display: none;
 
   @media all and (max-width: ${small}) {
     display: flex;
-    width: 60%;
+    width: 90%;
     height: 70px;
     position: absolute;
     left: 50%;
-    margin: -35px 0 0 -30%;
+    margin: -35px 0 0 -45%;
     top: 0;
     border: none;
-    justify-content: space-between;
-    -webkit-justify-content: space-between;
+    justify-content: flex-end;
+    -webkit-justify-content: flex-end;
     align-items: center;
     -webkit-align-items: center;
 
@@ -289,8 +314,8 @@ export const Button = styled.button`
     border-radius: 50px;
     color: #fff;
     border: none;
-    height: 100%;
-    padding: 15px 45px 15px;
+    height: 70px;
+    width: 70px;
     background-color: ${colors.action};
 
     &:focus {

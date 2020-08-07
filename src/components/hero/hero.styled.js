@@ -3,7 +3,7 @@ import { small, medium, large } from '../breakpoints'
 
 export const HeroWrapper = styled.main`
   width: 100vw;
-  height: 120vh;
+  height: 90vh;
   position: relative;
 
   @media all and (max-width: ${small}) {
@@ -26,80 +26,51 @@ export const ImageContainer = styled.div`
 `
 export const Image = styled.img`
   object-fit: cover;
+  object-position: center center;
   width: 100%;
 
-  @media all and (max-width: ${small}) {
-    height: 120%;
-  }
-  @media all and (min-width: ${small}) and (max-width: ${large}) {
-    height: 100%;
+  @media all and (max-width: ${medium}) {
+    height: 150%;
   }
 `
 export const Overlay = styled.div`
   position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 15;
   width: 100%;
   height: 80vh;
   background-color: #bf0000;
   mix-blend-mode: multiply;
+
   @media all and (max-width: ${small}) {
     height: 60vh;
   }
 `
-export const HeroText = styled.section`
+export const FloatingContainer = styled.div`
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 40vh;
+  height: 80vh;
   display: flex;
+  justify-content: center;
+  -webkit-justify-content: center;
   align-items: center;
   -webkit-align-items: center;
-  padding: 0 10vw 0;
-  position: relative;
-
+  overflow: hidden;
   @media all and (max-width: ${small}) {
-    flex-flow: column;
-    -webkit-flex-flow: column;
-    justify-content: center;
-    -webkit-justify-content: center;
-    align-items: flex-start;
-    padding: 0 5vw 0;
-    height: 30vh;
+    height: 60vh;
   }
 `
-export const Text = styled.h1`
-  font-size: 4em;
-  text-transform: uppercase;
-  font-weight: 800;
-  font-family: 'Aktiv Grotesk Ex', sans-serif;
-  color: transparent;
-  -webkit-text-stroke: 1px #000;
+export const FloatingImg = styled.img`
+  height: 85%;
   display: flex;
-  align-items: center;
-  -webkit-align-items: center;
+  align-self: flex-end;
+  object-fit: cover;
 
   @media all and (max-width: ${small}) {
-    font-size: 2.5em;
-  }
-`
-export const Movement = styled.div`
-  width: auto;
-  height: 18vh;
-  display: flex;
-  flex-flow: column;
-  -webkit-flex-flow: column;
-  justify-content: space-between;
-  -webkit-justify-content: space-between;
-  left: 35%;
-
-  @media all and (max-width: ${small}) {
-    position: static;
-    height: 10vh;
-  }
-`
-export const MovementText = styled(Text)`
-  color: #000;
-  font-size: 7em;
-  line-height: 80px;
-  @media all and (max-width: ${small}) {
-    font-size: 3em;
-    line-height: 40px;
+    height: 70%;
   }
 `

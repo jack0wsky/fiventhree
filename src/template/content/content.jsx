@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { addToCart } from '../../actions/addToCart'
 import { toggleCart } from '../../actions/toggleCart'
 import { setLineItems } from '../../actions/setLineItems'
+import Shipping from './shipping/shipping'
 import Client from 'shopify-buy'
 import {
   ContentWrapper,
@@ -20,22 +21,22 @@ import {
   DecrementQuantity,
   Add,
   IncrementQuantity,
-  MobileGallery,
   MobileAddToCart,
   Button,
+  Icon,
+  Line,
   MobileIncrement,
   MobileDecrement,
   DescriptionHead,
   ToggleBtn,
-  Icon,
-  Line,
 } from './content.styled'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import Size from './size/size'
-import { Preview, PreviewContainer } from '../productTemplate.styled'
 import { setCheckoutId } from '../../actions/setCheckoutId'
 import CartStatus from '../../components/header/cartStatus/cartStatus'
 import SizesTable from './sizesTable/sizesTable'
+import AddToCartIcon from './addToCartIcon'
+import { colors } from '../../theme'
 
 const mapStateToProps = (state) => ({
   cart: state.handleCart,
@@ -51,11 +52,13 @@ class Content extends Component {
       error: '',
       checkoutId: '',
       switchTabs: false,
+      checkIfAvailable: true,
+      adding: false,
     }
     this.sizes = createRef()
   }
   componentDidMount() {
-    const { dispatch } = this.props
+    const { dispatch, product } = this.props
     this.client = Client.buildClient({
       storefrontAccessToken: process.env.GATSBY_STOREFRONT_ACCESS_TOKEN,
       domain: `${process.env.GATSBY_SHOP_NAME}.myshopify.com`,
@@ -63,90 +66,96 @@ class Content extends Component {
     this.client.checkout.create().then((checkout) => {
       dispatch(setCheckoutId(checkout.attrs.id.value))
     })
+    this.fetchSizes(product)
+  }
+  fetchSizes = async (item) => {
+    const cachedSizes = localStorage.getItem('product')
+    if (cachedSizes) {
+      const parsed = JSON.parse(cachedSizes)
+      if (parsed.id !== item.shopifyId) {
+        localStorage.removeItem('product')
+        await this.client.product
+          .fetch(item.shopifyId)
+          .then((fetchedProduct) => {
+            localStorage.setItem('product', JSON.stringify(fetchedProduct))
+          })
+      }
+    } else {
+      await this.client.product.fetch(item.shopifyId).then((fetchedProduct) => {
+        this.setState({ sizes: fetchedProduct }, () => {
+          localStorage.setItem('product', JSON.stringify(this.state.sizes))
+        })
+      })
+    }
   }
 
   handleAddToCart = async (product, variant) => {
-    const { dispatch } = this.props
-    await this.client.product
-      .fetch(product.shopifyId)
-      .then((fetchedProduct) => {
-        const fetchedVariant = fetchedProduct.variants.find((option) => {
-          return option.id === variant.shopifyId
-        })
-        console.log(fetchedVariant.available)
-      })
-    dispatch(
-      addToCart(
-        product,
-        variant.price,
-        variant.title,
-        variant.shopifyId,
-        this.state.quantity
+    const cacheExist = localStorage.getItem('cart')
+    const { dispatch, cart } = this.props
+    const promise = new Promise((resolve) => {
+      dispatch(
+        addToCart(
+          product,
+          variant.price,
+          variant.title,
+          variant.shopifyId,
+          this.state.quantity
+        )
       )
-    )
-    dispatch(setLineItems(variant.shopifyId, this.state.quantity))
+      dispatch(setLineItems(variant.shopifyId, this.state.quantity))
+    })
+    promise.then((res) => {
+      console.log(res)
+      if (cacheExist) {
+        localStorage.removeItem('cart')
+        console.log(localStorage)
+      } else {
+        localStorage.setItem('cart', JSON.stringify(cart))
+      }
+    })
   }
 
   render() {
     const { dispatch, product, setImage, variant } = this.props
+    const cachedProduct = JSON.parse(localStorage.getItem('product'))
     return (
       <ContentWrapper>
         <CartHeader>
+          <AniLink cover to="/">
+            Powrót
+          </AniLink>
           <CartStatus />
         </CartHeader>
         <MobileAddToCart>
-          <MobileDecrement
-            onClick={() =>
-              this.setState((prevState) => ({
-                quantity: Math.max(prevState.quantity - 1, 1),
-              }))
-            }
-          >
-            -
-          </MobileDecrement>
           <Button onClick={() => this.handleAddToCart(product, variant)}>
-            Kup
+            <Icon>
+              <Line />
+              <Line />
+            </Icon>
           </Button>
-          <MobileIncrement
-            onClick={() =>
-              this.setState((prevState) => ({
-                quantity: Math.max(prevState.quantity + 1, 1),
-              }))
-            }
-          >
-            +
-          </MobileIncrement>
         </MobileAddToCart>
-        <AniLink cover to="/">
-          Powrót
-        </AniLink>
-        <MobileGallery>
-          {product.images.map((img) => {
-            return (
-              <PreviewContainer
-                key={img.id}
-                onClick={(e) =>
-                  setImage(img.localFile.childImageSharp.fluid.src, e)
-                }
-              >
-                <Preview src={img.localFile.childImageSharp.fluid.src} />
-              </PreviewContainer>
-            )
-          })}
-        </MobileGallery>
         <Head>
           <Type>{product.productType}</Type>
           <Name>{product.title}</Name>
         </Head>
         <Price>{variant.price} PLN</Price>
-        <Sizes id="sizes" ref={this.sizes}>
-          {product.variants.map((variant) => {
-            return (
-              <Size title={variant.title} sku={variant.sku} key={variant.sku} />
-            )
-          })}
+        <Sizes id="sizes">
+          {cachedProduct
+            ? cachedProduct.variants.map((option) => {
+                return (
+                  <Size
+                    available={option.available}
+                    title={option.title}
+                    sku={option.sku}
+                    key={option.sku}
+                  />
+                )
+              })
+            : null}
         </Sizes>
-        <Error>{this.state.error}</Error>
+        {this.state.checkIfAvailable ? null : (
+          <Error>Size isn't available</Error>
+        )}
         <Description>
           <DescriptionHead switch={this.state.switchTabs}>
             <Title onClick={() => this.setState({ switchTabs: false })}>
@@ -162,6 +171,7 @@ class Content extends Component {
             <Text>{product.description}</Text>
           )}
         </Description>
+        <Shipping />
         <AddToCart>
           <DecrementQuantity
             onClick={() =>
@@ -173,7 +183,9 @@ class Content extends Component {
             -
           </DecrementQuantity>
           <Add onClick={() => this.handleAddToCart(product, variant)}>
-            Dodaj {this.state.quantity} do koszyka
+            {this.state.adding
+              ? 'loading...'
+              : `Dodaj ${this.state.quantity} do koszyka`}
           </Add>
           <IncrementQuantity
             onClick={() =>
@@ -191,3 +203,21 @@ class Content extends Component {
 }
 
 export default connect(mapStateToProps)(Content)
+
+/*
+<MobileDecrement
+            onClick={() =>
+              this.setState((prevState) => ({
+                quantity: Math.max(prevState.quantity - 1, 1),
+              }))
+            }
+          >
+
+<MobileIncrement
+            onClick={() =>
+              this.setState((prevState) => ({
+                quantity: Math.max(prevState.quantity + 1, 1),
+              }))
+            }
+          >
+ */

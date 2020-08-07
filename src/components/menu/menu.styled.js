@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import { small } from '../breakpoints'
+import { small, medium } from '../breakpoints'
 
 export const MenuWrapper = styled.section`
   display: none;
-  @media all and (max-width: ${small}) {
+  @media all and (max-width: ${medium}) {
     width: 100vw;
     height: 50vh;
     background-color: #ffffff;

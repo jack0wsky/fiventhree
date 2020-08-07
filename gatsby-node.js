@@ -31,7 +31,14 @@ exports.createPages = async ({ graphql, actions }) => {
               localFile {
                 childImageSharp {
                   fluid {
-                    src
+                    srcWebp
+                    tracedSVG
+                    base64
+                    srcSetWebp
+                  }
+                  fixed(width: 400) {
+                    base64
+                    tracedSVG
                   }
                 }
               }

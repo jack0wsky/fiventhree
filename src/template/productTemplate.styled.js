@@ -3,7 +3,8 @@ import { small, medium, large, xlarge } from '../components/breakpoints'
 
 export const TemplateWrapper = styled.main`
   width: 100vw;
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
   display: flex;
   overflow: hidden;
 
@@ -14,16 +15,21 @@ export const TemplateWrapper = styled.main`
   }
 `
 export const Gallery = styled.section`
-  width: 50%;
-  height: 100%;
+  width: 70%;
+  height: auto;
+  min-height: 150vh;
   background-color: #ccc;
   display: flex;
   justify-content: space-between;
   position: relative;
 
-  @media all and (max-width: ${medium}) {
+  @media all and (max-width: ${small}) {
+    height: auto;
     width: 100%;
-    height: 70vh;
+  }
+  @media all and (min-width: ${small}) and (max-width: ${medium}) {
+    width: 100%;
+    height: auto;
     overflow: hidden;
     flex-flow: column-reverse;
     -webkit-flex-flow: column-reverse;
@@ -41,12 +47,44 @@ export const Gallery = styled.section`
     }
   }
 `
-export const ImageContainer = styled.div`
+export const ImagesContainer = styled.div`
   width: 100%;
   height: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  @media all and (max-width: ${medium}) {
+    display: flex;
+    flex-flow: column;
+    -webkit-flex-flow: column;
+    height: auto;
+  }
+`
+export const ClickableImage = styled.button`
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  scroll-behavior: smooth;
+
+  div {
+    width: 100%;
+    height: 100%;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  @media all and (max-width: ${small}) {
+    height: 60vh;
+  }
+  @media all and (min-width: ${small}) and (max-width: ${medium}) {
+    height: 70vh;
+  }
 `
 export const MainImage = styled.img`
   object-fit: cover;
@@ -65,7 +103,7 @@ export const RestImages = styled.section`
     display: none;
   }
 `
-export const PreviewContainer = styled.button`
+export const PreviewContainer = styled.a`
   width: 200px;
   height: 100%;
   display: flex;
