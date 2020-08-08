@@ -43,7 +43,6 @@ const ProductTemplate = ({ pageContext: { product, variant } }) => {
         </AniLink>
         <ImagesContainer>
           {product.images.map((img) => {
-            console.log(img)
             return (
               <ClickableImage>
                 <Img

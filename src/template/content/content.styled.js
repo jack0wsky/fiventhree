@@ -27,6 +27,13 @@ export const ContentWrapper = styled.section`
     height: 50%;
     padding: 5vw;
   }
+  @media all and (min-width: ${medium}) and (max-width: ${large}) {
+    width: 50%;
+    height: 100vh;
+  }
+  @media all and (min-width: ${large}) and (max-width: ${xlarge}) {
+    width: 35%;
+  }
   & > a {
     text-decoration: none;
     color: #000;

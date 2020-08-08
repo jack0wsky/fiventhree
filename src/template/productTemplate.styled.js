@@ -29,10 +29,16 @@ export const Gallery = styled.section`
   }
   @media all and (min-width: ${small}) and (max-width: ${medium}) {
     width: 100%;
-    height: auto;
     overflow: hidden;
     flex-flow: column-reverse;
     -webkit-flex-flow: column-reverse;
+  }
+  @media all and (min-width: ${medium}) and (max-width: ${large}) {
+    width: 50%;
+    height: auto;
+  }
+  @media all and (min-width: ${large}) and (max-width: ${xlarge}) {
+    width: 65%;
   }
 
   & > a {
@@ -53,7 +59,7 @@ export const ImagesContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 
-  @media all and (max-width: ${medium}) {
+  @media all and (max-width: ${large}) {
     display: flex;
     flex-flow: column;
     -webkit-flex-flow: column;
@@ -85,39 +91,13 @@ export const ClickableImage = styled.button`
   @media all and (min-width: ${small}) and (max-width: ${medium}) {
     height: 70vh;
   }
+  @media all and (min-width: ${medium}) and (max-width: ${large}) {
+    height: 80vh;
+  }
 `
 export const MainImage = styled.img`
   object-fit: cover;
   height: 100%;
   width: 100%;
   overflow: hidden;
-`
-export const RestImages = styled.section`
-  width: auto;
-  height: 100vh;
-  display: grid;
-  grid-template-rows: repeat(3, 1fr);
-  grid-template-columns: 100%;
-
-  @media all and (max-width: ${medium}) {
-    display: none;
-  }
-`
-export const PreviewContainer = styled.a`
-  width: 200px;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-  }
-`
-export const Preview = styled.img`
-  object-fit: cover;
-  height: 100%;
-  width: 100%;
 `

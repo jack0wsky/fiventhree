@@ -6,6 +6,7 @@ import { CSSPlugin } from 'gsap/CSSPlugin'
 import { EasePack } from 'gsap/EasePack'
 import { Power2 } from 'gsap/all'
 import { toggleCart } from '../../actions/toggleCart'
+import { getFromLocalStorage } from '../../actions/getFromLocalStorage'
 import CartProduct from './cartProduct/cartProduct'
 import Summary from './summary/summary'
 import cartProduct from './cartProduct/cartProduct'
@@ -31,6 +32,7 @@ class Cart extends Component {
       x: '100%',
       ease: Power2.easeOut,
     })
+    this.showCartProducts()
   }
 
   componentWillUnmount() {
@@ -54,12 +56,11 @@ class Cart extends Component {
   }
 
   showCartProducts = () => {
-    const { cart } = this.props
+    const { cart, dispatch } = this.props
     const cartData = localStorage.getItem('cart')
-    if (cart.length === 0) {
-      return <p>No items, find something special</p>
-    } else {
-      cart.map((product) => {
+    console.log('cart state', cart)
+    console.log('cart from cache', JSON.parse(cartData))
+    /*cart.map((product) => {
         return (
           <CartProduct
             quantityUpdate={this.state.quantityUpdate}
@@ -68,8 +69,7 @@ class Cart extends Component {
             product={product}
           />
         )
-      })
-    }
+      })*/
   }
 
   render() {
@@ -89,7 +89,7 @@ class Cart extends Component {
                   <CartProduct
                     quantityUpdate={this.state.quantityUpdate}
                     handleQuantityUpdate={this.handleQuantityUpdate}
-                    key={product.key}
+                    key={product.id}
                     product={product}
                   />
                 )

@@ -12,6 +12,11 @@ export const Preview = styled.div`
   height: 100%;
   background-color: #ccc;
   overflow: hidden;
+
+  div {
+    width: 100%;
+    height: 100%;
+  }
 `
 export const Data = styled.div`
   width: 60%;

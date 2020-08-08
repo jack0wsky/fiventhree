@@ -3,12 +3,15 @@ import { medium } from '../../breakpoints'
 
 export const Wrapper = styled.section`
   width: auto;
-  height: 100%;
+  height: min-content;
+  padding: 15px 30px 15px;
   display: flex;
   align-items: center;
   -webkit-align-items: center;
   justify-content: space-between;
   -webkit-justify-content: space-between;
+  position: relative;
+  overflow: hidden;
 
   @media all and (max-width: ${medium}) {
     display: none;
@@ -18,16 +21,14 @@ export const Length = styled.div`
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background-color: ${({ toggle, switchColor }) =>
-    toggle || switchColor ? '#000' : '#fff'};
+  background-color: #fff;
   margin: 0 0 0 20px;
   display: flex;
   justify-content: center;
   -webkit-justify-content: center;
   align-items: center;
   -webkit-align-items: center;
-  color: ${({ toggle, switchColor }) =>
-    toggle || switchColor ? '#fff' : '#000'};
+  color: #000;
   transition: 0.3s ease-in-out;
 `
 export const Cart = styled.button`

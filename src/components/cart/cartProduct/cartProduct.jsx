@@ -4,6 +4,7 @@ import { removeFromCart } from '../../../actions/removeFromCart'
 import { removeLineItems } from '../../../actions/removeLineItems'
 import { decrementQuantity } from '../../../actions/decrementQuantity'
 import { incrementQuantity } from '../../../actions/incrementQuantity'
+import Img from 'gatsby-image'
 import {
   Wrapper,
   Preview,
@@ -29,8 +30,10 @@ class CartProduct extends Component {
   }
 
   ifLowestQuantity = (id) => {
-    const { dispatch, handleQuantityUpdate } = this.props
-    dispatch(decrementQuantity(id))
+    const { dispatch, handleQuantityUpdate, product } = this.props
+    if (product.quantity !== 1) {
+      dispatch(decrementQuantity(id))
+    }
     handleQuantityUpdate()
   }
   incrementProductQuantity = (id) => {
@@ -48,8 +51,8 @@ class CartProduct extends Component {
     return (
       <Wrapper>
         <Preview>
-          <Image
-            src={product.product.images[0].localFile.childImageSharp.fluid.src}
+          <Img
+            fluid={product.product.images[0].localFile.childImageSharp.fluid}
           />
         </Preview>
         <Data>

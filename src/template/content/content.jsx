@@ -92,32 +92,37 @@ class Content extends Component {
   handleAddToCart = async (product, variant) => {
     const cacheExist = localStorage.getItem('cart')
     const { dispatch, cart } = this.props
-    const promise = new Promise((resolve) => {
-      dispatch(
-        addToCart(
-          product,
-          variant.price,
-          variant.title,
-          variant.shopifyId,
-          this.state.quantity
-        )
+    dispatch(
+      addToCart(
+        product,
+        variant.price,
+        variant.title,
+        variant.shopifyId,
+        this.state.quantity
       )
-      dispatch(setLineItems(variant.shopifyId, this.state.quantity))
-    })
-    promise.then((res) => {
-      console.log(res)
-      if (cacheExist) {
-        localStorage.removeItem('cart')
-        console.log(localStorage)
-      } else {
-        localStorage.setItem('cart', JSON.stringify(cart))
-      }
-    })
+    )
+    dispatch(setLineItems(variant.shopifyId, this.state.quantity))
+    const exitingCart = localStorage.getItem('cart')
+    if (exitingCart) {
+      localStorage.setItem('cart', JSON.stringify(cart))
+    } else {
+      localStorage.setItem('cart', JSON.stringify(cart))
+    }
+  }
+  componentDidUpdate() {
+    const { cart } = this.props
+    const exitingCart = localStorage.getItem('cart')
+    if (exitingCart) {
+      localStorage.setItem('cart', JSON.stringify(cart))
+    } else {
+      localStorage.setItem('cart', JSON.stringify(cart))
+    }
   }
 
   render() {
     const { dispatch, product, setImage, variant } = this.props
     const cachedProduct = JSON.parse(localStorage.getItem('product'))
+    console.log(localStorage)
     return (
       <ContentWrapper>
         <CartHeader>

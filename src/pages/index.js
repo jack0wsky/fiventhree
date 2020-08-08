@@ -27,7 +27,10 @@ const combine = combineReducers({
 
 //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
-export const store = createStore(combine)
+export const store = createStore(
+  combine,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
 
 const MainWrapper = styled.main`
   width: 100vw;

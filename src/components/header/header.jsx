@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { Wrapper, Background, Nav } from './header.styled'
+import { Wrapper, Background, Nav, ActiveBackground } from './header.styled'
 import { colors } from '../../theme'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import Logo from '../header/logo/logo'
@@ -12,12 +12,26 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false)
   const [minify, setMinified] = useState(false)
   const [background, setBackground] = useState(false)
+  const activeBackground = useRef()
   useEffect(() => {
     if (window) {
       if (window.location.href.includes('/produkty/')) {
         setMinified(true)
       } else {
         setMinified(false)
+      }
+      if (window.location.href.includes('/kontakt')) {
+        gsap.to(activeBackground.current, {
+          translateY: 0,
+          duration: 0.7,
+          delay: 0.8,
+        })
+      } else {
+        gsap.to(activeBackground.current, {
+          translateY: '100%',
+          duration: 0.7,
+          delay: 0.5,
+        })
       }
       window.addEventListener('scroll', () => {
         if (window.pageYOffset > 50) {
@@ -57,6 +71,7 @@ const Header = () => {
         >
           Kontakt
         </AniLink>
+        <ActiveBackground ref={activeBackground} />
       </Nav>
       <CartStatus />
       <Background />

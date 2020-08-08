@@ -39,7 +39,7 @@ export const handleCart = (state = initState.handleCart, action) => {
       const toDecrement = state.find((item) => {
         return item.shopifyId === action.payload
       })
-      Math.max(1, (toDecrement.quantity -= 1))
+      toDecrement.quantity -= 1
       return state
     }
     case 'INCREMENT_QUANTITY': {
@@ -50,8 +50,7 @@ export const handleCart = (state = initState.handleCart, action) => {
       return state
     }
     case 'GET_DATA': {
-      const data = localStorage.getItem('cart')
-      return (state = data)
+      return (state = action.payload)
     }
     default: {
       return state

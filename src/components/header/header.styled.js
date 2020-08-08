@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { small, medium } from '../breakpoints'
+import { medium } from '../breakpoints'
 
 export const Wrapper = styled.header`
   height: ${({ minify }) => (minify ? '0' : '100px')};
@@ -36,13 +36,16 @@ export const Background = styled.div`
   bottom: -100%;
 `
 export const Nav = styled.nav`
-  width: 30%;
-  height: 100%;
+  width: 40%;
+  padding: 15px 30px 15px;
   display: flex;
   align-items: center;
   -webkit-align-items: center;
   justify-content: space-between;
   -webkit-justify-content: space-between;
+  background-color: transparent;
+  position: relative;
+  overflow: hidden;
 
   a {
     text-decoration: none;
@@ -58,4 +61,14 @@ export const Nav = styled.nav`
   @media all and (max-width: ${medium}) {
     display: none;
   }
+`
+export const ActiveBackground = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  transform: translateY(100%);
 `
