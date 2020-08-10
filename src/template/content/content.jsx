@@ -122,7 +122,6 @@ class Content extends Component {
   render() {
     const { dispatch, product, setImage, variant } = this.props
     const cachedProduct = JSON.parse(localStorage.getItem('product'))
-    console.log(localStorage)
     return (
       <ContentWrapper>
         <CartHeader>

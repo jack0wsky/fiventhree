@@ -9,6 +9,7 @@ import {
   Text,
   Price,
   ContinueBtn,
+  InPostBtn,
 } from './summary.styled'
 import Client from 'shopify-buy'
 import Spinner from '../../loadingSpinner/spinner'
@@ -30,6 +31,7 @@ const Summary = ({ total }) => {
   const handleRequest = () => {
     setRequest(!request)
   }
+  const handleInPostModal = () => {}
   const handleCheckout = async () => {
     handleRequest()
     await client.checkout
@@ -41,6 +43,7 @@ const Summary = ({ total }) => {
   }
   return (
     <Wrapper>
+      <InPostBtn onClick={() => handleInPostModal}>Wybierz paczkomat</InPostBtn>
       <Divider />
       <Shipping>
         <Label>Dostawa</Label>

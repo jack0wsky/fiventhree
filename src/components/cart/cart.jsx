@@ -9,7 +9,7 @@ import { toggleCart } from '../../actions/toggleCart'
 import { getFromLocalStorage } from '../../actions/getFromLocalStorage'
 import CartProduct from './cartProduct/cartProduct'
 import Summary from './summary/summary'
-import cartProduct from './cartProduct/cartProduct'
+import axios from 'axios'
 
 gsap.registerPlugin(CSSPlugin, EasePack, Power2)
 
@@ -23,16 +23,18 @@ class Cart extends Component {
     super()
     this.state = {
       quantityUpdate: false,
+      inPostData: null,
     }
     this.cart = createRef()
   }
-  componentDidMount() {
+  componentDidMount = async () => {
     gsap.from(this.cart.current, {
       opacity: 0,
       x: '100%',
       ease: Power2.easeOut,
     })
     this.showCartProducts()
+    const data = await this.getInPost()
   }
 
   componentWillUnmount() {

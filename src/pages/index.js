@@ -12,7 +12,8 @@ import {
   handleCheckoutId,
   handleModal,
 } from '../reducers'
-import { handleLineItems } from '../reducers/lineItems'
+import { handleLineItems } from '../reducers/lineItemsReducer'
+import { handleInPostModal } from '../reducers/inPostReducer'
 import styled from 'styled-components'
 
 const combine = combineReducers({
@@ -23,14 +24,12 @@ const combine = combineReducers({
   id: handleCheckoutId,
   handleLineItems,
   modal: handleModal,
+  inpost: handleInPostModal,
 })
 
 //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
-export const store = createStore(
-  combine,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)
+export const store = createStore(combine)
 
 const MainWrapper = styled.main`
   width: 100vw;

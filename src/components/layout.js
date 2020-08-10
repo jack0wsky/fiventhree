@@ -10,6 +10,7 @@ import Cart from './cart/cart'
 import RedOverlay from './overlays/redOverlay'
 import Footer from './footer/footer'
 import styled, { createGlobalStyle } from 'styled-components'
+import InPostModal from './inPost/inPost'
 import { Helmet } from 'react-helmet'
 import '../fonts/medium.css'
 import '../fonts/bold.css'
@@ -33,6 +34,7 @@ const Wrapper = styled.main`
 const Layout = ({ children }) => {
   const toggleCart = useSelector((state) => state.toggleCart)
   const toggleMenu = useSelector((state) => state.handleMenu)
+  const inpost = useSelector((state) => state.inpost)
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -54,6 +56,7 @@ const Layout = ({ children }) => {
         <title>{siteMetadata.title}</title>
       </Helmet>
       <Header />
+      {inpost ? <InPostModal /> : null}
       <MobileCart />
       <BurgerMenu />
       <Menu />

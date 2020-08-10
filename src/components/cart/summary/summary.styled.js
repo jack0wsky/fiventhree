@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.section`
   width: 100%;
-  height: 15vh;
+  height: 23vh;
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
@@ -60,5 +60,17 @@ export const ContinueBtn = styled.button`
       0 23.2px 17.9px -9px rgba(0, 0, 0, 0.036),
       0 43.4px 33.4px -9px rgba(0, 0, 0, 0.043),
       0 104px 80px -9px rgba(0, 0, 0, 0.06);
+  }
+`
+export const InPostBtn = styled.button`
+  width: 100%;
+  height: 50px;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
   }
 `
