@@ -70,13 +70,13 @@ class CartProduct extends Component {
               +
             </Increment>
           </Quantity>
+          <Remove>
+            <RemoveBtn onClick={() => this.removeCartItem(product.shopifyId)}>
+              <Cancel height={'25px'} color={'#5b5b5b'} />
+              Usuń
+            </RemoveBtn>
+          </Remove>
         </Data>
-        <Remove>
-          <RemoveBtn onClick={() => this.removeCartItem(product.shopifyId)}>
-            <Cancel height={'30px'} color={'#000'} />
-            Usuń
-          </RemoveBtn>
-        </Remove>
       </Wrapper>
     )
   }

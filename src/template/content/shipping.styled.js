@@ -14,11 +14,12 @@ export const Grid = styled.section`
 export const ShippingTitle = styled(Title)`
   text-align: left;
 `
-export const ShippingMethod = styled.div`
+export const ShippingMethod = styled.button`
   width: 100%;
   height: 10vh;
   background-color: transparent;
-  border: 1px solid #c1c1c1;
+  border: ${({ selected }) =>
+    selected ? '3px solid #000' : '1px solid #c1c1c1'};
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
@@ -26,6 +27,14 @@ export const ShippingMethod = styled.div`
   -webkit-align-items: center;
   justify-content: center;
   -webkit-justify-content: center;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    background-color: #e5e5e5;
+  }
 `
 export const Label = styled.p`
   font-size: 1em;

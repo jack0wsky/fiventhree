@@ -70,7 +70,6 @@ export const Line = styled.span`
 `
 export const Grid = styled.section`
   width: 100%;
-  height: auto;
   padding: 0 2vw 0;
 
   ${({ length }) => {
@@ -80,15 +79,41 @@ export const Grid = styled.section`
           grid-template-columns: 100%;
           grid-template-rows: repeat(${length}, 1fr);
           grid-row-gap: 5px;
+          height: auto;
           `
     } else {
       return `
         display: flex;
-      justify-content: center;
-      -webkit-justify-content: center;
-      align-items: center;
-      -webkit-align-items: center;
+        justify-content: center;
+        -webkit-justify-content: center;
+        align-items: center;
+        -webkit-align-items: center;
+        height: 50vh;
         `
     }
   }};
+`
+export const CartPlaceholder = styled.div`
+  font-size: 1em;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  -webkit-align-items: center;
+  height: auto;
+  width: 70%;
+`
+export const Text = styled.p`
+  font-size: 1em;
+`
+export const CTA = styled.button`
+  border: none;
+  padding: 15px 30px 15px;
+  background-color: ${colors.action};
+  color: #fff;
+  cursor: pointer;
+  margin: 30px 0 0;
+
+  &:focus {
+    outline: none;
+  }
 `

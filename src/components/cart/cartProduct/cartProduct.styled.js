@@ -24,7 +24,7 @@ export const Data = styled.div`
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
-  padding: 20px;
+  padding: 0 20px 0;
   justify-content: space-between;
   -webkit-justify-content: space-between;
 `
@@ -84,7 +84,7 @@ export const Value = styled.p`
   margin: 0;
 `
 export const Remove = styled.div`
-  height: 100%;
+  height: max-content;
   width: 20%;
   display: flex;
   align-items: center;
@@ -97,12 +97,10 @@ export const RemoveBtn = styled.button`
   display: flex;
   align-items: center;
   -webkit-align-items: center;
+  color: #5b5b5b;
 
   &:focus {
     outline: none;
-  }
-  &:hover svg g path {
-    stroke: #ff0043;
   }
 `
 export const Image = styled.img`

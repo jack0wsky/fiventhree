@@ -14,6 +14,8 @@ import {
 } from '../reducers'
 import { handleLineItems } from '../reducers/lineItemsReducer'
 import { handleInPostModal } from '../reducers/inPostReducer'
+import { SelectedInPostLocker } from '../reducers/inPostLockerReducer'
+import { shippingMethod } from '../reducers/shippingMethodReducer'
 import styled from 'styled-components'
 
 const combine = combineReducers({
@@ -25,11 +27,16 @@ const combine = combineReducers({
   handleLineItems,
   modal: handleModal,
   inpost: handleInPostModal,
+  locker: SelectedInPostLocker,
+  shippingMethod,
 })
 
 //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
-export const store = createStore(combine)
+export const store = createStore(
+  combine,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
 
 const MainWrapper = styled.main`
   width: 100vw;

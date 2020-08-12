@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { colors } from '../../../theme'
+import gsap from 'gsap'
+import { CSSPlugin } from 'gsap/CSSPlugin'
+gsap.registerPlugin(CSSPlugin)
 
 const Overlay = styled.div`
   width: 100vw;
@@ -13,8 +16,9 @@ const Overlay = styled.div`
   opacity: 0.5;
 `
 
-const RedOverlay = () => {
-  return <Overlay />
+const RedOverlay = ({ cartAnimation }) => {
+  const overlay = useRef()
+  return <Overlay ref={overlay} />
 }
 
 export default RedOverlay

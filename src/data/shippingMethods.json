@@ -1,0 +1,14 @@
+[
+  {
+    "key": 1,
+    "label": "Kurier",
+    "price": 12.99,
+    "selected": false
+  },
+  {
+    "key": 2,
+    "label": "Punkt odbioru",
+    "price": 8.99,
+    "selected": true
+  }
+]

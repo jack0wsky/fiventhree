@@ -54,6 +54,7 @@ class Content extends Component {
       switchTabs: false,
       checkIfAvailable: true,
       adding: false,
+      inPostLocker: true,
     }
     this.sizes = createRef()
   }
@@ -89,9 +90,13 @@ class Content extends Component {
     }
   }
 
+  addingToCart = () => {
+    this.setState({ adding: !this.state.adding })
+  }
   handleAddToCart = async (product, variant) => {
     const cacheExist = localStorage.getItem('cart')
     const { dispatch, cart } = this.props
+    this.addingToCart()
     dispatch(
       addToCart(
         product,
@@ -101,6 +106,9 @@ class Content extends Component {
         this.state.quantity
       )
     )
+    setTimeout(() => {
+      this.addingToCart()
+    }, 1000)
     dispatch(setLineItems(variant.shopifyId, this.state.quantity))
     const exitingCart = localStorage.getItem('cart')
     if (exitingCart) {
@@ -175,7 +183,7 @@ class Content extends Component {
             <Text>{product.description}</Text>
           )}
         </Description>
-        <Shipping />
+        <Shipping inPostLocker={this.state.inPostLocker} />
         <AddToCart>
           <DecrementQuantity
             onClick={() =>
@@ -188,7 +196,7 @@ class Content extends Component {
           </DecrementQuantity>
           <Add onClick={() => this.handleAddToCart(product, variant)}>
             {this.state.adding
-              ? 'loading...'
+              ? 'Dodany!'
               : `Dodaj ${this.state.quantity} do koszyka`}
           </Add>
           <IncrementQuantity

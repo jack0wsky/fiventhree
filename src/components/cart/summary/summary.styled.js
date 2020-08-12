@@ -63,11 +63,39 @@ export const ContinueBtn = styled.button`
   }
 `
 export const InPostBtn = styled.button`
-  width: 100%;
-  height: 50px;
+  width: ${({ inPost }) => (inPost ? '75%' : '100%')};
+  height: 100%;
   border: none;
   background-color: #000;
   color: #fff;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+`
+export const ShippingStatus = styled.div`
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  align-items: center;
+  -webkit-align-items: center;
+`
+export const SelectedLocker = styled.div`
+  height: 100%;
+  width: 80%;
+  background-color: #000;
+`
+export const SelectedValue = styled.p`
+  color: #fff;
+`
+export const ChangeBtn = styled.button`
+  height: 100%;
+  padding: 15px 30px 15px;
+  width: max-content;
+  border: 1px solid #000;
   cursor: pointer;
 
   &:focus {

@@ -1,5 +1,14 @@
 import React, { Component, createRef } from 'react'
-import { CartWrapper, Header, Exit, Line, Grid } from './cart.styled'
+import {
+  CartWrapper,
+  Header,
+  Exit,
+  Line,
+  Grid,
+  CartPlaceholder,
+  Text,
+  CTA,
+} from './cart.styled'
 import { connect } from 'react-redux'
 import gsap from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
@@ -9,7 +18,6 @@ import { toggleCart } from '../../actions/toggleCart'
 import { getFromLocalStorage } from '../../actions/getFromLocalStorage'
 import CartProduct from './cartProduct/cartProduct'
 import Summary from './summary/summary'
-import axios from 'axios'
 
 gsap.registerPlugin(CSSPlugin, EasePack, Power2)
 
@@ -34,14 +42,6 @@ class Cart extends Component {
       ease: Power2.easeOut,
     })
     this.showCartProducts()
-    const data = await this.getInPost()
-  }
-
-  componentWillUnmount() {
-    gsap.to(this.cart.current, {
-      opacity: 0,
-      ease: Power2.easeOut,
-    })
   }
 
   handleQuantityUpdate = () => {
@@ -56,47 +56,55 @@ class Cart extends Component {
     sum += 8.99
     return sum.toFixed(2)
   }
+  closeCart = () => {
+    const { handleCartAnimation } = this.props
+    handleCartAnimation()
+    gsap.to(this.cart.current, {
+      opacity: 0,
+      x: '100%',
+      ease: Power2.easeOut,
+      duration: 0.3,
+    })
+    setTimeout(() => {
+      this.props.dispatch(toggleCart())
+    }, 300)
+  }
 
   showCartProducts = () => {
     const { cart, dispatch } = this.props
     const cartData = localStorage.getItem('cart')
     console.log('cart state', cart)
     console.log('cart from cache', JSON.parse(cartData))
-    /*cart.map((product) => {
-        return (
-          <CartProduct
-            quantityUpdate={this.state.quantityUpdate}
-            handleQuantityUpdate={this.handleQuantityUpdate}
-            key={product.key}
-            product={product}
-          />
-        )
-      })*/
   }
 
   render() {
-    const { dispatch, cart } = this.props
+    const { cart } = this.props
     return (
       <CartWrapper ref={this.cart} toggle={this.props.toggleCart}>
         <Header>
-          <Exit onClick={() => dispatch(toggleCart())}>
+          <Exit onClick={() => this.closeCart()}>
             <Line />
             <Line />
           </Exit>
         </Header>
         <Grid length={cart.length}>
-          {cart.length > 0
-            ? cart.map((product) => {
-                return (
-                  <CartProduct
-                    quantityUpdate={this.state.quantityUpdate}
-                    handleQuantityUpdate={this.handleQuantityUpdate}
-                    key={product.id}
-                    product={product}
-                  />
-                )
-              })
-            : null}
+          {cart.length > 0 ? (
+            cart.map((product) => {
+              return (
+                <CartProduct
+                  quantityUpdate={this.state.quantityUpdate}
+                  handleQuantityUpdate={this.handleQuantityUpdate}
+                  key={product.id}
+                  product={product}
+                />
+              )
+            })
+          ) : (
+            <CartPlaceholder>
+              <Text>Trochę tu pusto, nie sądzisz?</Text>
+              <CTA onClick={() => this.closeCart()}>Dodaj produkty</CTA>
+            </CartPlaceholder>
+          )}
         </Grid>
         {cart.length > 0 ? (
           <Summary

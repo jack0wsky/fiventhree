@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import {
   Wrapper,
   Divider,
+  ShippingStatus,
   Shipping,
   Label,
   Value,
@@ -10,10 +11,14 @@ import {
   Price,
   ContinueBtn,
   InPostBtn,
+  SelectedLocker,
+  SelectedValue,
+  ChangeBtn,
 } from './summary.styled'
 import Client from 'shopify-buy'
 import Spinner from '../../loadingSpinner/spinner'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { handleInPostModal } from '../../../actions/handleInPostModal'
 
 let client
 
@@ -21,7 +26,11 @@ const Summary = ({ total }) => {
   const lineItems = useSelector((state) => state.handleLineItems)
   const cart = useSelector((state) => state.handleCart)
   const checkoutId = useSelector((state) => state.id)
+  const inPost = useSelector((state) => state.locker)
+  const shippingMethod = useSelector((state) => state.shippingMethod)
+  const dispatch = useDispatch()
   const [request, setRequest] = useState(false)
+
   useEffect(() => {
     client = Client.buildClient({
       storefrontAccessToken: process.env.GATSBY_STOREFRONT_ACCESS_TOKEN,
@@ -31,19 +40,49 @@ const Summary = ({ total }) => {
   const handleRequest = () => {
     setRequest(!request)
   }
-  const handleInPostModal = () => {}
   const handleCheckout = async () => {
+    const inPostLocker = {
+      customAttributes: [
+        { key: 'Nazwa paczkomatu', value: inPost.name },
+        { key: 'Ulica', value: inPost.street },
+        { key: 'Kod pocztowy', value: inPost.postCode },
+        { key: 'Miasto', value: inPost.city },
+      ],
+    }
     handleRequest()
+    await client.checkout.addLineItems(checkoutId, lineItems).then(() => {
+      handleRequest()
+    })
+
     await client.checkout
-      .addLineItems(checkoutId, lineItems)
+      .updateAttributes(checkoutId, inPostLocker)
       .then((checkout) => {
+        // Do something with the updated checkout
+        console.log(checkout)
         window.open(checkout.webUrl)
-        handleRequest()
       })
   }
+  const deliveryPoint = localStorage.getItem('deliveryPoint')
+  console.log(JSON.parse(deliveryPoint), inPost)
   return (
     <Wrapper>
-      <InPostBtn onClick={() => handleInPostModal}>Wybierz paczkomat</InPostBtn>
+      {inPost === null || deliveryPoint === null ? (
+        <ShippingStatus>
+          <InPostBtn
+            inPost={inPost}
+            onClick={() => dispatch(handleInPostModal())}
+          >
+            Wybierz paczkomat
+          </InPostBtn>
+        </ShippingStatus>
+      ) : (
+        <ShippingStatus>
+          <SelectedLocker>
+            <SelectedValue>Wybrany:</SelectedValue>
+          </SelectedLocker>
+          <ChangeBtn>Zmień</ChangeBtn>
+        </ShippingStatus>
+      )}
       <Divider />
       <Shipping>
         <Label>Dostawa</Label>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useStaticQuery, graphql } from 'gatsby'
 import { useSelector } from 'react-redux'
@@ -35,6 +35,7 @@ const Layout = ({ children }) => {
   const toggleCart = useSelector((state) => state.toggleCart)
   const toggleMenu = useSelector((state) => state.handleMenu)
   const inpost = useSelector((state) => state.inpost)
+  const [cartAnimation, setCartAnimation] = useState(false)
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -44,6 +45,10 @@ const Layout = ({ children }) => {
       }
     }
   `)
+
+  const handleCartAnimation = () => {
+    setCartAnimation(!cartAnimation)
+  }
 
   const {
     site: { siteMetadata },
@@ -60,8 +65,8 @@ const Layout = ({ children }) => {
       <MobileCart />
       <BurgerMenu />
       <Menu />
-      {toggleCart ? <Cart /> : null}
-      {toggleCart ? <RedOverlay /> : null}
+      {toggleCart ? <Cart handleCartAnimation={handleCartAnimation} /> : null}
+      {toggleCart ? <RedOverlay cartAnimation={cartAnimation} /> : null}
       {toggleMenu ? <RedOverlay /> : null}
       {children}
     </Wrapper>

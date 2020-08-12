@@ -1,5 +1,5 @@
 const initState = {
-  toggleModal: true,
+  toggleModal: false,
 }
 
 export const handleInPostModal = (state = initState.toggleModal, action) => {
