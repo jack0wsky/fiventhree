@@ -63,11 +63,10 @@ const Summary = ({ total }) => {
       })
   }
   const deliveryPoint = localStorage.getItem('deliveryPoint')
-  console.log(JSON.parse(deliveryPoint), inPost)
   return (
     <Wrapper>
       {inPost === null || deliveryPoint === null ? (
-        <ShippingStatus>
+        <ShippingStatus inPost={inPost}>
           <InPostBtn
             inPost={inPost}
             onClick={() => dispatch(handleInPostModal())}
@@ -76,11 +75,15 @@ const Summary = ({ total }) => {
           </InPostBtn>
         </ShippingStatus>
       ) : (
-        <ShippingStatus>
+        <ShippingStatus inPost={inPost}>
           <SelectedLocker>
-            <SelectedValue>Wybrany:</SelectedValue>
+            <SelectedValue>{inPost.name}</SelectedValue>
+            <SelectedValue>{inPost.street}</SelectedValue>
+            <SelectedValue>{inPost.city}</SelectedValue>
           </SelectedLocker>
-          <ChangeBtn>Zmień</ChangeBtn>
+          <ChangeBtn onClick={() => dispatch(handleInPostModal())}>
+            Zmień
+          </ChangeBtn>
         </ShippingStatus>
       )}
       <Divider />
@@ -96,7 +99,7 @@ const Summary = ({ total }) => {
         {request ? (
           <Spinner width={'30px'} borderColor={'#fff'} color={'#000'} />
         ) : null}
-        Checkout
+        Przejdź do kasy
       </ContinueBtn>
     </Wrapper>
   )

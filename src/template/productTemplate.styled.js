@@ -55,7 +55,7 @@ export const Gallery = styled.section`
 `
 export const ImagesContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: auto;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 
@@ -68,7 +68,7 @@ export const ImagesContainer = styled.div`
 `
 export const ClickableImage = styled.button`
   width: 100%;
-  height: 100%;
+  height: 70vh;
   border: none;
   background: transparent;
   display: flex;

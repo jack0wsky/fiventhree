@@ -18,7 +18,6 @@ import {
   Value,
   Remove,
   RemoveBtn,
-  Image,
 } from './cartProduct.styled'
 import Cancel from './removeIcon/removeIcon'
 

@@ -5,6 +5,7 @@ const initState = {
   handleCheckout: '',
   checkoutId: '',
   modal: '',
+  cartCache: [],
 }
 
 export const handleMenu = (state = initState.toggleMenu, action) => {
@@ -31,6 +32,14 @@ export const handleCart = (state = initState.handleCart, action) => {
       return [...state, action.payload]
     }
     case 'REMOVE_FROM_CART': {
+      const cachedCart = JSON.parse(localStorage.getItem('cart'))
+      if (cachedCart) {
+        const filteredCache = cachedCart.filter((item) => {
+          return item.shopifyId !== action.payload
+        })
+        initState.cartCache = filteredCache
+        return state
+      }
       return state.filter((item) => {
         return item.shopifyId !== action.payload
       })

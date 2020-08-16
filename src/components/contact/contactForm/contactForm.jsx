@@ -12,7 +12,6 @@ import {
 } from './contactForm.styled'
 import contactProblems from '../../../data/contactProblems.json'
 import emailjs from 'emailjs-com'
-import Success from './success/success'
 
 class ContactForm extends Component {
   state = {

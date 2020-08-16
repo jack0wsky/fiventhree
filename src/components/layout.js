@@ -8,10 +8,9 @@ import Menu from './menu/menu'
 import MobileCart from './mobileCart/mobileCart'
 import Cart from './cart/cart'
 import RedOverlay from './overlays/redOverlay'
-import Footer from './footer/footer'
 import styled, { createGlobalStyle } from 'styled-components'
 import InPostModal from './inPost/inPost'
-import { Helmet } from 'react-helmet'
+import SEO from './seo'
 import '../fonts/medium.css'
 import '../fonts/bold.css'
 import '../fonts/xbold.css'
@@ -41,6 +40,7 @@ const Layout = ({ children }) => {
       site {
         siteMetadata {
           title
+          description
         }
       }
     }
@@ -56,10 +56,11 @@ const Layout = ({ children }) => {
   return (
     <Wrapper>
       <GlobalStyle />
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>{siteMetadata.title}</title>
-      </Helmet>
+      <SEO
+        title={siteMetadata.title}
+        lang={'pl-PL'}
+        description={siteMetadata.description}
+      />
       <Header />
       {inpost ? <InPostModal /> : null}
       <MobileCart />

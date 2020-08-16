@@ -35,15 +35,13 @@ exports.createPages = async ({ graphql, actions }) => {
                     tracedSVG
                     base64
                     srcSetWebp
-                  }
-                  fixed(width: 400) {
-                    base64
-                    tracedSVG
+                    presentationWidth
+                    presentationHeight
                   }
                 }
               }
             }
-            description
+            descriptionHtml
             productType
             shopifyId
             variants {

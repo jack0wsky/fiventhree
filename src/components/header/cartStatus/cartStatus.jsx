@@ -6,6 +6,7 @@ import { toggleCart } from '../../../actions/toggleCart'
 import { ActiveBackground } from '../header.styled'
 import gsap from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
+gsap.registerPlugin(CSSPlugin)
 
 const CartStatus = () => {
   const dispatch = useDispatch()
@@ -13,8 +14,13 @@ const CartStatus = () => {
   const cart = useSelector((state) => state.handleCart)
   const activeBackground = useRef()
   const getProductsAmount = () => {
+    const existingCart = JSON.parse(localStorage.getItem('cart'))
     if (cart.length > 0) {
       return cart.reduce((acc, cur) => {
+        return (acc += cur.quantity)
+      }, 0)
+    } else if (existingCart) {
+      return existingCart.reduce((acc, cur) => {
         return (acc += cur.quantity)
       }, 0)
     }

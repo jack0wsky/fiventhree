@@ -7,6 +7,8 @@ export const PointWrapper = styled.div`
   padding: 20px;
   border-bottom: 1px solid #ccc;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
 `
 export const Address = styled.h3`
   font-size: 1em;
@@ -16,15 +18,36 @@ export const Description = styled.p`
   font-family: 'Helvetica Neue', sans-serif;
 `
 export const ChooseBtn = styled.button`
-  width: 100%;
-  font-size: 1em;
-  border: none;
-  padding: 15px 30px 15px;
+  width: max-content;
+  padding: 10px 20px 10px;
   cursor: pointer;
-  background-color: ${colors.action};
-  color: #fff;
+  border: 1px solid ${colors.action};
+  color: ${colors.action};
+  background: transparent;
+  transition: 0.3s ease-in-out;
 
   &:focus {
     outline: none;
   }
+  &:hover {
+    border: 3px solid ${colors.action};
+    transition: 0.3s ease-in-out;
+  }
 `
+export const IconWrapper = styled.div`
+  height: 100%;
+  width: 15%;
+  display: flex;
+  justify-content: center;
+  -webkit-justify-content: center;
+  align-items: center;
+  -webkit-align-items: center;
+`
+export const DataWrapper = styled.div`
+  height: auto;
+  width: 50%;
+  display: flex;
+  flex-flow: column;
+  -webkit-flex-flow: column;
+`
+export const OpeningHours = styled.p``

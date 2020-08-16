@@ -1,7 +1,6 @@
 import React, { Component, createRef } from 'react'
 import { connect } from 'react-redux'
 import { addToCart } from '../../actions/addToCart'
-import { toggleCart } from '../../actions/toggleCart'
 import { setLineItems } from '../../actions/setLineItems'
 import Shipping from './shipping/shipping'
 import Client from 'shopify-buy'
@@ -22,26 +21,35 @@ import {
   Add,
   IncrementQuantity,
   MobileAddToCart,
-  Button,
-  Icon,
-  Line,
-  MobileIncrement,
-  MobileDecrement,
   DescriptionHead,
-  ToggleBtn,
+  MobileButton,
+  MobileQuantity,
+  MobileDecrement,
+  MobileValue,
+  MobileIncrement,
+  MobileSizes,
+  BasicsWrapper,
 } from './content.styled'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import Size from './size/size'
 import { setCheckoutId } from '../../actions/setCheckoutId'
 import CartStatus from '../../components/header/cartStatus/cartStatus'
 import SizesTable from './sizesTable/sizesTable'
-import AddToCartIcon from './addToCartIcon'
+import gsap from 'gsap'
+import { CSSPlugin } from 'gsap/CSSPlugin'
 import { colors } from '../../theme'
+import { Link } from 'gatsby'
+gsap.registerPlugin(CSSPlugin)
 
 const mapStateToProps = (state) => ({
   cart: state.handleCart,
   checkoutId: state.id,
 })
+
+const ifActive = {
+  color: '#fff',
+  backgroundColor: '#000',
+}
 
 class Content extends Component {
   constructor() {
@@ -55,10 +63,13 @@ class Content extends Component {
       checkIfAvailable: true,
       adding: false,
       inPostLocker: true,
+      sizes: [],
     }
     this.sizes = createRef()
+    this.mobileBtn = createRef()
+    this.description = createRef()
   }
-  componentDidMount() {
+  componentDidMount = async () => {
     const { dispatch, product } = this.props
     this.client = Client.buildClient({
       storefrontAccessToken: process.env.GATSBY_STOREFRONT_ACCESS_TOKEN,
@@ -67,36 +78,42 @@ class Content extends Component {
     this.client.checkout.create().then((checkout) => {
       dispatch(setCheckoutId(checkout.attrs.id.value))
     })
-    this.fetchSizes(product)
+    await this.fetchSizes(product)
   }
+
   fetchSizes = async (item) => {
-    const cachedSizes = localStorage.getItem('product')
-    if (cachedSizes) {
-      const parsed = JSON.parse(cachedSizes)
-      if (parsed.id !== item.shopifyId) {
-        localStorage.removeItem('product')
-        await this.client.product
-          .fetch(item.shopifyId)
-          .then((fetchedProduct) => {
-            localStorage.setItem('product', JSON.stringify(fetchedProduct))
-          })
-      }
-    } else {
-      await this.client.product.fetch(item.shopifyId).then((fetchedProduct) => {
-        this.setState({ sizes: fetchedProduct }, () => {
-          localStorage.setItem('product', JSON.stringify(this.state.sizes))
+    await this.client.product.fetch(item.shopifyId).then(({ variants }) => {
+      this.setState({ sizes: variants }, () => {
+        const cache = JSON.parse(localStorage.getItem('product'))
+        cache.variants.forEach(({ available }) => {
+          console.log(available)
         })
       })
-    }
+    })
   }
 
   addingToCart = () => {
     this.setState({ adding: !this.state.adding })
   }
-  handleAddToCart = async (product, variant) => {
-    const cacheExist = localStorage.getItem('cart')
-    const { dispatch, cart } = this.props
+  handleAddToCart = (product, variant, e) => {
+    const { dispatch } = this.props
+    if (e.target.name === 'mobile') {
+      gsap.to(this.mobileBtn.current, {
+        width: '100%',
+        backgroundColor: '#0bb300',
+        duration: 0.3,
+      })
+      setTimeout(() => {
+        gsap.to(this.mobileBtn.current, {
+          width: '50%',
+          backgroundColor: colors.action,
+          duration: 0.3,
+        })
+      }, 1000)
+    }
+
     this.addingToCart()
+
     dispatch(
       addToCart(
         product,
@@ -110,25 +127,10 @@ class Content extends Component {
       this.addingToCart()
     }, 1000)
     dispatch(setLineItems(variant.shopifyId, this.state.quantity))
-    const exitingCart = localStorage.getItem('cart')
-    if (exitingCart) {
-      localStorage.setItem('cart', JSON.stringify(cart))
-    } else {
-      localStorage.setItem('cart', JSON.stringify(cart))
-    }
-  }
-  componentDidUpdate() {
-    const { cart } = this.props
-    const exitingCart = localStorage.getItem('cart')
-    if (exitingCart) {
-      localStorage.setItem('cart', JSON.stringify(cart))
-    } else {
-      localStorage.setItem('cart', JSON.stringify(cart))
-    }
   }
 
   render() {
-    const { dispatch, product, setImage, variant } = this.props
+    const { product, variant } = this.props
     const cachedProduct = JSON.parse(localStorage.getItem('product'))
     return (
       <ContentWrapper>
@@ -138,36 +140,32 @@ class Content extends Component {
           </AniLink>
           <CartStatus />
         </CartHeader>
-        <MobileAddToCart>
-          <Button onClick={() => this.handleAddToCart(product, variant)}>
-            <Icon>
-              <Line />
-              <Line />
-            </Icon>
-          </Button>
-        </MobileAddToCart>
-        <Head>
-          <Type>{product.productType}</Type>
-          <Name>{product.title}</Name>
-        </Head>
-        <Price>{variant.price} PLN</Price>
-        <Sizes id="sizes">
-          {cachedProduct
-            ? cachedProduct.variants.map((option) => {
+        <BasicsWrapper>
+          <Head>
+            <Type>{product.productType}</Type>
+            <Name>{product.title}</Name>
+          </Head>
+          <Price>{variant.price} PLN</Price>
+          <Sizes id="sizes">
+            {this.state.sizes ? (
+              this.state.sizes.map(({ title, available, sku }) => {
                 return (
                   <Size
-                    available={option.available}
-                    title={option.title}
-                    sku={option.sku}
-                    key={option.sku}
+                    available={available}
+                    title={title}
+                    sku={sku}
+                    key={sku}
                   />
                 )
               })
-            : null}
-        </Sizes>
-        {this.state.checkIfAvailable ? null : (
-          <Error>Size isn't available</Error>
-        )}
+            ) : (
+              <p>Sprawdzam dostepność</p>
+            )}
+          </Sizes>
+          {this.state.checkIfAvailable ? null : (
+            <Error>Size isn't available</Error>
+          )}
+        </BasicsWrapper>
         <Description>
           <DescriptionHead switch={this.state.switchTabs}>
             <Title onClick={() => this.setState({ switchTabs: false })}>
@@ -180,7 +178,9 @@ class Content extends Component {
           {this.state.switchTabs ? (
             <SizesTable />
           ) : (
-            <Text>{product.description}</Text>
+            <Text
+              dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+            />
           )}
         </Description>
         <Shipping inPostLocker={this.state.inPostLocker} />
@@ -194,7 +194,7 @@ class Content extends Component {
           >
             -
           </DecrementQuantity>
-          <Add onClick={() => this.handleAddToCart(product, variant)}>
+          <Add onClick={(e) => this.handleAddToCart(product, variant, e)}>
             {this.state.adding
               ? 'Dodany!'
               : `Dodaj ${this.state.quantity} do koszyka`}
@@ -202,13 +202,61 @@ class Content extends Component {
           <IncrementQuantity
             onClick={() =>
               this.setState((prevState) => ({
-                quantity: Math.max(prevState.quantity + 1, 1),
+                quantity: prevState.quantity + 1,
               }))
             }
           >
             +
           </IncrementQuantity>
         </AddToCart>
+
+        <MobileAddToCart>
+          <MobileSizes>
+            {cachedProduct ? (
+              cachedProduct.variants.map((option) => {
+                return (
+                  <Link
+                    to={`/produkty/${option.sku}`}
+                    available={option.available}
+                    key={option.sku}
+                    activeStyle={ifActive}
+                  >
+                    {option.title}
+                  </Link>
+                )
+              })
+            ) : (
+              <p>loading...</p>
+            )}
+          </MobileSizes>
+          <MobileQuantity>
+            <MobileDecrement
+              onClick={() =>
+                this.setState((prevState) => ({
+                  quantity: Math.max(prevState.quantity - 1, 1),
+                }))
+              }
+            >
+              -
+            </MobileDecrement>
+            <MobileValue>{this.state.quantity}</MobileValue>
+            <MobileIncrement
+              onClick={() =>
+                this.setState((prevState) => ({
+                  quantity: prevState.quantity + 1,
+                }))
+              }
+            >
+              +
+            </MobileIncrement>
+          </MobileQuantity>
+          <MobileButton
+            ref={this.mobileBtn}
+            onClick={(e) => this.handleAddToCart(product, variant, e)}
+          >
+            Dodaj do koszyka
+          </MobileButton>
+        </MobileAddToCart>
       </ContentWrapper>
     )
   }

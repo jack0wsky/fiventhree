@@ -3,7 +3,6 @@ import {
   TemplateWrapper,
   Gallery,
   ImagesContainer,
-  MainImage,
   ClickableImage,
 } from './productTemplate.styled'
 import Content from './content/content'
@@ -14,54 +13,56 @@ import { handleModal } from '../actions/handleModal'
 import Img from 'gatsby-image'
 const ProductTemplate = ({ pageContext: { product, variant } }) => {
   const dispatch = useDispatch()
-  const [defaultImage, setDefaultImage] = useState(
-    product.images[0].localFile.childImageSharp.fluid.src
-  )
   const [toggleModal, setModal] = useState(false)
-  const rest = useRef()
-  const openModal = (img) => {
-    dispatch(handleModal(img.localFile.childImageSharp.fluid.src))
+  const [height, setHeight] = useState(0)
+  const [width, setWidth] = useState(0)
+
+  const openModal = (img, height, width) => {
+    setHeight(height)
+    setWidth(width)
+    dispatch(handleModal(img))
     setModal(!toggleModal)
   }
   const closeModal = () => {
     setModal(!toggleModal)
   }
-  const setImage = (src, e) => {
-    const images = [...rest.current.children]
-    images.forEach((img) => {
-      img.style.border = 'none'
-    })
-    e.currentTarget.style.border = '4px solid #ff0043'
-    setDefaultImage(src)
-  }
   return (
     <TemplateWrapper>
-      {toggleModal ? <ImageModal closeModal={closeModal} /> : null}
+      {toggleModal ? (
+        <ImageModal height={height} width={width} closeModal={closeModal} />
+      ) : null}
       <Gallery>
         <AniLink cover to="/">
           Powrót
         </AniLink>
         <ImagesContainer>
           {product.images.map((img) => {
+            const {
+              localFile: {
+                childImageSharp: {
+                  fluid: { presentationWidth, presentationHeight },
+                },
+              },
+            } = img
             return (
-              <ClickableImage>
+              <ClickableImage
+                onClick={() =>
+                  openModal(img, presentationHeight, presentationWidth)
+                }
+              >
                 <Img
-                  fadeIn="true"
+                  fadeIn={true}
                   backgroundColor="#ffffff"
                   objectFit="cover"
                   fluid={img.localFile.childImageSharp.fluid}
+                  alt="zdjęcia produktu"
                 />
               </ClickableImage>
             )
           })}
         </ImagesContainer>
       </Gallery>
-      <Content
-        key={variant.shopifyId}
-        setImage={setImage}
-        product={product}
-        variant={variant}
-      />
+      <Content key={variant.shopifyId} product={product} variant={variant} />
     </TemplateWrapper>
   )
 }

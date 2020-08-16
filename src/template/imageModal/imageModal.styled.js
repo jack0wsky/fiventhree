@@ -15,23 +15,38 @@ export const ModalWrapper = styled.div`
   -webkit-align-items: center;
 `
 export const SelectedImageContainer = styled.div`
-  width: 90%;
-  height: 90%;
+  width: 800px;
+  height: 1200px;
   background-color: #fff;
-  overflow: hidden;
+  overflow: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-`
-export const Image = styled.img`
-  object-fit: cover;
-  height: 100%;
+  transform-origin: center 0;
+
+  div {
+    height: 100%;
+    width: 100%;
+  }
 `
 export const CloseBtn = styled.button`
   width: 40px;
   height: 40px;
   position: absolute;
-  right: 5vw;
+  border-radius: 50%;
+  background-color: #fff;
+  border: none;
+  z-index: 50;
+  left: 5vw;
   top: 5vw;
+  display: flex;
+  justify-content: center;
+  -webkit-justify-content: center;
+  align-items: center;
+  -webkit-align-items: center;
+
+  &:focus {
+    outline: none;
+  }
 `

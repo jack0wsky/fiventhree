@@ -1,8 +1,15 @@
 import React from 'react'
-import { Wrapper } from './leftSide.styled'
+import { Wrapper, ImageWrapper, Image } from './leftSide.styled'
+import contactImg from '../../../assets/contact.jpg'
 
 const LeftSide = () => {
-  return <Wrapper></Wrapper>
+  return (
+    <Wrapper>
+      <ImageWrapper>
+        <Image src={contactImg} alt="contact" />
+      </ImageWrapper>
+    </Wrapper>
+  )
 }
 
 export default LeftSide

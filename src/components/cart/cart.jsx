@@ -5,9 +5,9 @@ import {
   Exit,
   Line,
   Grid,
-  CartPlaceholder,
+  EmptyPlaceholder,
   Text,
-  CTA,
+  Illustration,
 } from './cart.styled'
 import { connect } from 'react-redux'
 import gsap from 'gsap'
@@ -15,9 +15,10 @@ import { CSSPlugin } from 'gsap/CSSPlugin'
 import { EasePack } from 'gsap/EasePack'
 import { Power2 } from 'gsap/all'
 import { toggleCart } from '../../actions/toggleCart'
-import { getFromLocalStorage } from '../../actions/getFromLocalStorage'
 import CartProduct from './cartProduct/cartProduct'
 import Summary from './summary/summary'
+import EmptyCart from '../../assets/empty-cart.svg'
+import AniLink from 'gatsby-plugin-transition-link/AniLink'
 
 gsap.registerPlugin(CSSPlugin, EasePack, Power2)
 
@@ -35,6 +36,7 @@ class Cart extends Component {
     }
     this.cart = createRef()
   }
+  // pushes data from cache to redux when cart mounts
   componentDidMount = async () => {
     gsap.from(this.cart.current, {
       opacity: 0,
@@ -71,10 +73,56 @@ class Cart extends Component {
   }
 
   showCartProducts = () => {
-    const { cart, dispatch } = this.props
-    const cartData = localStorage.getItem('cart')
-    console.log('cart state', cart)
-    console.log('cart from cache', JSON.parse(cartData))
+    const { cart } = this.props
+    const existingInCache = localStorage.getItem('cart')
+    if (cart.length > 0) {
+      return cart.map((product) => {
+        return (
+          <CartProduct
+            quantityUpdate={this.state.quantityUpdate}
+            handleQuantityUpdate={this.handleQuantityUpdate}
+            key={product.shopifyId}
+            product={product}
+          />
+        )
+      })
+    } else {
+      if (existingInCache) {
+        const cachedCart = JSON.parse(existingInCache)
+        return cachedCart.map((product) => {
+          return (
+            <CartProduct
+              quantityUpdate={this.state.quantityUpdate}
+              handleQuantityUpdate={this.handleQuantityUpdate}
+              key={product.id}
+              product={product}
+            />
+          )
+        })
+      }
+    }
+  }
+
+  showSummary = () => {
+    const { cart } = this.props
+    let existingCache = localStorage.getItem('cart')
+    if (cart.length > 0) {
+      return (
+        <Summary
+          quantityUpdate={this.state.quantityUpdate}
+          total={this.getTotalPrice}
+        />
+      )
+    } else {
+      if (existingCache) {
+        return (
+          <Summary
+            quantityUpdate={this.state.quantityUpdate}
+            total={this.getTotalPrice}
+          />
+        )
+      }
+    }
   }
 
   render() {
@@ -87,31 +135,29 @@ class Cart extends Component {
             <Line />
           </Exit>
         </Header>
-        <Grid length={cart.length}>
+        <Grid length={cart.length} cache={localStorage.getItem('cart')}>
           {cart.length > 0 ? (
             cart.map((product) => {
               return (
                 <CartProduct
                   quantityUpdate={this.state.quantityUpdate}
                   handleQuantityUpdate={this.handleQuantityUpdate}
-                  key={product.id}
+                  key={product.shopifyId}
                   product={product}
                 />
               )
             })
           ) : (
-            <CartPlaceholder>
-              <Text>Trochę tu pusto, nie sądzisz?</Text>
-              <CTA onClick={() => this.closeCart()}>Dodaj produkty</CTA>
-            </CartPlaceholder>
+            <EmptyPlaceholder>
+              <Illustration src={EmptyCart} alt="emptyCart" />
+              <Text>Trochę tu pusto</Text>
+              <AniLink cover bg={'#fff'} to="/produkty">
+                Dodaj produkty
+              </AniLink>
+            </EmptyPlaceholder>
           )}
         </Grid>
-        {cart.length > 0 ? (
-          <Summary
-            quantityUpdate={this.state.quantityUpdate}
-            total={this.getTotalPrice}
-          />
-        ) : null}
+        {this.showSummary()}
       </CartWrapper>
     )
   }

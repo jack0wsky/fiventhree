@@ -18,8 +18,8 @@ export const ContentWrapper = styled.section`
   @media all and (max-width: ${small}) {
     position: relative;
     width: 100%;
-    padding: 0 5vw 5vw;
-    height: 80vh;
+    padding: 0 5vw 10vh;
+    height: auto;
   }
   @media all and (min-width: ${small}) and (max-width: ${medium}) {
     position: relative;
@@ -53,6 +53,13 @@ export const ContentWrapper = styled.section`
     margin: auto;
   }
 `
+export const BasicsWrapper = styled.section`
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-flow: column;
+  -webkit-flex-flow: column;
+`
 export const CartHeader = styled.div`
   width: 100%;
   height: 100px;
@@ -66,6 +73,7 @@ export const CartHeader = styled.div`
     text-decoration: none;
     color: #000;
     transition: 0.3s ease-in-out;
+
     &:hover {
       transition: 0.3s ease-in-out;
       color: ${colors.action};
@@ -73,17 +81,14 @@ export const CartHeader = styled.div`
   }
 
   @media all and (max-width: ${small}) {
-    display: none;
+    height: auto;
+    margin: 3vh 0 0;
   }
 `
 export const Head = styled.div`
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
-
-  @media all and (max-width: ${small}) {
-    margin: 5vh 0 0;
-  }
 `
 export const Type = styled.p`
   opacity: 0.5;
@@ -185,52 +190,6 @@ export const Description = styled.section`
     width: 100%;
   }
 `
-export const ToggleBtn = styled.button`
-  height: 40px;
-  width: 40px;
-  border: none;
-  background-color: #000;
-  display: flex;
-  justify-content: center;
-  -webkit-justify-content: center;
-  align-items: center;
-  -webkit-align-items: center;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-  }
-`
-export const Icon = styled.div`
-  display: none;
-
-  span:nth-child(2) {
-    position: absolute;
-    transform: rotate(90deg);
-  }
-
-  @media all and (max-width: ${small}) {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    -webkit-justify-content: center;
-    align-items: center;
-    -webkit-align-items: center;
-    position: relative;
-  }
-`
-export const Line = styled.span`
-  display: none;
-
-  @media all and (max-width: ${small}) {
-    display: block;
-    height: 3px;
-    border-radius: 20px;
-    width: 100%;
-    background-color: #fff;
-  }
-`
 export const Title = styled.button`
   font-size: 1.1em;
   border: none;
@@ -247,11 +206,52 @@ export const Text = styled.p`
   font-size: 1em;
   font-family: 'Roboto', sans-serif;
   transition: 0.3s ease-in-out;
-  height: 100px;
+  height: auto;
+
+  p:nth-child(2),
+  p:nth-child(4),
+  p:nth-child(6) {
+    margin: 25px 0 0;
+  }
+  p:nth-child(2),
+  p:nth-child(4) {
+    position: relative;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: -30%;
+      width: 100%;
+      height: 2px;
+      background-color: #e2e2e2;
+    }
+  }
+  ul {
+    margin: 0 0 0 20px;
+    li {
+      list-style-type: none;
+      position: relative;
+
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: -5%;
+        height: 6px;
+        width: 6px;
+        margin: -3px 0 0;
+        border-radius: 50%;
+        background-color: ${colors.action};
+      }
+    }
+  }
 `
 export const AddToCart = styled.section`
-  width: max-content;
+  width: 100%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   -webkit-align-items: center;
 
@@ -274,6 +274,7 @@ export const Add = styled.button`
   height: 60px;
   padding: 15px 30px 15px;
   font-size: 1em;
+  width: calc(100% - 120px);
   background-color: ${colors.action};
   border: none;
   cursor: pointer;
@@ -289,58 +290,76 @@ export const MobileAddToCart = styled.section`
 
   @media all and (max-width: ${small}) {
     display: flex;
-    width: 90%;
-    height: 70px;
-    position: absolute;
-    left: 50%;
-    margin: -35px 0 0 -45%;
-    top: 0;
+    width: 100%;
     border: none;
-    justify-content: flex-end;
-    -webkit-justify-content: flex-end;
+    flex-flow: column;
+    -webkit-flex-flow: column;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
     align-items: center;
     -webkit-align-items: center;
+    height: 140px;
+    position: fixed;
+    z-index: 50;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
 
     &:focus {
       outline: none;
     }
   }
 `
-export const Button = styled.button`
-  display: none;
-
-  @media all and (max-width: ${small}) {
-    display: flex;
-    justify-content: center;
-    -webkit-justify-content: center;
-    align-items: center;
-    -webkit-align-items: center;
-    font-size: 1em;
-    font-weight: 600;
-    text-transform: uppercase;
-    border-radius: 50px;
-    color: #fff;
-    border: none;
-    height: 70px;
-    width: 70px;
-    background-color: ${colors.action};
-
-    &:focus {
-      outline: none;
-    }
-  }
-`
-export const MobileIncrement = styled.button`
-  height: 100%;
-  width: 70px;
-  font-size: 1em;
-  color: #fff;
-  border-radius: 50%;
-  background-color: ${colors.action};
+export const MobileButton = styled.button`
+  width: 50%;
   border: none;
+  height: 50%;
+  background-color: ${colors.action};
+  color: #fff;
+  padding: 20px 40px 20px;
+  transition: 0.3s ease-in-out;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+`
+export const MobileQuantity = styled.section`
+  width: 50%;
+  height: 50%;
+  display: flex;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  align-items: center;
+  -webkit-align-items: center;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+`
+export const MobileDecrement = styled.button`
+  height: 100%;
+  font-size: 1.2em;
+  width: 30%;
+  border: none;
+  background-color: transparent;
 
   &:focus {
     outline: none;
   }
 `
-export const MobileDecrement = styled(MobileIncrement)``
+export const MobileValue = styled.p``
+export const MobileIncrement = styled(MobileDecrement)``
+export const MobileSizes = styled.div`
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: space-between;
+
+  a {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+  }
+`

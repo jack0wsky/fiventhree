@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { small, medium, large } from '../breakpoints'
+import { small, medium } from '../breakpoints'
 import { colors } from '../../theme'
 
 export const MobileCartWrapper = styled.button`

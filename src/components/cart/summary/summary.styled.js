@@ -76,7 +76,8 @@ export const InPostBtn = styled.button`
 `
 export const ShippingStatus = styled.div`
   width: 100%;
-  height: 50px;
+  height: auto;
+  min-height: 50px;
   display: flex;
   justify-content: space-between;
   -webkit-justify-content: space-between;
@@ -85,8 +86,9 @@ export const ShippingStatus = styled.div`
 `
 export const SelectedLocker = styled.div`
   height: 100%;
-  width: 80%;
-  background-color: #000;
+  width: 70%;
+  background-color: #0cc43a;
+  color: #fff;
 `
 export const SelectedValue = styled.p`
   color: #fff;
@@ -95,8 +97,9 @@ export const ChangeBtn = styled.button`
   height: 100%;
   padding: 15px 30px 15px;
   width: max-content;
-  border: 1px solid #000;
+  border: 2px solid #000;
   cursor: pointer;
+  background: transparent;
 
   &:focus {
     outline: none;

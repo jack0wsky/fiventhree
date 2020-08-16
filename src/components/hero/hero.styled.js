@@ -47,30 +47,3 @@ export const Overlay = styled.div`
     height: 60vh;
   }
 `
-export const FloatingContainer = styled.div`
-  position: absolute;
-  z-index: 20;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 80vh;
-  display: flex;
-  justify-content: center;
-  -webkit-justify-content: center;
-  align-items: center;
-  -webkit-align-items: center;
-  overflow: hidden;
-  @media all and (max-width: ${small}) {
-    height: 60vh;
-  }
-`
-export const FloatingImg = styled.img`
-  height: 85%;
-  display: flex;
-  align-self: flex-end;
-  object-fit: cover;
-
-  @media all and (max-width: ${small}) {
-    height: 70%;
-  }
-`

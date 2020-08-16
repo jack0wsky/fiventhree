@@ -1,7 +1,18 @@
 import React, { useState } from 'react'
-import { PointWrapper, Address, Description, ChooseBtn } from './points.styled'
+import {
+  PointWrapper,
+  Address,
+  Description,
+  ChooseBtn,
+  IconWrapper,
+  DataWrapper,
+  OpeningHours,
+} from './points.styled'
 import { useDispatch } from 'react-redux'
 import { provideInPostLocker } from '../../../actions/provideInPostLocker'
+import { handleInPostModal } from '../../../actions/handleInPostModal'
+import Pin from '../pinIcon/pinIcon'
+import { colors } from '../../../theme'
 
 const InPostPoints = ({ point }) => {
   const [toggle, setToggle] = useState(false)
@@ -24,6 +35,7 @@ const InPostPoints = ({ point }) => {
       localStorage.setItem('deliveryPoint', JSON.stringify(data))
       dispatch(provideInPostLocker(point))
     }
+    dispatch(handleInPostModal())
   }
   return (
     <PointWrapper
@@ -32,11 +44,15 @@ const InPostPoints = ({ point }) => {
       }}
       toggle={toggle}
     >
-      <Address>{point.address.line1}</Address>
-      <Description>{point.location_description}</Description>
-      {toggle ? (
-        <ChooseBtn onClick={() => choosePoint(point)}>Wybierz</ChooseBtn>
-      ) : null}
+      <IconWrapper>
+        <Pin height={'35px'} color={colors.darkRed} />
+      </IconWrapper>
+      <DataWrapper>
+        <Address>{point.address.line1}</Address>
+        <Description>{point.location_description}</Description>
+        <OpeningHours>{point.opening_hours}</OpeningHours>
+      </DataWrapper>
+      <ChooseBtn onClick={() => choosePoint(point)}>Wybierz</ChooseBtn>
     </PointWrapper>
   )
 }

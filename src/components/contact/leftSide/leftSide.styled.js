@@ -10,10 +10,18 @@ export const Wrapper = styled.section`
     display: none;
   }
 `
-export const ImageContainer = styled.div`
-  width: 200px;
-  height: 200px;
+export const ImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #bf0000;
+  mix-blend-mode: multiply;
 `
-export const Img = styled.img`
+export const Image = styled.img`
   object-fit: cover;
+  height: 100%;
+  width: 100%;
 `

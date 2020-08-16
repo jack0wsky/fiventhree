@@ -1,5 +1,4 @@
 import React from 'react'
-import SEO from '~/components/seo'
 import Hero from '../components/hero/hero'
 import Products from '../products/products'
 import { createStore, combineReducers } from 'redux'
@@ -33,10 +32,7 @@ const combine = combineReducers({
 
 //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
-export const store = createStore(
-  combine,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)
+export const store = createStore(combine)
 
 const MainWrapper = styled.main`
   width: 100vw;

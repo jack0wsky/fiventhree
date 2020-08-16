@@ -5,7 +5,6 @@ import Img from 'gatsby-image'
 import {
   ProductWrapper,
   ImageSlider,
-  Image,
   Details,
   Name,
   Price,
@@ -14,8 +13,7 @@ import {
   OnHover,
 } from './product.styled'
 
-const Product = ({ product }) => {
-  const { node: item } = product
+const Product = ({ product: { node: item } }) => {
   return (
     <ProductWrapper>
       <ImageSlider>

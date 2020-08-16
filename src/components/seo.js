@@ -2,12 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
+import favicon from '../images/fiventhree-favicon.svg'
 
 function SEO({ description, lang, meta, keywords, title }) {
   return (
     <StaticQuery
       query={detailsQuery}
-      render={data => {
+      render={(data) => {
         const metaDescription =
           description || data.site.siteMetadata.description
         return (
@@ -16,7 +17,6 @@ function SEO({ description, lang, meta, keywords, title }) {
               lang,
             }}
             title={title}
-            titleTemplate={`%s | ${data.site.siteMetadata.title}`}
             meta={[
               {
                 name: `description`,
@@ -34,22 +34,6 @@ function SEO({ description, lang, meta, keywords, title }) {
                 property: `og:type`,
                 content: `website`,
               },
-              {
-                name: `twitter:card`,
-                content: `summary`,
-              },
-              {
-                name: `twitter:creator`,
-                content: data.site.siteMetadata.author,
-              },
-              {
-                name: `twitter:title`,
-                content: title,
-              },
-              {
-                name: `twitter:description`,
-                content: metaDescription,
-              },
             ]
               .concat(
                 keywords.length > 0
@@ -60,6 +44,9 @@ function SEO({ description, lang, meta, keywords, title }) {
                   : []
               )
               .concat(meta)}
+            link={[
+              { rel: 'shortcut icon', type: 'image/svg', href: `${favicon}` },
+            ]}
           />
         )
       }}

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { colors } from '../../theme'
-import { small, medium, large, xlarge } from '../breakpoints'
+import { medium, large, xlarge } from '../breakpoints'
 
 export const CartWrapper = styled.section`
   width: 35vw;
@@ -31,8 +31,8 @@ export const Header = styled.div`
   padding: 0 2vw 0;
 `
 export const Exit = styled.button`
-  width: 50px;
   height: 50px;
+  width: 50px;
   border: none;
   background: none;
   &:focus {
@@ -72,8 +72,8 @@ export const Grid = styled.section`
   width: 100%;
   padding: 0 2vw 0;
 
-  ${({ length }) => {
-    if (length > 0) {
+  ${({ length, cache }) => {
+    if (length > 0 || cache) {
       return `
           display: grid;
           grid-template-columns: 100%;
@@ -93,27 +93,25 @@ export const Grid = styled.section`
     }
   }};
 `
-export const CartPlaceholder = styled.div`
-  font-size: 1em;
+export const EmptyPlaceholder = styled.div`
   display: flex;
   flex-flow: column;
+  -webkit-flex-flow: column;
   align-items: center;
   -webkit-align-items: center;
-  height: auto;
-  width: 70%;
-`
-export const Text = styled.p`
-  font-size: 1em;
-`
-export const CTA = styled.button`
-  border: none;
-  padding: 15px 30px 15px;
-  background-color: ${colors.action};
-  color: #fff;
-  cursor: pointer;
-  margin: 30px 0 0;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  height: 20vh;
 
-  &:focus {
-    outline: none;
+  a {
+    text-decoration: none;
+    color: #fff;
+    padding: 15px 30px 15px;
+    background-color: ${colors.action};
   }
+`
+export const Text = styled.p``
+export const Illustration = styled.img`
+  width: 100%;
+  opacity: 0.2;
 `

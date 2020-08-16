@@ -7,6 +7,7 @@ import {
   SearchInput,
   ExitBtn,
   Wrapper,
+  MapContainer,
   PointsGrid,
   FetchPlaceholder,
   UseGPSBtn,
@@ -14,13 +15,20 @@ import {
   CurrentPage,
   DecrementPagination,
   IncrementPagination,
+  PointData,
+  MapPoint,
+  Name,
+  OpenLabel,
+  Street,
+  City,
+  SelectBtn,
 } from './inPost.styled'
 import axios from 'axios'
 import InPostPoints from './points/points'
 import ReactMapboxGl, { Marker } from 'react-mapbox-gl'
-import MapPoint from './mapPoint/mapPoint'
 import { connect } from 'react-redux'
 import { handleInPostModal } from '../../actions/handleInPostModal'
+import { provideInPostLocker } from '../../actions/provideInPostLocker'
 import Pin from './pinIcon/pinIcon'
 import { colors } from '../../theme'
 import gsap from 'gsap'
@@ -28,13 +36,17 @@ import { CSSPlugin } from 'gsap/CSSPlugin'
 import NavArrowRight from './pagination/rightArrow'
 import NavArrowLeft from './pagination/leftArrow'
 import Cancel from './exit'
+import { OpeningHours } from './points/points.styled'
 gsap.registerPlugin(CSSPlugin)
 
 const Map = ReactMapboxGl({
   accessToken: process.env.GATSBY_MAPBOXGL_TOKEN,
 })
 
-const mapStateToProps = (state) => ({ modal: state.inpost })
+const mapStateToProps = (state) => ({
+  modal: state.inpost,
+  locker: state.locker,
+})
 
 class InPostModal extends Component {
   constructor() {
@@ -78,7 +90,6 @@ class InPostModal extends Component {
         }
       )
       .then((result) => {
-        console.log(result)
         this.setState({
           inPostPoints: result.data.items,
           fetchedInPost: true,
@@ -93,7 +104,6 @@ class InPostModal extends Component {
     if (navigator.geolocation) {
       this.setState({ getPosition: true })
       navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position.coords)
         this.setState(
           {
             longitude: position.coords.longitude,
@@ -113,33 +123,45 @@ class InPostModal extends Component {
     } = point
     this.setState({ longitude: longitude, latitude: latitude })
   }
-  handleCity = (e) => {
-    console.log('handleCity')
-    this.setState({ searchInput: e.target.value }, () => {
-      setTimeout(async () => {
-        await axios
-          .get(
-            `https://api-shipx-pl.easypack24.net/v1/points/?city=${this.state.searchInput}&page=${this.state.currentPage}&relative_point=${this.state.latitude},${this.state.longitude}`,
-            {
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${process.env.GATSBY_INPOST_TOKEN}`,
-              },
-            }
-          )
-          .then((result) => {
-            this.setState({
-              inPostPoints: result.data.items,
-              fetchedInPost: true,
-              getPosition: false,
-              zoom: 12,
-              currentPage: result.data.page,
-              totalPages: result.data.total_pages,
+  formatCityName = (name) => {
+    const capital = name.slice(0, 1).toUpperCase()
+    const rest = name.slice(1, name.length).toLowerCase()
+    return capital.concat(rest)
+  }
+  handleCity = async (e, state) => {
+    this.setState(
+      { searchInput: e.target !== null ? e.target.value : state },
+      () => {
+        console.log(typeof parseInt(this.state.searchInput))
+        setTimeout(async () => {
+          await axios
+            .get(
+              `https://api-shipx-pl.easypack24.net/v1/points/?city=${this.formatCityName(
+                this.state.searchInput
+              )}&page=${this.state.currentPage}`,
+              {
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${process.env.GATSBY_INPOST_TOKEN}`,
+                },
+              }
+            )
+            .then((result) => {
+              this.setState({
+                inPostPoints: result.data.items,
+                fetchedInPost: true,
+                getPosition: false,
+                zoom: 12,
+                currentPage: result.data.page,
+                totalPages: result.data.total_pages,
+                longitude: result.data.items[0].location.longitude,
+                latitude: result.data.items[0].location.latitude,
+              })
             })
-          })
-          .catch((err) => console.log(err))
-      }, 1200)
-    })
+            .catch((err) => console.log(err))
+        }, 1200)
+      }
+    )
   }
   closeModal = () => {
     gsap.to(this.modal.current, {
@@ -161,7 +183,11 @@ class InPostModal extends Component {
       this.setState(
         (prevState) => ({ currentPage: prevState.currentPage + 1 }),
         async () => {
-          await this.getInPost()
+          if (this.state.searchInput !== '') {
+            await this.handleCity(e, this.state.searchInput)
+          } else {
+            await this.getInPost()
+          }
         }
       )
     } else if (e.currentTarget.name === 'decrement') {
@@ -169,22 +195,56 @@ class InPostModal extends Component {
         this.setState(
           (prevState) => ({ currentPage: prevState.currentPage - 1 }),
           async () => {
-            await this.getInPost()
+            if (this.state.searchInput !== '') {
+              await this.handleCity(e, this.state.searchInput)
+            } else {
+              await this.getInPost()
+            }
           }
         )
       }
     }
   }
+  selectPointOnMap = (point) => {
+    const { dispatch } = this.props
+    this.setState({
+      longitude: point.location.longitude,
+      latitude: point.location.latitude,
+    })
+    dispatch(provideInPostLocker(point))
+  }
+  // TODO show placeholder
+  renderResults = () => {
+    if (this.state.getPosition) {
+      return <FetchPlaceholder>Pobieranie lokalizacji...</FetchPlaceholder>
+    } else {
+      return this.state.inPostPoints.map((point) => {
+        return <InPostPoints key={point.href} point={point} />
+      })
+    }
+    if (this.state.searchInput !== '') {
+      return this.state.inPostPoints.map((point) => {
+        return <InPostPoints key={point.href} point={point} />
+      })
+    }
+    return (
+      <FetchPlaceholder>
+        Wpisz miasto lub użyj swojej lokalizacji, aby znaleźć najbliższy
+        paczkomat
+      </FetchPlaceholder>
+    )
+  }
 
   render() {
     const { inPostPoints } = this.state
+    const { locker, dispatch } = this.props
     return (
       <ModalWrapper>
         <Modal ref={this.modal}>
           <Header>
             <SearchInput
               onChange={(e) => this.handleCity(e)}
-              placeholder="Szukaj..."
+              placeholder="Wpisz nazwę miasta lub kod pocztowy..."
               type="search"
             />
             <UseGPSBtn onClick={() => this.getLocation()}>
@@ -197,13 +257,7 @@ class InPostModal extends Component {
           </Header>
           <Wrapper>
             <PointsGrid fetched={inPostPoints}>
-              {this.state.getPosition ? (
-                <FetchPlaceholder>Pobieranie lokalizacji...</FetchPlaceholder>
-              ) : (
-                inPostPoints.map((point) => {
-                  return <InPostPoints key={point.href} point={point} />
-                })
-              )}
+              {this.renderResults()}
               {inPostPoints.length > 0 ? (
                 <Pagination>
                   <DecrementPagination
@@ -224,38 +278,52 @@ class InPostModal extends Component {
                 </Pagination>
               ) : null}
             </PointsGrid>
-            <Map
-              style="mapbox://styles/mapbox/streets-v9"
-              containerStyle={{
-                height: '100%',
-                width: '50%',
-              }}
-              zoom={[this.state.zoom]}
-              movingMethod={'easeTo'}
-              center={[this.state.longitude, this.state.latitude]}
-              flyToOptions={{
-                center: [this.state.longitude, this.state.latitude],
-              }}
-            >
-              {inPostPoints.length > 0
-                ? inPostPoints.map((point) => {
-                    const {
-                      location: { longitude, latitude },
-                    } = point
-                    return (
-                      <Marker coordinates={[longitude, latitude]}>
-                        <MapPoint
+            <MapContainer>
+              {locker ? (
+                <PointData>
+                  <Name>{locker.name}</Name>
+                  <OpenLabel>Godziny otwarcia</OpenLabel>
+                  <OpeningHours>{locker.openingHours}</OpeningHours>
+                  <Street>
+                    {locker.street}, {locker.city}
+                  </Street>
+                  <SelectBtn onClick={() => this.closeModal()}>
+                    Wybierz
+                  </SelectBtn>
+                </PointData>
+              ) : null}
+              <Map
+                style="mapbox://styles/mapbox/streets-v9"
+                containerStyle={{
+                  height: '100%',
+                  width: '100%',
+                }}
+                zoom={[this.state.zoom]}
+                movingMethod={'easeTo'}
+                center={[this.state.longitude, this.state.latitude]}
+                flyToOptions={{
+                  center: [this.state.longitude, this.state.latitude],
+                }}
+              >
+                {inPostPoints.length > 0
+                  ? inPostPoints.map((point) => {
+                      const {
+                        location: { longitude, latitude },
+                      } = point
+                      return (
+                        <Marker
                           key={point.href}
-                          longitude={this.state.longitude}
-                          latitude={this.state.latitude}
-                          centerMapOnActivePoint={this.centerMapOnActivePoint}
-                          point={point}
-                        />
-                      </Marker>
-                    )
-                  })
-                : null}
-            </Map>
+                          coordinates={[longitude, latitude]}
+                        >
+                          <MapPoint
+                            onClick={() => this.selectPointOnMap(point)}
+                          />
+                        </Marker>
+                      )
+                    })
+                  : null}
+              </Map>
+            </MapContainer>
           </Wrapper>
         </Modal>
         <Fade ref={this.fade} />

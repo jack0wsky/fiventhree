@@ -10,9 +10,9 @@ export const Button = styled.button`
     background-color: #000;
     position: fixed;
     z-index: 50;
-    bottom: 5vw;
+    bottom: 15vw;
     right: 5vw;
-    display: flex;
+    display: ${({ hide }) => (hide ? 'none' : 'flex')};
     justify-content: center;
     -webkit-justify-content: center;
     align-items: center;

@@ -1,19 +1,32 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import {
   ModalWrapper,
   SelectedImageContainer,
-  Image,
   CloseBtn,
 } from './imageModal.styled'
 import { useSelector } from 'react-redux'
+import Img from 'gatsby-image'
+import Cancel from '../../components/inPost/exit'
+import gsap from 'gsap'
+import { CSSPlugin } from 'gsap/CSSPlugin'
+gsap.registerPlugin(CSSPlugin)
 
-const ImageModal = ({ closeModal }) => {
+const ImageModal = ({ closeModal, width, height }) => {
   const modal = useSelector((state) => state.modal)
+  const container = useRef()
+  useEffect(() => {
+    gsap.from(container.current, {
+      height: 0,
+      duration: 0.7,
+    })
+  }, [])
   return (
     <ModalWrapper>
-      <SelectedImageContainer>
-        <CloseBtn onClick={() => closeModal()}></CloseBtn>
-        <Image src={modal} />
+      <SelectedImageContainer width={width} height={height} ref={container}>
+        <CloseBtn onClick={() => closeModal()}>
+          <Cancel color={'#000'} height={'30px'} />
+        </CloseBtn>
+        <Img fluid={modal.localFile.childImageSharp.fluid} />
       </SelectedImageContainer>
     </ModalWrapper>
   )

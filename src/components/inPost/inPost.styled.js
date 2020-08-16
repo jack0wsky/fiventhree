@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { colors } from '../../theme'
-import { small, medium, large } from '../breakpoints'
+import { small, large } from '../breakpoints'
 
 export const ModalWrapper = styled.div`
   width: 100vw;
@@ -22,13 +22,17 @@ export const Fade = styled.div`
   background-color: rgba(0, 0, 0, 0.77);
 `
 export const Modal = styled.section`
-  width: 60vw;
+  width: 65vw;
   height: 60vh;
   background-color: #fff;
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
 
+  @media all and (max-width: ${small}) {
+    width: 100%;
+    height: 100%;
+  }
   @media all and (min-width: ${small}) and (max-width: ${large}) {
     width: 80vw;
   }
@@ -43,6 +47,10 @@ export const Header = styled.div`
   -webkit-align-items: center;
   padding: 20px;
   background-color: #efefef;
+
+  @media all and (max-width: ${small}) {
+    height: 15vh;
+  }
 `
 export const SearchInput = styled.input`
   height: 100%;
@@ -50,6 +58,14 @@ export const SearchInput = styled.input`
   padding: 20px;
   font-size: 1em;
   border: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  @media all and (max-width: ${small}) {
+    width: 85%;
+  }
 `
 export const ExitBtn = styled.button`
   width: 50px;
@@ -71,14 +87,23 @@ export const Wrapper = styled.div`
   height: calc(100% - 80px);
   display: flex;
   justify-content: space-between;
+
+  @media all and (max-width: ${small}) {
+    flex-flow: column;
+    -webkit-flex-flow: column;
+  }
 `
-export const Map = styled.section`
+export const MapContainer = styled.div`
   height: 100%;
-  width: 50%;
-  background-color: #ccc;
+  width: 55%;
+  position: relative;
+
+  @media all and (max-width: ${small}) {
+    width: 100%;
+  }
 `
 export const PointsGrid = styled.section`
-  width: 50%;
+  width: 45%;
   height: 100%;
   padding: 60px 0 0;
   position: relative;
@@ -102,6 +127,10 @@ export const PointsGrid = styled.section`
   }};
 
   overflow: auto;
+
+  @media all and (max-width: ${small}) {
+    display: none;
+  }
 `
 export const UseGPSBtn = styled.button`
   border: none;
@@ -115,12 +144,15 @@ export const UseGPSBtn = styled.button`
   &:focus {
     outline: none;
   }
+  @media all and (max-width: ${small}) {
+    display: none;
+  }
 `
 export const FetchPlaceholder = styled.p`
   text-align: center;
 `
 export const Pagination = styled.div`
-  width: 50%;
+  width: 45%;
   height: 60px;
   padding: 0 20px 0;
   display: flex;
@@ -149,3 +181,50 @@ export const DecrementPagination = styled.button`
   }
 `
 export const IncrementPagination = styled(DecrementPagination)``
+
+export const PointData = styled.div`
+  width: 50%;
+  height: 15vh;
+  background-color: #fff;
+  position: absolute;
+  z-index: 50;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-flow: column;
+  -webkit-flex-flow: column;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  padding: 10px;
+`
+export const MapPoint = styled.button`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: ${colors.action};
+  border: 1px solid #fff;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+`
+export const Name = styled.p``
+export const Street = styled.p``
+export const OpenLabel = styled.p`
+  font-size: 0.9em;
+  color: #b7b7b7;
+`
+export const SelectBtn = styled.button`
+  width: 100%;
+  padding: 15px 30px 15px;
+  background-color: ${colors.action};
+  border: none;
+  color: #fff;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+`
