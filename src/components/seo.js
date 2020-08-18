@@ -1,10 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 import favicon from '../images/fiventhree-favicon.svg'
 
-function SEO({ description, lang, meta, keywords, title }) {
+function SEO({ description, lang, meta, keywords }) {
+  const [dynamicTitle, setTitle] = useState('Fiventhree | Clothing')
+
+  const setDynamicTitle = () => {
+    if (window) {
+      if (window.location.pathname.includes('/produkty')) {
+        setTitle('5&3 | Produkty')
+      }
+      if (window.location.pathname.includes('/kontakt')) {
+        setTitle('5&3 | Kontakt')
+      }
+      if (window.location.pathname === '/') {
+        setTitle('Fiventhree | Clothing')
+      }
+    }
+  }
+  useEffect(() => {
+    setDynamicTitle()
+  })
   return (
     <StaticQuery
       query={detailsQuery}
@@ -16,7 +34,7 @@ function SEO({ description, lang, meta, keywords, title }) {
             htmlAttributes={{
               lang,
             }}
-            title={title}
+            title={dynamicTitle}
             meta={[
               {
                 name: `description`,
@@ -24,7 +42,7 @@ function SEO({ description, lang, meta, keywords, title }) {
               },
               {
                 property: `og:title`,
-                content: title,
+                content: dynamicTitle,
               },
               {
                 property: `og:description`,

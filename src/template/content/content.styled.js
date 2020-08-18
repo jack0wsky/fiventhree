@@ -10,7 +10,7 @@ export const ContentWrapper = styled.section`
   flex-flow: column;
   -webkit-flex-flow: column;
   justify-content: space-between;
-  -webkit-justify-content: space-between;
+  -webkit-justify-content: space-betwen;
   position: fixed;
   right: 0;
   top: 0;
@@ -68,6 +68,9 @@ export const CartHeader = styled.div`
   -webkit-align-items: center;
   justify-content: space-between;
   -webkit-justify-content: space-between;
+  position: relative;
+  z-index: 100;
+  margin: 10vh 0 0;
 
   & > a {
     text-decoration: none;
@@ -311,7 +314,7 @@ export const MobileAddToCart = styled.section`
   }
 `
 export const MobileButton = styled.button`
-  width: 50%;
+  width: 65%;
   border: none;
   height: 50%;
   background-color: ${colors.action};
@@ -323,7 +326,7 @@ export const MobileButton = styled.button`
   bottom: 0;
 `
 export const MobileQuantity = styled.section`
-  width: 50%;
+  width: 35%;
   height: 50%;
   display: flex;
   justify-content: space-between;

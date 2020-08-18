@@ -31,23 +31,13 @@ export const Data = styled.div`
 export const Name = styled.h4`
   font-size: 1em;
   font-family: 'Aktiv Grotesk Ex', sans-serif;
-
-  @media all and (max-width: ${small}) {
-    font-size: 0.8em;
-  }
 `
 export const Price = styled.p`
   font-size: 1em;
-  @media all and (max-width: ${small}) {
-    font-size: 0.8em;
-  }
 `
 export const Size = styled.p`
   font-size: 1em;
   text-transform: uppercase;
-  @media all and (max-width: ${small}) {
-    font-size: 0.8em;
-  }
 `
 export const Quantity = styled.div`
   width: 5vw;

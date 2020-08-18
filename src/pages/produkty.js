@@ -2,6 +2,9 @@ import React from 'react'
 import {
   Wrapper,
   ProductsGrid,
+  Categories,
+  Header,
+  External,
 } from '../components/produktyPage/products.styled'
 import { useStaticQuery, graphql } from 'gatsby'
 import Product from '../components/product/product'
@@ -21,7 +24,10 @@ const Produkty = () => {
               localFile {
                 childImageSharp {
                   fluid {
-                    src
+                    srcWebp
+                    tracedSVG
+                    base64
+                    srcSetWebp
                   }
                   fixed {
                     src
@@ -30,7 +36,10 @@ const Produkty = () => {
               }
             }
             variants {
+              sku
               price
+              title
+              shopifyId
             }
           }
         }
@@ -43,8 +52,8 @@ const Produkty = () => {
   return (
     <Wrapper>
       <ProductsGrid>
-        {edges.map((product) => {
-          return <Product key={product.shopifyId} product={product} />
+        {edges.map(({ node }) => {
+          return <Product key={node.shopifyId} product={node} />
         })}
       </ProductsGrid>
     </Wrapper>
@@ -52,3 +61,10 @@ const Produkty = () => {
 }
 
 export default Produkty
+
+/*
+<Categories>
+        <Header>Kategorie</Header>
+        <External href="#">Naklejki</External>
+      </Categories>
+ */

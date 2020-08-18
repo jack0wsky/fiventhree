@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { medium } from '../../breakpoints'
+import { small, medium } from '../../breakpoints'
+import { colors } from '../../../theme'
 
 export const Wrapper = styled.section`
   width: auto;
@@ -14,7 +15,8 @@ export const Wrapper = styled.section`
   overflow: hidden;
 
   @media all and (max-width: ${medium}) {
-    display: none;
+    padding: 0;
+    overflow: initial;
   }
 `
 export const Length = styled.div`
@@ -30,6 +32,10 @@ export const Length = styled.div`
   -webkit-align-items: center;
   color: #000;
   transition: 0.3s ease-in-out;
+
+  @media all and (max-width: ${medium}) {
+    display: none;
+  }
 `
 export const Cart = styled.button`
   width: 30px;
@@ -42,6 +48,7 @@ export const Cart = styled.button`
   align-items: center;
   -webkit-align-items: center;
   cursor: pointer;
+  position: relative;
 
   &:focus {
     outline: none;
@@ -51,4 +58,24 @@ export const Value = styled.p`
   font-size: 1em;
   font-weight: 600;
   margin: 0;
+`
+export const MobileStatus = styled.div`
+  display: none;
+
+  @media all and (max-width: ${medium}) {
+    width: auto;
+    height: auto;
+    padding: 5px 10px 5px;
+    border-radius: 50%;
+    position: absolute;
+    top: -30%;
+    right: -30%;
+    background-color: ${colors.action};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`
+export const MobileValue = styled.p`
+  color: #fff;
 `

@@ -4,6 +4,7 @@ import {
   Divider,
   ShippingStatus,
   Shipping,
+  Data,
   Label,
   Value,
   Total,
@@ -14,11 +15,13 @@ import {
   SelectedLocker,
   SelectedValue,
   ChangeBtn,
+  PinWrapper,
 } from './summary.styled'
 import Client from 'shopify-buy'
 import Spinner from '../../loadingSpinner/spinner'
 import { useSelector, useDispatch } from 'react-redux'
 import { handleInPostModal } from '../../../actions/handleInPostModal'
+import Pin from '../../inPost/pinIcon/pinIcon'
 
 let client
 
@@ -27,7 +30,6 @@ const Summary = ({ total }) => {
   const cart = useSelector((state) => state.handleCart)
   const checkoutId = useSelector((state) => state.id)
   const inPost = useSelector((state) => state.locker)
-  const shippingMethod = useSelector((state) => state.shippingMethod)
   const dispatch = useDispatch()
   const [request, setRequest] = useState(false)
 
@@ -45,8 +47,8 @@ const Summary = ({ total }) => {
       customAttributes: [
         { key: 'Nazwa paczkomatu', value: inPost.name },
         { key: 'Ulica', value: inPost.street },
-        { key: 'Kod pocztowy', value: inPost.postCode },
-        { key: 'Miasto', value: inPost.city },
+        { key: 'Godziny otwarcia', value: inPost.openingHours },
+        { key: 'Kod pocztowy i miasto', value: inPost.city },
       ],
     }
     handleRequest()
@@ -77,9 +79,14 @@ const Summary = ({ total }) => {
       ) : (
         <ShippingStatus inPost={inPost}>
           <SelectedLocker>
-            <SelectedValue>{inPost.name}</SelectedValue>
-            <SelectedValue>{inPost.street}</SelectedValue>
-            <SelectedValue>{inPost.city}</SelectedValue>
+            <PinWrapper>
+              <Pin height={'25px'} color={'#fff'} />
+            </PinWrapper>
+            <Data>
+              <SelectedValue>{inPost.name}</SelectedValue>
+              <SelectedValue>{inPost.street}</SelectedValue>
+              <SelectedValue>{inPost.city}</SelectedValue>
+            </Data>
           </SelectedLocker>
           <ChangeBtn onClick={() => dispatch(handleInPostModal())}>
             Zmień
@@ -95,12 +102,21 @@ const Summary = ({ total }) => {
         <Text>Suma</Text>
         <Price>{total()} PLN</Price>
       </Total>
-      <ContinueBtn onClick={() => handleCheckout()}>
-        {request ? (
-          <Spinner width={'30px'} borderColor={'#fff'} color={'#000'} />
-        ) : null}
-        Przejdź do kasy
-      </ContinueBtn>
+      {inPost ? (
+        <ContinueBtn onClick={() => handleCheckout()}>
+          {request ? (
+            <Spinner width={'30px'} borderColor={'#fff'} color={'#000'} />
+          ) : null}
+          Przejdź do kasy
+        </ContinueBtn>
+      ) : (
+        <ContinueBtn>
+          {request ? (
+            <Spinner width={'30px'} borderColor={'#fff'} color={'#000'} />
+          ) : null}
+          Przejdź do kasy
+        </ContinueBtn>
+      )}
     </Wrapper>
   )
 }

@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import { medium } from '../breakpoints'
+import { small, medium, large, xlarge } from '../breakpoints'
 
 export const Wrapper = styled.header`
-  height: ${({ minify }) => (minify ? '0' : '100px')};
+  height: 100px;
   width: 100vw;
   background-color: ${({ background }) =>
     background ? '#000' : 'transparent'};
@@ -33,7 +33,7 @@ export const Background = styled.div`
   z-index: -1;
   transition: 0.3s ease-in-out;
   transform-origin: 0 0;
-  bottom: -100%;
+  bottom: 0;
 `
 export const Nav = styled.nav`
   width: 40%;
@@ -58,6 +58,9 @@ export const Nav = styled.nav`
       outline: none;
     }
   }
+  &:hover {
+    height: auto;
+  }
   @media all and (max-width: ${medium}) {
     display: none;
   }
@@ -71,4 +74,66 @@ export const ActiveBackground = styled.div`
   height: 100%;
   background-color: #000;
   transform: translateY(100%);
+
+  @media all and (max-width: ${medium}) {
+    display: none;
+  }
+`
+export const MobileBurger = styled.button`
+  display: none;
+
+  @media all and (max-width: ${medium}) {
+    display: flex;
+    flex-flow: column;
+    -webkit-flex-flow: column;
+    padding: 10px 0 10px;
+    width: 40px;
+    height: 40px;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    background: transparent;
+
+    &:focus {
+      outline: none;
+    }
+  }
+`
+export const Line = styled.span`
+  display: block;
+  width: 70%;
+  height: 2px;
+  background-color: #fff;
+`
+export const RightAside = styled.section`
+  height: 100%;
+  width: 15vw;
+  display: flex;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  align-items: center;
+  -webkit-align-items: center;
+
+  @media all and (max-width: ${medium}) {
+    width: auto;
+  }
+  @media all and (min-width: ${medium}) and (max-width: ${large}) {
+    width: 25vw;
+  }
+  @media all and (min-width: ${large}) and (max-width: ${xlarge}) {
+    width: 20vw;
+  }
+`
+export const SocialMedia = styled.div`
+  width: 80px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  align-items: center;
+  -webkit-align-items: center;
+
+  @media all and (max-width: ${medium}) {
+    display: none;
+  }
 `

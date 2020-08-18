@@ -15,8 +15,8 @@ export const ModalWrapper = styled.div`
   -webkit-align-items: center;
 `
 export const SelectedImageContainer = styled.div`
-  width: 800px;
-  height: 1200px;
+  width: 60vw;
+  height: 85vh;
   background-color: #fff;
   overflow: auto;
   display: flex;

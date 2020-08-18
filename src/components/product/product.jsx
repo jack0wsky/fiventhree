@@ -13,22 +13,22 @@ import {
   OnHover,
 } from './product.styled'
 
-const Product = ({ product: { node: item } }) => {
+const Product = ({ product }) => {
   return (
     <ProductWrapper>
       <ImageSlider>
         <OnHover />
-        <Img fluid={item.images[0].localFile.childImageSharp.fluid} />
+        <Img fluid={product.images[0].localFile.childImageSharp.fluid} />
       </ImageSlider>
       <Details>
-        <Price>{item.variants[0].price} PLN</Price>
+        <Price>{product.variants[0].price} PLN</Price>
         <SecondLine>
           <AniLink
             cover
             bg={colors.darkRed}
-            to={`/produkty/${item.variants[0].sku}`}
+            to={`/produkty/${product.variants[0].sku}`}
           >
-            <Name>{item.title}</Name>
+            <Name>{product.title}</Name>
             <AddToCart>Kup teraz</AddToCart>
           </AniLink>
         </SecondLine>

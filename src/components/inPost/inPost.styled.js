@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { colors } from '../../theme'
-import { small, large } from '../breakpoints'
+import { small, medium, large } from '../breakpoints'
 
 export const ModalWrapper = styled.div`
   width: 100vw;
@@ -49,7 +49,7 @@ export const Header = styled.div`
   background-color: #efefef;
 
   @media all and (max-width: ${small}) {
-    height: 15vh;
+    height: 70px;
   }
 `
 export const SearchInput = styled.input`
@@ -98,7 +98,7 @@ export const MapContainer = styled.div`
   width: 55%;
   position: relative;
 
-  @media all and (max-width: ${small}) {
+  @media all and (max-width: ${medium}) {
     width: 100%;
   }
 `
@@ -128,7 +128,7 @@ export const PointsGrid = styled.section`
 
   overflow: auto;
 
-  @media all and (max-width: ${small}) {
+  @media all and (max-width: ${medium}) {
     display: none;
   }
 `
@@ -196,6 +196,15 @@ export const PointData = styled.div`
   justify-content: space-between;
   -webkit-justify-content: space-between;
   padding: 10px;
+
+  @media all and (max-width: ${small}) {
+    width: 90%;
+    margin: 0 0 0 -45%;
+    height: 25vh;
+  }
+  @media all and (min-width: ${medium}) and (max-width: ${large}) {
+    width: 90%;
+  }
 `
 export const MapPoint = styled.button`
   width: 20px;

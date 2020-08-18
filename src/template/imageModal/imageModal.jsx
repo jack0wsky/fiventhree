@@ -26,7 +26,7 @@ const ImageModal = ({ closeModal, width, height }) => {
         <CloseBtn onClick={() => closeModal()}>
           <Cancel color={'#000'} height={'30px'} />
         </CloseBtn>
-        <Img fluid={modal.localFile.childImageSharp.fluid} />
+        <Img fluid={modal} />
       </SelectedImageContainer>
     </ModalWrapper>
   )

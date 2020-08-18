@@ -33,7 +33,6 @@ import {
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import Size from './size/size'
 import { setCheckoutId } from '../../actions/setCheckoutId'
-import CartStatus from '../../components/header/cartStatus/cartStatus'
 import SizesTable from './sizesTable/sizesTable'
 import gsap from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
@@ -138,7 +137,6 @@ class Content extends Component {
           <AniLink cover to="/">
             Powrót
           </AniLink>
-          <CartStatus />
         </CartHeader>
         <BasicsWrapper>
           <Head>

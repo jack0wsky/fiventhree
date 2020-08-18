@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { small, medium } from '../components/breakpoints'
+import { small, medium, large } from '../components/breakpoints'
 
 export const ProductsWrapper = styled.main`
   width: 100vw;
@@ -11,10 +11,10 @@ export const ProductsWrapper = styled.main`
   align-items: center;
   -webkit-align-items: center;
   @media all and (max-width: ${small}) {
-    padding: 0 5vw 0;
+    padding: 5vw;
   }
-  @media all and (min-width: ${small}) and (max-width: ${medium}) {
-    padding: 0 2vw 0;
+  @media all and (min-width: ${small}) and (max-width: ${large}) {
+    padding: 2vw;
   }
 `
 export const ProductsGrid = styled.section`

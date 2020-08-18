@@ -8,8 +8,10 @@ import {
   EmptyPlaceholder,
   Text,
   Illustration,
+  CTA,
 } from './cart.styled'
 import { connect } from 'react-redux'
+import { navigate } from 'gatsby'
 import gsap from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
 import { EasePack } from 'gsap/EasePack'
@@ -17,8 +19,7 @@ import { Power2 } from 'gsap/all'
 import { toggleCart } from '../../actions/toggleCart'
 import CartProduct from './cartProduct/cartProduct'
 import Summary from './summary/summary'
-import EmptyCart from '../../assets/empty-cart.svg'
-import AniLink from 'gatsby-plugin-transition-link/AniLink'
+import EmptyCart from '../../assets/empty cart.svg'
 
 gsap.registerPlugin(CSSPlugin, EasePack, Power2)
 
@@ -36,7 +37,6 @@ class Cart extends Component {
     }
     this.cart = createRef()
   }
-  // pushes data from cache to redux when cart mounts
   componentDidMount = async () => {
     gsap.from(this.cart.current, {
       opacity: 0,
@@ -48,6 +48,19 @@ class Cart extends Component {
 
   handleQuantityUpdate = () => {
     this.setState({ quantityUpdate: !this.state.quantityUpdate })
+  }
+  addProducts = () => {
+    const { dispatch } = this.props
+    gsap.to(this.cart.current, {
+      opacity: 0,
+      x: '100%',
+      ease: Power2.easeOut,
+      duration: 0.3,
+    })
+    setTimeout(() => {
+      dispatch(toggleCart())
+    }, 300)
+    navigate('/produkty')
   }
 
   getTotalPrice = () => {
@@ -151,9 +164,7 @@ class Cart extends Component {
             <EmptyPlaceholder>
               <Illustration src={EmptyCart} alt="emptyCart" />
               <Text>Trochę tu pusto</Text>
-              <AniLink cover bg={'#fff'} to="/produkty">
-                Dodaj produkty
-              </AniLink>
+              <CTA onClick={() => this.addProducts()}>Dodaj produkty</CTA>
             </EmptyPlaceholder>
           )}
         </Grid>

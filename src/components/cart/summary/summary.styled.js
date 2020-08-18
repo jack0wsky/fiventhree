@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.section`
   width: 100%;
-  height: 23vh;
+  height: auto;
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
@@ -48,6 +48,7 @@ export const ContinueBtn = styled.button`
   align-items: center;
   -webkit-align-items: center;
   transition: 0.3s ease-in-out;
+  height: 70px;
 
   &:focus {
     outline: none;
@@ -64,7 +65,7 @@ export const ContinueBtn = styled.button`
 `
 export const InPostBtn = styled.button`
   width: ${({ inPost }) => (inPost ? '75%' : '100%')};
-  height: 100%;
+  height: ${({ inPost }) => (inPost ? '100%' : '70px')};
   border: none;
   background-color: #000;
   color: #fff;
@@ -77,24 +78,41 @@ export const InPostBtn = styled.button`
 export const ShippingStatus = styled.div`
   width: 100%;
   height: auto;
-  min-height: 50px;
+  min-height: 80px;
   display: flex;
   justify-content: space-between;
   -webkit-justify-content: space-between;
   align-items: center;
   -webkit-align-items: center;
+  padding: ${({ inPost }) => (inPost ? '20px 0 20px' : 0)};
 `
 export const SelectedLocker = styled.div`
   height: 100%;
   width: 70%;
   background-color: #0cc43a;
   color: #fff;
+  padding: 10px 0 10px;
+  display: flex;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+`
+export const PinWrapper = styled.div`
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+export const Data = styled.div`
+  width: 70%;
+  display: flex;
+  flex-flow: column;
+  -webkit-flex-flow: column;
 `
 export const SelectedValue = styled.p`
   color: #fff;
 `
 export const ChangeBtn = styled.button`
-  height: 100%;
+  height: 80px;
   padding: 15px 30px 15px;
   width: max-content;
   border: 2px solid #000;

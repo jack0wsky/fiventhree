@@ -1,54 +1,70 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { Wrapper, Background, Nav, ActiveBackground } from './header.styled'
+import {
+  Wrapper,
+  Background,
+  Nav,
+  ActiveBackground,
+  MobileBurger,
+  Line,
+  RightAside,
+  SocialMedia,
+} from './header.styled'
 import { colors } from '../../theme'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import Logo from '../header/logo/logo'
 import CartStatus from './cartStatus/cartStatus'
+import { toggleMenu } from '../../actions/toggleMenu'
+import { useDispatch } from 'react-redux'
+import FacebookIcon from '../../icons/facebookIcon'
+import InstagramIcon from '../../icons/instagramIcon'
 import gsap from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
 gsap.registerPlugin(CSSPlugin)
+
+let init
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('scroll', () => {
+    setTimeout(() => {
+      init = window.pageYOffset
+    }, 100)
+  })
+}
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false)
   const [minify, setMinified] = useState(false)
   const [background, setBackground] = useState(false)
+  const dispatch = useDispatch()
   const activeBackground = useRef()
+  const backgroundRef = useRef()
+
   useEffect(() => {
     if (window) {
-      if (window.location.href.includes('/produkty/')) {
+      if (window.location.href.includes('/produkty')) {
         setMinified(true)
+        setBackground(true)
       } else {
         setMinified(false)
-      }
-      if (window.location.href.includes('/kontakt')) {
-        gsap.to(activeBackground.current, {
-          translateY: 0,
-          duration: 0.7,
-          delay: 0.8,
-        })
-      } else {
-        gsap.to(activeBackground.current, {
-          translateY: '100%',
-          duration: 0.7,
-          delay: 0.5,
-        })
+        setBackground(false)
       }
       window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 50) {
+        const curScroll = window.pageYOffset
+        if (init < curScroll) {
           setScrolled(true)
         } else {
           setScrolled(false)
         }
       })
-      if (window.location.href.includes('/produkty')) {
-        setBackground(true)
-      } else {
-        setBackground(false)
-      }
     }
-  })
+  }, [])
   return (
     <Wrapper background={background} minify={minify} scrolled={scrolled}>
+      <MobileBurger onClick={() => dispatch(toggleMenu())}>
+        <Line />
+        <Line />
+        <Line />
+      </MobileBurger>
       <AniLink cover bg={colors.darkRed} to="/">
         <Logo color={'#fff'} height={'10px'} />
       </AniLink>
@@ -73,8 +89,14 @@ const Header = () => {
         </AniLink>
         <ActiveBackground ref={activeBackground} />
       </Nav>
-      <CartStatus />
-      <Background />
+      <RightAside>
+        <CartStatus />
+        <SocialMedia>
+          <FacebookIcon color={'#fff'} height={'20px'} />
+          <InstagramIcon height={'20px'} color={'#fff'} />
+        </SocialMedia>
+      </RightAside>
+      <Background ref={backgroundRef} />
     </Wrapper>
   )
 }

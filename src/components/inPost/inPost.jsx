@@ -20,7 +20,6 @@ import {
   Name,
   OpenLabel,
   Street,
-  City,
   SelectBtn,
 } from './inPost.styled'
 import axios from 'axios'
@@ -117,12 +116,6 @@ class InPostModal extends Component {
       })
     }
   }
-  centerMapOnActivePoint = (point) => {
-    const {
-      location: { longitude, latitude },
-    } = point
-    this.setState({ longitude: longitude, latitude: latitude })
-  }
   formatCityName = (name) => {
     const capital = name.slice(0, 1).toUpperCase()
     const rest = name.slice(1, name.length).toLowerCase()
@@ -206,12 +199,11 @@ class InPostModal extends Component {
     }
   }
   selectPointOnMap = (point) => {
-    const { dispatch } = this.props
     this.setState({
       longitude: point.location.longitude,
       latitude: point.location.latitude,
+      zoom: 7,
     })
-    dispatch(provideInPostLocker(point))
   }
   // TODO show placeholder
   renderResults = () => {
@@ -237,14 +229,14 @@ class InPostModal extends Component {
 
   render() {
     const { inPostPoints } = this.state
-    const { locker, dispatch } = this.props
+    const { locker } = this.props
     return (
       <ModalWrapper>
         <Modal ref={this.modal}>
           <Header>
             <SearchInput
               onChange={(e) => this.handleCity(e)}
-              placeholder="Wpisz nazwę miasta lub kod pocztowy..."
+              placeholder="Wpisz nazwę miasta..."
               type="search"
             />
             <UseGPSBtn onClick={() => this.getLocation()}>

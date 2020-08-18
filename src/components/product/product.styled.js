@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { colors } from '../../theme'
-import { small, medium } from '../breakpoints'
+import { small, medium, large } from '../breakpoints'
 
 export const Image = styled.img`
   height: 100%;
@@ -28,7 +28,7 @@ export const ProductWrapper = styled.div`
   @media all and (max-width: ${small}) {
     width: 90vw;
   }
-  @media all and (min-width: ${small}) and (max-width: ${medium}) {
+  @media all and (min-width: ${small}) and (max-width: ${large}) {
     width: 100%;
   }
 `

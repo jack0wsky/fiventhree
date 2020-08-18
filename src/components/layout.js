@@ -63,8 +63,6 @@ const Layout = ({ children }) => {
       />
       <Header />
       {inpost ? <InPostModal /> : null}
-      <MobileCart />
-      <BurgerMenu />
       <Menu />
       {toggleCart ? <Cart handleCartAnimation={handleCartAnimation} /> : null}
       {toggleCart ? <RedOverlay cartAnimation={cartAnimation} /> : null}

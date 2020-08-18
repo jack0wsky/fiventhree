@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { small, medium, large } from '../breakpoints'
+import { small, medium, large, xlarge } from '../breakpoints'
 
 export const HeroWrapper = styled.main`
   width: 100vw;
@@ -29,8 +29,8 @@ export const Image = styled.img`
   object-position: center center;
   width: 100%;
 
-  @media all and (max-width: ${medium}) {
-    height: 150%;
+  @media all and (max-width: ${xlarge}) {
+    height: 100%;
   }
 `
 export const Overlay = styled.div`

@@ -102,16 +102,21 @@ export const EmptyPlaceholder = styled.div`
   justify-content: space-between;
   -webkit-justify-content: space-between;
   height: 20vh;
-
-  a {
-    text-decoration: none;
-    color: #fff;
-    padding: 15px 30px 15px;
-    background-color: ${colors.action};
-  }
 `
 export const Text = styled.p``
 export const Illustration = styled.img`
   width: 100%;
   opacity: 0.2;
+`
+export const CTA = styled.button`
+  color: #fff;
+  padding: 15px 30px 15px;
+  background-color: ${colors.action};
+  border: none;
+  font-size: 1em;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
 `

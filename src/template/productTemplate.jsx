@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import {
   TemplateWrapper,
   Gallery,
@@ -36,30 +36,30 @@ const ProductTemplate = ({ pageContext: { product, variant } }) => {
           Powrót
         </AniLink>
         <ImagesContainer>
-          {product.images.map((img) => {
-            const {
+          {product.images.map(
+            ({
               localFile: {
-                childImageSharp: {
-                  fluid: { presentationWidth, presentationHeight },
-                },
+                childImageSharp: { fluid },
               },
-            } = img
-            return (
-              <ClickableImage
-                onClick={() =>
-                  openModal(img, presentationHeight, presentationWidth)
-                }
-              >
-                <Img
-                  fadeIn={true}
-                  backgroundColor="#ffffff"
-                  objectFit="cover"
-                  fluid={img.localFile.childImageSharp.fluid}
-                  alt="zdjęcia produktu"
-                />
-              </ClickableImage>
-            )
-          })}
+            }) => {
+              const { presentationWidth, presentationHeight } = fluid
+              return (
+                <ClickableImage
+                  onClick={() =>
+                    openModal(fluid, presentationHeight, presentationWidth)
+                  }
+                >
+                  <Img
+                    fadeIn={true}
+                    backgroundColor="#ffffff"
+                    objectFit="cover"
+                    fluid={fluid}
+                    alt="zdjęcia produktu"
+                  />
+                </ClickableImage>
+              )
+            }
+          )}
         </ImagesContainer>
       </Gallery>
       <Content key={variant.shopifyId} product={product} variant={variant} />

@@ -44,11 +44,8 @@ const Products = () => {
   return (
     <ProductsWrapper>
       <ProductsGrid>
-        {edges.map((product) => {
-          const {
-            node: { shopifyId },
-          } = product
-          return <Product key={shopifyId} product={product} />
+        {edges.map(({ node }) => {
+          return <Product key={node.shopifyId} product={node} />
         })}
       </ProductsGrid>
     </ProductsWrapper>
