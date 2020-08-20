@@ -87,7 +87,6 @@ class Cart extends Component {
 
   showCartProducts = () => {
     const { cart } = this.props
-    const existingInCache = localStorage.getItem('cart')
     if (cart.length > 0) {
       return cart.map((product) => {
         return (
@@ -100,25 +99,27 @@ class Cart extends Component {
         )
       })
     } else {
-      if (existingInCache) {
-        const cachedCart = JSON.parse(existingInCache)
-        return cachedCart.map((product) => {
-          return (
-            <CartProduct
-              quantityUpdate={this.state.quantityUpdate}
-              handleQuantityUpdate={this.handleQuantityUpdate}
-              key={product.id}
-              product={product}
-            />
-          )
-        })
+      if (window) {
+        const existingInCache = localStorage.getItem('cart')
+        if (existingInCache) {
+          const cachedCart = JSON.parse(existingInCache)
+          return cachedCart.map((product) => {
+            return (
+              <CartProduct
+                quantityUpdate={this.state.quantityUpdate}
+                handleQuantityUpdate={this.handleQuantityUpdate}
+                key={product.id}
+                product={product}
+              />
+            )
+          })
+        }
       }
     }
   }
 
   showSummary = () => {
     const { cart } = this.props
-    let existingCache = localStorage.getItem('cart')
     if (cart.length > 0) {
       return (
         <Summary
@@ -127,13 +128,16 @@ class Cart extends Component {
         />
       )
     } else {
-      if (existingCache) {
-        return (
-          <Summary
-            quantityUpdate={this.state.quantityUpdate}
-            total={this.getTotalPrice}
-          />
-        )
+      if (window) {
+        let existingCache = localStorage.getItem('cart')
+        if (existingCache) {
+          return (
+            <Summary
+              quantityUpdate={this.state.quantityUpdate}
+              total={this.getTotalPrice}
+            />
+          )
+        }
       }
     }
   }
