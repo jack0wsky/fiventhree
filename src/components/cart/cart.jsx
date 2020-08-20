@@ -99,7 +99,7 @@ class Cart extends Component {
         )
       })
     } else {
-      if (window) {
+      if (typeof window !== 'undefined') {
         const existingInCache = localStorage.getItem('cart')
         if (existingInCache) {
           const cachedCart = JSON.parse(existingInCache)
@@ -128,7 +128,7 @@ class Cart extends Component {
         />
       )
     } else {
-      if (window) {
+      if (typeof window !== 'undefined') {
         let existingCache = localStorage.getItem('cart')
         if (existingCache) {
           return (

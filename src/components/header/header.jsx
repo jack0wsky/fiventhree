@@ -40,7 +40,7 @@ const Header = () => {
   const backgroundRef = useRef()
 
   useEffect(() => {
-    if (window) {
+    if (typeof window !== 'undefined') {
       if (window.location.href.includes('/produkty')) {
         setMinified(true)
         setBackground(true)

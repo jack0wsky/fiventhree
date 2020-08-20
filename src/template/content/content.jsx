@@ -83,7 +83,9 @@ class Content extends Component {
   fetchSizes = async (item) => {
     await this.client.product.fetch(item.shopifyId).then(({ variants }) => {
       this.setState({ sizes: variants }, () => {
-        JSON.parse(localStorage.getItem('product'))
+        if (typeof window !== 'undefined') {
+          JSON.parse(localStorage.getItem('product'))
+        }
       })
     })
   }
