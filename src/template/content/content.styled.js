@@ -24,7 +24,6 @@ export const ContentWrapper = styled.section`
   @media all and (min-width: ${small}) and (max-width: ${medium}) {
     position: relative;
     width: 100%;
-    height: 50%;
     padding: 5vw;
   }
   @media all and (min-width: ${medium}) and (max-width: ${large}) {
@@ -45,12 +44,6 @@ export const ContentWrapper = styled.section`
     @media all and (max-width: ${small}) {
       display: none;
     }
-  }
-
-  @media all and (min-width: ${medium}) and (max-width: ${large}) {
-    padding: 5vw;
-    height: 70%;
-    margin: auto;
   }
 `
 export const BasicsWrapper = styled.section`

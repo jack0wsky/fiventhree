@@ -28,6 +28,7 @@ import ReactMapboxGl, { Marker } from 'react-mapbox-gl'
 import { connect } from 'react-redux'
 import { handleInPostModal } from '../../actions/handleInPostModal'
 import { provideInPostLocker } from '../../actions/provideInPostLocker'
+import { selectLocker } from '../../actions/selectLocker'
 import Pin from './pinIcon/pinIcon'
 import { colors } from '../../theme'
 import gsap from 'gsap'
@@ -45,6 +46,7 @@ const Map = ReactMapboxGl({
 const mapStateToProps = (state) => ({
   modal: state.inpost,
   locker: state.locker,
+  temporaryLockerHolder: state.temporaryInPostHolder,
 })
 
 class InPostModal extends Component {
@@ -60,6 +62,7 @@ class InPostModal extends Component {
       getPosition: false,
       currentPage: 1,
       totalPages: 0,
+      selectedLocker: null,
     }
     this.modal = createRef()
     this.fade = createRef()
@@ -156,7 +159,9 @@ class InPostModal extends Component {
       }
     )
   }
-  closeModal = () => {
+  closeModal = (point) => {
+    const { dispatch } = this.props
+    if (point) dispatch(provideInPostLocker(point))
     gsap.to(this.modal.current, {
       y: 20,
       scale: 0.2,
@@ -168,7 +173,7 @@ class InPostModal extends Component {
       duration: 0.3,
     })
     setTimeout(() => {
-      this.props.dispatch(handleInPostModal())
+      dispatch(handleInPostModal())
     }, 300)
   }
   handlePagination = (e) => {
@@ -199,13 +204,18 @@ class InPostModal extends Component {
     }
   }
   selectPointOnMap = (point) => {
-    this.setState({
-      longitude: point.location.longitude,
-      latitude: point.location.latitude,
-      zoom: 7,
-    })
+    const { dispatch } = this.props
+    this.setState(
+      {
+        longitude: point.location.longitude,
+        latitude: point.location.latitude,
+        zoom: 14,
+      },
+      () => {
+        dispatch(selectLocker(point))
+      }
+    )
   }
-  // TODO show placeholder
   renderResults = () => {
     if (this.state.getPosition) {
       return <FetchPlaceholder>Pobieranie lokalizacji...</FetchPlaceholder>
@@ -229,7 +239,7 @@ class InPostModal extends Component {
 
   render() {
     const { inPostPoints } = this.state
-    const { locker } = this.props
+    const { temporaryLockerHolder } = this.props
     return (
       <ModalWrapper>
         <Modal ref={this.modal}>
@@ -271,15 +281,19 @@ class InPostModal extends Component {
               ) : null}
             </PointsGrid>
             <MapContainer>
-              {locker ? (
+              {temporaryLockerHolder ? (
                 <PointData>
-                  <Name>{locker.name}</Name>
+                  <Name>{temporaryLockerHolder.name}</Name>
                   <OpenLabel>Godziny otwarcia</OpenLabel>
-                  <OpeningHours>{locker.openingHours}</OpeningHours>
+                  <OpeningHours>
+                    {temporaryLockerHolder.openingHours}
+                  </OpeningHours>
                   <Street>
-                    {locker.street}, {locker.city}
+                    {temporaryLockerHolder.street}, {temporaryLockerHolder.city}
                   </Street>
-                  <SelectBtn onClick={() => this.closeModal()}>
+                  <SelectBtn
+                    onClick={() => this.closeModal(temporaryLockerHolder)}
+                  >
                     Wybierz
                   </SelectBtn>
                 </PointData>

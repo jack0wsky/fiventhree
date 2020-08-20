@@ -21,6 +21,7 @@ import Client from 'shopify-buy'
 import Spinner from '../../loadingSpinner/spinner'
 import { useSelector, useDispatch } from 'react-redux'
 import { handleInPostModal } from '../../../actions/handleInPostModal'
+import { resetLocker } from '../../../actions/resetLocker'
 import Pin from '../../inPost/pinIcon/pinIcon'
 
 let client
@@ -42,12 +43,15 @@ const Summary = ({ total }) => {
   const handleRequest = () => {
     setRequest(!request)
   }
+  const handleLockerChange = () => {
+    dispatch(resetLocker())
+    dispatch(handleInPostModal())
+  }
   const handleCheckout = async () => {
     const inPostLocker = {
       customAttributes: [
         { key: 'Nazwa paczkomatu', value: inPost.name },
         { key: 'Ulica', value: inPost.street },
-        { key: 'Godziny otwarcia', value: inPost.openingHours },
         { key: 'Kod pocztowy i miasto', value: inPost.city },
       ],
     }
@@ -59,9 +63,8 @@ const Summary = ({ total }) => {
     await client.checkout
       .updateAttributes(checkoutId, inPostLocker)
       .then((checkout) => {
-        // Do something with the updated checkout
-        console.log(checkout)
         window.open(checkout.webUrl)
+        handleRequest()
       })
   }
   const deliveryPoint = localStorage.getItem('deliveryPoint')
@@ -88,9 +91,7 @@ const Summary = ({ total }) => {
               <SelectedValue>{inPost.city}</SelectedValue>
             </Data>
           </SelectedLocker>
-          <ChangeBtn onClick={() => dispatch(handleInPostModal())}>
-            Zmień
-          </ChangeBtn>
+          <ChangeBtn onClick={() => handleLockerChange()}>Zmień</ChangeBtn>
         </ShippingStatus>
       )}
       <Divider />

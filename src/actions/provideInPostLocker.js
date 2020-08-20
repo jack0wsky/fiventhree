@@ -3,9 +3,9 @@ export const provideInPostLocker = (inpost) => {
     type: 'PROVIDE_INPOST_LOCKER',
     payload: {
       name: inpost.name,
-      street: inpost.address.line1,
+      street: inpost.street,
       openingHours: inpost.opening_hours,
-      city: inpost.address.line2,
+      city: inpost.city,
     },
   }
 }

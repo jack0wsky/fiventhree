@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Stars } from '../../hero/content/content.styled'
 import stars from '../../../assets/stars.png'
 import styled from 'styled-components'
@@ -13,18 +13,7 @@ const Wrapper = styled.div`
 `
 
 const Logo = ({ color, height }) => {
-  const [scrolled, setScrolled] = useState(true)
-  useEffect(() => {
-    /*if (window) {
-      window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 50) {
-          setScrolled(true)
-        } else {
-          setScrolled(false)
-        }
-      })
-    }*/
-  })
+  const [scrolled] = useState(true)
   return (
     <Wrapper>
       <svg
