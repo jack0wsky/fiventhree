@@ -24,6 +24,7 @@ export const ProductsGrid = styled.section`
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 2vw;
   grid-row-gap: 2vw;
+  background-color: #fff;
 
   @media all and (max-width: ${small}) {
     grid-template-columns: 1fr;
