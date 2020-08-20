@@ -11,6 +11,7 @@ import {
 } from './header.styled'
 import { colors } from '../../theme'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
+import { Link } from 'gatsby'
 import Logo from '../header/logo/logo'
 import CartStatus from './cartStatus/cartStatus'
 import { toggleMenu } from '../../actions/toggleMenu'
@@ -68,24 +69,12 @@ const Header = () => {
         <Logo color={'#fff'} height={'10px'} />
       </AniLink>
       <Nav>
-        <AniLink
-          cover
-          bg={'#000000'}
-          direction="top"
-          to="/produkty"
-          activeStyle={{ color: colors.action }}
-        >
+        <Link to="/produkty" activeStyle={{ color: colors.action }}>
           Produkty
-        </AniLink>
-        <AniLink
-          cover
-          bg={'#000000'}
-          direction="top"
-          to="/kontakt"
-          activeStyle={{ color: colors.action }}
-        >
+        </Link>
+        <Link to="/kontakt" activeStyle={{ color: colors.action }}>
           Kontakt
-        </AniLink>
+        </Link>
       </Nav>
       <RightAside>
         <CartStatus />
