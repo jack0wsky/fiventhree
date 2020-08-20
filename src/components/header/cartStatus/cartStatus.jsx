@@ -21,7 +21,7 @@ const CartStatus = () => {
   const cart = useSelector((state) => state.handleCart)
   const activeBackground = useRef()
   const getProductsAmount = () => {
-    if (window) {
+    if (typeof window !== 'undefined') {
       const existingCart = JSON.parse(localStorage.getItem('cart'))
       if (cart.length > 0) {
         return cart.reduce((acc, cur) => {
@@ -37,7 +37,7 @@ const CartStatus = () => {
     return 0
   }
   useEffect(() => {
-    if (window) {
+    if (typeof window !== 'undefined') {
       const path = window.location.href
       if (path.includes('/kontakt') || path.includes('/produkty/')) {
         gsap.to(activeBackground.current, {
