@@ -99,8 +99,7 @@ export const MobileBurger = styled.button`
     }
   }
 `
-export const Line = styled.span`
-  display: block;
+export const Line = styled.div`
   width: 70%;
   height: 2px;
   background-color: #fff;

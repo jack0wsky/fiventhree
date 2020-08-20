@@ -9,7 +9,7 @@ import {
 import { useStaticQuery, graphql } from 'gatsby'
 import Product from '../components/product/product'
 
-const Produkty = () => {
+const Products = () => {
   const products = useStaticQuery(graphql`
     {
       allShopifyProduct {
@@ -60,7 +60,7 @@ const Produkty = () => {
   )
 }
 
-export default Produkty
+export default Products
 
 /*
 <Categories>

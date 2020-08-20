@@ -58,6 +58,7 @@ const Header = () => {
       })
     }
   }, [])
+
   return (
     <Wrapper background={background} minify={minify} scrolled={scrolled}>
       <MobileBurger onClick={() => dispatch(toggleMenu())}>
@@ -69,10 +70,10 @@ const Header = () => {
         <Logo color={'#fff'} height={'10px'} />
       </AniLink>
       <Nav>
-        <Link to="/produkty" activeStyle={{ color: colors.action }}>
+        <Link to="/products" activeStyle={{ color: colors.action }}>
           Produkty
         </Link>
-        <Link to="/kontakt" activeStyle={{ color: colors.action }}>
+        <Link to="/contact" activeStyle={{ color: colors.action }}>
           Kontakt
         </Link>
       </Nav>

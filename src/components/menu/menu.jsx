@@ -13,7 +13,7 @@ const Menu = () => {
       <AniLink
         cover
         bg={colors.darkRed}
-        to="/produkty"
+        to="/products"
         activeStyle={{ color: colors.darkRed }}
       >
         Produkty
@@ -21,16 +21,19 @@ const Menu = () => {
       <AniLink
         cover
         bg={colors.darkRed}
-        to="/kontakt"
+        to="/contact"
         activeStyle={{ color: colors.darkRed }}
       >
         Kontakt
       </AniLink>
       <SocialMedia>
-        <Ahref href="#" target="_blank">
+        <Ahref href="https://www.facebook.com/fiventhree/" target="_blank">
           <SMItem src={facebook} />
         </Ahref>
-        <Ahref href="#" target="_blank">
+        <Ahref
+          href="https://www.instagram.com/fiventhree_clothing/"
+          target="_blank"
+        >
           <SMItem src={instagram} />
         </Ahref>
       </SocialMedia>
