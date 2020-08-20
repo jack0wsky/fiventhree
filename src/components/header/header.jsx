@@ -36,7 +36,6 @@ const Header = () => {
   const [minify, setMinified] = useState(false)
   const [background, setBackground] = useState(false)
   const dispatch = useDispatch()
-  const activeBackground = useRef()
   const backgroundRef = useRef()
 
   useEffect(() => {
@@ -87,7 +86,6 @@ const Header = () => {
         >
           Kontakt
         </AniLink>
-        <ActiveBackground ref={activeBackground} />
       </Nav>
       <RightAside>
         <CartStatus />

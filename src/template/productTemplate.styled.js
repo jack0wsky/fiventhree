@@ -7,6 +7,7 @@ export const TemplateWrapper = styled.main`
   min-height: 100vh;
   display: flex;
   overflow: hidden;
+  background-color: #fff;
 
   @media all and (max-width: ${medium}) {
     flex-flow: column;
