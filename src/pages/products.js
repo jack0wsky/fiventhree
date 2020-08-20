@@ -13,7 +13,7 @@ const Products = () => {
   const {
     allShopifyProduct: { edges },
   } = useStaticQuery(graphql`
-    {
+    query Products {
       allShopifyProduct {
         edges {
           node {
