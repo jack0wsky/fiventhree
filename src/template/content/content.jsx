@@ -129,7 +129,6 @@ class Content extends Component {
 
   render() {
     const { product, variant } = this.props
-    const cachedProduct = JSON.parse(localStorage.getItem('product'))
     return (
       <ContentWrapper>
         <CartHeader>
@@ -209,21 +208,21 @@ class Content extends Component {
 
         <MobileAddToCart>
           <MobileSizes>
-            {cachedProduct ? (
-              cachedProduct.variants.map((option) => {
+            {this.state.sizes ? (
+              this.state.sizes.map(({ title, available, sku }) => {
                 return (
                   <Link
-                    to={`/produkty/${option.sku}`}
-                    available={option.available}
-                    key={option.sku}
+                    to={`/produkty/${sku}`}
+                    available={available}
+                    key={sku}
                     activeStyle={ifActive}
                   >
-                    {option.title}
+                    {title}
                   </Link>
                 )
               })
             ) : (
-              <p>loading...</p>
+              <p>Sprawdzam dostepność</p>
             )}
           </MobileSizes>
           <MobileQuantity>

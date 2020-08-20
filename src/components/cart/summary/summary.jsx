@@ -67,10 +67,9 @@ const Summary = ({ total }) => {
         handleRequest()
       })
   }
-  const deliveryPoint = localStorage.getItem('deliveryPoint')
   return (
     <Wrapper>
-      {inPost === null || deliveryPoint === null ? (
+      {inPost === null ? (
         <ShippingStatus inPost={inPost}>
           <InPostBtn
             inPost={inPost}
