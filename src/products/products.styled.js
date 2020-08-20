@@ -10,6 +10,7 @@ export const ProductsWrapper = styled.main`
   -webkit-justify-content: center;
   align-items: center;
   -webkit-align-items: center;
+  background-color: #fff;
   @media all and (max-width: ${small}) {
     padding: 5vw;
   }

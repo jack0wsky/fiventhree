@@ -4,6 +4,7 @@ export const Wrapper = styled.main`
   width: 100vw;
   height: auto;
   padding: 15vh 5vw 0;
+  background-color: #fff;
 `
 export const ProductsGrid = styled.section`
   display: grid;

@@ -65,7 +65,7 @@ const Header = () => {
         <Line />
         <Line />
       </MobileBurger>
-      <AniLink cover bg={colors.darkRed} to="/">
+      <AniLink cover bg={'#000000'} to="/">
         <Logo color={'#fff'} height={'10px'} />
       </AniLink>
       <Nav>
