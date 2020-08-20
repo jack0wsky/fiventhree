@@ -10,7 +10,9 @@ import { useStaticQuery, graphql } from 'gatsby'
 import Product from '../components/product/product'
 
 const Products = () => {
-  const products = useStaticQuery(graphql`
+  const {
+    allShopifyProduct: { edges },
+  } = useStaticQuery(graphql`
     {
       allShopifyProduct {
         edges {
@@ -46,9 +48,6 @@ const Products = () => {
       }
     }
   `)
-  const {
-    allShopifyProduct: { edges },
-  } = products
   return (
     <Wrapper>
       <ProductsGrid>
