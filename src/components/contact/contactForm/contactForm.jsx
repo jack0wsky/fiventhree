@@ -123,7 +123,6 @@ class ContactForm extends Component {
         problem: '',
       })
     } else {
-      console.error('not valid')
       this.props.handleEmail()
     }
   }

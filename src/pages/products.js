@@ -47,7 +47,7 @@ const Products = () => {
             }
           `}
           render={({ allShopifyProduct: { edges } }) => {
-            edges.map(({ node }) => {
+            return edges.map(({ node }) => {
               return <Product key={node.shopifyId} product={node} />
             })
           }}
