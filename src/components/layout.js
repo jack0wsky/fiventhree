@@ -15,6 +15,7 @@ import '../fonts/medium.css'
 import '../fonts/bold.css'
 import '../fonts/xbold.css'
 import { Overlay } from './hero/hero.styled'
+import { Helmet } from 'react-helmet/es/Helmet'
 
 const GlobalStyle = createGlobalStyle`
   *, *:before, *:after {
@@ -61,6 +62,12 @@ const Layout = ({ children }) => {
         lang={'pl-PL'}
         description={siteMetadata.description}
       />
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{siteMetadata.title}</title>
+        <meta name="description" content={siteMetadata.description} />
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <Header />
       {inpost ? <InPostModal /> : null}
       <Menu />
