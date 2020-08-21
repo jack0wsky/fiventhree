@@ -70,12 +70,22 @@ const Header = () => {
         <Logo color={'#fff'} height={'10px'} />
       </AniLink>
       <Nav>
-        <Link to="/products" activeStyle={{ color: colors.action }}>
+        <AniLink
+          cover
+          bg={'#000000'}
+          to="/products"
+          activeStyle={{ color: colors.action }}
+        >
           Produkty
-        </Link>
-        <Link to="/contact" activeStyle={{ color: colors.action }}>
+        </AniLink>
+        <AniLink
+          cover
+          bg={'#000000'}
+          to="/contact"
+          activeStyle={{ color: colors.action }}
+        >
           Kontakt
-        </Link>
+        </AniLink>
       </Nav>
       <RightAside>
         <CartStatus />

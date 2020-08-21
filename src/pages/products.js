@@ -23,16 +23,12 @@ const Products = () => {
             handle
             images {
               id
+              originalSrc
               localFile {
                 childImageSharp {
                   fluid {
-                    srcWebp
                     tracedSVG
                     base64
-                    srcSetWebp
-                  }
-                  fixed {
-                    src
                   }
                 }
               }

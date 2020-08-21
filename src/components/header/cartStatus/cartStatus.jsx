@@ -27,14 +27,9 @@ const CartStatus = () => {
         return cart.reduce((acc, cur) => {
           return (acc += cur.quantity)
         }, 0)
-      } else if (existingCart) {
-        return existingCart.reduce((acc, cur) => {
-          return (acc += cur.quantity)
-        }, 0)
       }
+      return 0
     }
-
-    return 0
   }
   useEffect(() => {
     if (typeof window !== 'undefined') {

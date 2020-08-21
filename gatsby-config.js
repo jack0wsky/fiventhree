@@ -71,5 +71,11 @@ module.exports = {
         includeCollections: ['shop', 'content'],
       },
     },
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        precachePages: [`/products/*`, `/contact`],
+      },
+    },
   ],
 }

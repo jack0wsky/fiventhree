@@ -4,6 +4,7 @@ import {
   Gallery,
   ImagesContainer,
   ClickableImage,
+  Image,
 } from './productTemplate.styled'
 import Content from './content/content'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
@@ -36,30 +37,15 @@ const ProductTemplate = ({ pageContext: { product, variant } }) => {
           Powrót
         </AniLink>
         <ImagesContainer>
-          {product.images.map(
-            ({
-              localFile: {
-                childImageSharp: { fluid },
-              },
-            }) => {
-              const { presentationWidth, presentationHeight } = fluid
-              return (
-                <ClickableImage
-                  onClick={() =>
-                    openModal(fluid, presentationHeight, presentationWidth)
-                  }
-                >
-                  <Img
-                    fadeIn={true}
-                    backgroundColor="#ffffff"
-                    objectFit="cover"
-                    fluid={fluid}
-                    alt="zdjęcia produktu"
-                  />
-                </ClickableImage>
-              )
-            }
-          )}
+          {product.images.map(({ originalSrc }) => {
+            return (
+              <ClickableImage
+                onClick={() => openModal(originalSrc, '85vh', '50vw')}
+              >
+                <Image src={originalSrc} alt="zdjęcia produktu" />
+              </ClickableImage>
+            )
+          })}
         </ImagesContainer>
       </Gallery>
       <Content key={variant.shopifyId} product={product} variant={variant} />

@@ -96,9 +96,8 @@ export const ClickableImage = styled.button`
     height: 80vh;
   }
 `
-export const MainImage = styled.img`
+export const Image = styled.img`
   object-fit: cover;
   height: 100%;
   width: 100%;
-  overflow: hidden;
 `

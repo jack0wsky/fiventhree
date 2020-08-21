@@ -7,6 +7,7 @@ import {
 import { useSelector } from 'react-redux'
 import Img from 'gatsby-image'
 import Cancel from '../../components/inPost/exit'
+import { Image } from '../productTemplate.styled'
 import gsap from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
 gsap.registerPlugin(CSSPlugin)
@@ -26,7 +27,7 @@ const ImageModal = ({ closeModal, width, height }) => {
         <CloseBtn onClick={() => closeModal()}>
           <Cancel color={'#000'} height={'30px'} />
         </CloseBtn>
-        <Img fluid={modal} />
+        <Image src={modal} alt="product-image-preview" />
       </SelectedImageContainer>
     </ModalWrapper>
   )

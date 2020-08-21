@@ -11,6 +11,7 @@ import {
   SecondLine,
   AddToCart,
   OnHover,
+  Image,
 } from './product.styled'
 
 const Product = ({ product }) => {
@@ -18,7 +19,7 @@ const Product = ({ product }) => {
     <ProductWrapper>
       <ImageSlider>
         <OnHover />
-        <Img fluid={product.images[0].localFile.childImageSharp.fluid} />
+        <Image src={product.images[0].originalSrc} />
       </ImageSlider>
       <Details>
         <Price>{product.variants[0].price} PLN</Price>
