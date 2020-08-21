@@ -6,50 +6,52 @@ import {
   Header,
   External,
 } from '../components/produktyPage/products.styled'
-import { useStaticQuery, graphql } from 'gatsby'
+import { graphql, StaticQuery } from 'gatsby'
 import Product from '../components/product/product'
 
 const Products = () => {
-  const {
-    allShopifyProduct: { edges },
-  } = useStaticQuery(graphql`
-    query Products {
-      allShopifyProduct {
-        edges {
-          node {
-            title
-            productType
-            shopifyId
-            handle
-            images {
-              id
-              originalSrc
-              localFile {
-                childImageSharp {
-                  fluid {
-                    tracedSVG
-                    base64
+  return (
+    <Wrapper>
+      <ProductsGrid>
+        <StaticQuery
+          query={graphql`
+            query Products {
+              allShopifyProduct {
+                edges {
+                  node {
+                    title
+                    productType
+                    shopifyId
+                    handle
+                    images {
+                      id
+                      originalSrc
+                      localFile {
+                        childImageSharp {
+                          fluid {
+                            tracedSVG
+                            base64
+                          }
+                        }
+                      }
+                    }
+                    variants {
+                      sku
+                      price
+                      title
+                      shopifyId
+                    }
                   }
                 }
               }
             }
-            variants {
-              sku
-              price
-              title
-              shopifyId
-            }
-          }
-        }
-      }
-    }
-  `)
-  return (
-    <Wrapper>
-      <ProductsGrid>
-        {edges.map(({ node }) => {
-          return <Product key={node.shopifyId} product={node} />
-        })}
+          `}
+          render={({ allShopifyProduct: { edges } }) => {
+            edges.map(({ node }) => {
+              return <Product key={node.shopifyId} product={node} />
+            })
+          }}
+        />
       </ProductsGrid>
     </Wrapper>
   )

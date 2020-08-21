@@ -65,6 +65,7 @@ export const SearchInput = styled.input`
 
   @media all and (max-width: ${small}) {
     width: 85%;
+    height: 70px;
   }
 `
 export const ExitBtn = styled.button`
@@ -77,6 +78,7 @@ export const ExitBtn = styled.button`
   -webkit-justify-content: center;
   align-items: center;
   -webkit-align-items: center;
+  background: transparent;
 
   &:focus {
     outline: none;
@@ -140,6 +142,7 @@ export const UseGPSBtn = styled.button`
   display: flex;
   align-items: center;
   -webkit-align-items: center;
+  background: transparent;
 
   &:focus {
     outline: none;
@@ -199,7 +202,7 @@ export const PointData = styled.div`
 
   @media all and (max-width: ${small}) {
     width: 90%;
-    margin: 0 0 0 -45%;
+    margin: 0 0 10vh -45%;
     height: 25vh;
   }
   @media all and (min-width: ${medium}) and (max-width: ${large}) {
