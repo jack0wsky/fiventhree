@@ -3,15 +3,13 @@ import {
   Wrapper,
   Background,
   Nav,
-  ActiveBackground,
   MobileBurger,
-  Line,
   RightAside,
   SocialMedia,
+  Line,
 } from './header.styled'
 import { colors } from '../../theme'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
-import { Link } from 'gatsby'
 import Logo from '../header/logo/logo'
 import CartStatus from './cartStatus/cartStatus'
 import { toggleMenu } from '../../actions/toggleMenu'
@@ -67,7 +65,7 @@ const Header = () => {
         <Line />
       </MobileBurger>
       <AniLink cover bg={'#000000'} to="/">
-        <Logo color={'#fff'} height={'10px'} />
+        <Logo />
       </AniLink>
       <Nav>
         <AniLink

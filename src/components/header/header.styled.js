@@ -100,9 +100,13 @@ export const MobileBurger = styled.button`
   }
 `
 export const Line = styled.div`
-  width: 70%;
-  height: 2px;
-  background-color: #fff;
+  display: none;
+
+  @media all and (max-width: ${medium}) {
+    width: 70%;
+    height: 2px;
+    background-color: #fff;
+  }
 `
 export const RightAside = styled.section`
   height: 100%;
