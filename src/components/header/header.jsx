@@ -6,9 +6,10 @@ import {
   MobileBurger,
   RightAside,
   SocialMedia,
-  Line,
+  BurgerIcon,
 } from './header.styled'
 import { colors } from '../../theme'
+import burgerIcon from '../../assets/menu.svg'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import Logo from '../header/logo/logo'
 import CartStatus from './cartStatus/cartStatus'
@@ -60,9 +61,7 @@ const Header = () => {
   return (
     <Wrapper background={background} minify={minify} scrolled={scrolled}>
       <MobileBurger onClick={() => dispatch(toggleMenu())}>
-        <Line />
-        <Line />
-        <Line />
+        <BurgerIcon src={burgerIcon} />
       </MobileBurger>
       <AniLink cover bg={'#000000'} to="/">
         <Logo />

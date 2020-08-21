@@ -1,22 +1,30 @@
 import React from 'react'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
-import { MenuWrapper, SocialMedia, SMItem, Ahref } from './menu.styled'
-import { useSelector } from 'react-redux'
+import {
+  MenuWrapper,
+  SocialMedia,
+  SMItem,
+  Ahref,
+  LinkButton,
+} from './menu.styled'
+import { useSelector, useDispatch } from 'react-redux'
 import facebook from '../../assets/facebook.svg'
 import instagram from '../../assets/instagram.svg'
 import { colors } from '../../theme'
+import { toggleMenu } from '../../actions/toggleMenu'
 
 const Menu = () => {
-  const toggleMenu = useSelector((state) => state.handleMenu)
+  const toggleMenuState = useSelector((state) => state.handleMenu)
+  const dispatch = useDispatch()
   return (
-    <MenuWrapper toggle={toggleMenu}>
+    <MenuWrapper toggle={toggleMenuState}>
       <AniLink
         cover
         bg={colors.darkRed}
         to="/products"
         activeStyle={{ color: colors.darkRed }}
       >
-        Produkty
+        <LinkButton onClick={() => dispatch(toggleMenu())}>Produkty</LinkButton>
       </AniLink>
       <AniLink
         cover
@@ -24,7 +32,7 @@ const Menu = () => {
         to="/contact"
         activeStyle={{ color: colors.darkRed }}
       >
-        Kontakt
+        <LinkButton onClick={() => dispatch(toggleMenu())}>Kontakt</LinkButton>
       </AniLink>
       <SocialMedia>
         <Ahref href="https://www.facebook.com/fiventhree/" target="_blank">

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { small, medium } from '../breakpoints'
+import { medium } from '../breakpoints'
 
 export const MenuWrapper = styled.section`
   display: none;
@@ -41,3 +41,14 @@ export const SMItem = styled.img`
   height: 30px;
 `
 export const Ahref = styled.a``
+export const LinkButton = styled.button`
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+
+  &:focus {
+    outline: none;
+  }
+`

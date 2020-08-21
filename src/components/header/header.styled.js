@@ -87,8 +87,8 @@ export const MobileBurger = styled.button`
     flex-flow: column;
     -webkit-flex-flow: column;
     padding: 10px 0 10px;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     justify-content: space-between;
     align-items: center;
     border: none;
@@ -99,13 +99,13 @@ export const MobileBurger = styled.button`
     }
   }
 `
-export const Line = styled.div`
+export const BurgerIcon = styled.img`
   display: none;
 
   @media all and (max-width: ${medium}) {
-    width: 70%;
-    height: 2px;
-    background-color: #fff;
+    display: block;
+    height: 100%;
+    width: 100%;
   }
 `
 export const RightAside = styled.section`
