@@ -250,7 +250,7 @@ class Content extends Component {
             ref={this.mobileBtn}
             onClick={(e) => this.handleAddToCart(product, variant, e)}
           >
-            Dodaj do koszyka
+            {this.state.adding ? 'Dodany!' : 'Dodaj do koszyka'}
           </MobileButton>
         </MobileAddToCart>
       </ContentWrapper>

@@ -317,6 +317,10 @@ export const MobileButton = styled.button`
   position: absolute;
   right: 0;
   bottom: 0;
+
+  &:focus {
+    outline: none;
+  }
 `
 export const MobileQuantity = styled.section`
   width: 35%;

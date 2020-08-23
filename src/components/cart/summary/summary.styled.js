@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { small } from '../../breakpoints'
 
 export const Wrapper = styled.section`
   width: 100%;
@@ -12,6 +13,10 @@ export const Wrapper = styled.section`
   position: absolute;
   bottom: 0;
   right: 0;
+
+  @media all and (max-width: ${small}) {
+    padding: 0 2vw 10vh;
+  }
 `
 export const Divider = styled.span`
   width: 100%;
@@ -22,6 +27,7 @@ export const Shipping = styled.div`
   display: flex;
   justify-content: space-between;
   -webkit-justify-content: space-between;
+  margin: 0 0 10px;
 `
 export const Label = styled.p`
   text-transform: uppercase;
@@ -122,4 +128,9 @@ export const ChangeBtn = styled.button`
   &:focus {
     outline: none;
   }
+`
+export const DiscountInfo = styled.p`
+  width: 100%;
+  font-size: 1em;
+  margin: 0 0 20px;
 `

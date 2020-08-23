@@ -16,6 +16,7 @@ import {
   SelectedValue,
   ChangeBtn,
   PinWrapper,
+  DiscountInfo,
 } from './summary.styled'
 import Client from 'shopify-buy'
 import Spinner from '../../loadingSpinner/spinner'
@@ -69,6 +70,9 @@ const Summary = ({ total }) => {
   }
   return (
     <Wrapper>
+      <DiscountInfo>
+        Jeśli posiadasz kod rabatowy, możesz wprowadzić go w następnym kroku
+      </DiscountInfo>
       {inPost === null ? (
         <ShippingStatus inPost={inPost}>
           <InPostBtn
