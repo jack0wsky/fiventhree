@@ -101,7 +101,7 @@ export const EmptyPlaceholder = styled.div`
   -webkit-align-items: center;
   justify-content: space-between;
   -webkit-justify-content: space-between;
-  height: 20vh;
+  height: 35vh;
 `
 export const Text = styled.p``
 export const Illustration = styled.img`

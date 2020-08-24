@@ -20,6 +20,7 @@ import { toggleCart } from '../../actions/toggleCart'
 import CartProduct from './cartProduct/cartProduct'
 import Summary from './summary/summary'
 import EmptyCart from '../../assets/empty cart.svg'
+import CheckoutFailed from './checkoutFailed/checkoutFailed'
 
 gsap.registerPlugin(CSSPlugin, EasePack, Power2)
 
@@ -34,6 +35,7 @@ class Cart extends Component {
     this.state = {
       quantityUpdate: false,
       inPostData: null,
+      checkoutFailed: false,
     }
     this.cart = createRef()
   }
@@ -61,6 +63,10 @@ class Cart extends Component {
       dispatch(toggleCart())
     }, 300)
     navigate('/produkty')
+  }
+
+  handleCloseInfo = () => {
+    this.setState({ checkoutFailed: !this.state.checkoutFailed })
   }
 
   getTotalPrice = () => {
@@ -118,34 +124,13 @@ class Cart extends Component {
     }
   }
 
-  showSummary = () => {
-    const { cart } = this.props
-    if (cart.length > 0) {
-      return (
-        <Summary
-          quantityUpdate={this.state.quantityUpdate}
-          total={this.getTotalPrice}
-        />
-      )
-    } else {
-      if (typeof window !== 'undefined') {
-        let existingCache = localStorage.getItem('cart')
-        if (existingCache) {
-          return (
-            <Summary
-              quantityUpdate={this.state.quantityUpdate}
-              total={this.getTotalPrice}
-            />
-          )
-        }
-      }
-    }
-  }
-
   render() {
-    const { cart } = this.props
+    const { cart, toggleCart } = this.props
     return (
-      <CartWrapper ref={this.cart} toggle={this.props.toggleCart}>
+      <CartWrapper ref={this.cart} toggle={toggleCart}>
+        {this.state.checkoutFailed ? (
+          <CheckoutFailed handleCloseInfo={this.handleCloseInfo} />
+        ) : null}
         <Header>
           <Exit onClick={() => this.closeCart()}>
             <Line />
@@ -172,7 +157,13 @@ class Cart extends Component {
             </EmptyPlaceholder>
           )}
         </Grid>
-        {this.showSummary()}
+        {cart.length > 0 ? (
+          <Summary
+            handleCloseInfo={this.handleCloseInfo}
+            quantityUpdate={this.state.quantityUpdate}
+            total={this.getTotalPrice}
+          />
+        ) : null}
       </CartWrapper>
     )
   }

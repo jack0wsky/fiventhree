@@ -27,7 +27,7 @@ import Pin from '../../inPost/pinIcon/pinIcon'
 
 let client
 
-const Summary = ({ total }) => {
+const Summary = ({ total, handleCloseInfo }) => {
   const lineItems = useSelector((state) => state.handleLineItems)
   const cart = useSelector((state) => state.handleCart)
   const checkoutId = useSelector((state) => state.id)
@@ -66,6 +66,9 @@ const Summary = ({ total }) => {
       .then((checkout) => {
         window.open(checkout.webUrl)
         handleRequest()
+        setTimeout(() => {
+          handleCloseInfo()
+        }, 1000)
       })
   }
   return (
