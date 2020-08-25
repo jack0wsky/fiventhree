@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { small, medium, large, xlarge } from '../breakpoints'
+import { medium, large, xlarge } from '../breakpoints'
 
 export const Wrapper = styled.header`
   height: 100px;

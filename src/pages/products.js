@@ -2,9 +2,9 @@ import React from 'react'
 import {
   Wrapper,
   ProductsGrid,
-  Categories,
-  Header,
-  External,
+  //Categories,
+  //Header,
+  //External,
 } from '../components/produktyPage/products.styled'
 import { graphql, StaticQuery } from 'gatsby'
 import Product from '../components/product/product'

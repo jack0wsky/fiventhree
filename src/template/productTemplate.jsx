@@ -11,7 +11,6 @@ import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import ImageModal from './imageModal/imageModal'
 import { useDispatch } from 'react-redux'
 import { handleModal } from '../actions/handleModal'
-import Img from 'gatsby-image'
 const ProductTemplate = ({ pageContext: { product, variant } }) => {
   const dispatch = useDispatch()
   const [toggleModal, setModal] = useState(false)

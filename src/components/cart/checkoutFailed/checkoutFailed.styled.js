@@ -9,12 +9,31 @@ export const Wrapper = styled.div`
     flex-flow: column;
     -webkit-flex-flow: column;
     position: fixed;
+    z-index: 150;
     top: 100px;
     width: 100%;
     height: auto;
-    background-color: #000000;
     padding: 20px;
   }
+`
+export const BackgroundFade = styled.div`
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  z-index: 101;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.82);
+`
+export const TextWrapper = styled.div`
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-flow: column;
+  -webkit-flex-flow: column;
+  background-color: #000;
+  position: relative;
+  z-index: 110;
 `
 export const Header = styled.div`
   display: none;
@@ -41,8 +60,11 @@ export const CloseBtn = styled.button`
 `
 export const Text = styled.p`
   color: #fff;
-  height: auto;
+  height: 25vh;
   font-weight: 500;
+  padding: 20px;
+  position: relative;
+  z-index: 102;
 `
 export const Highlight = styled.span`
   font-weight: 600;

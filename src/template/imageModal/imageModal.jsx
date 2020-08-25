@@ -5,7 +5,6 @@ import {
   CloseBtn,
 } from './imageModal.styled'
 import { useSelector } from 'react-redux'
-import Img from 'gatsby-image'
 import Cancel from '../../components/inPost/exit'
 import { Image } from '../productTemplate.styled'
 import gsap from 'gsap'

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { small, medium, large } from '../components/breakpoints'
+import { small, large } from '../components/breakpoints'
 
 export const ProductsWrapper = styled.main`
   width: 100vw;

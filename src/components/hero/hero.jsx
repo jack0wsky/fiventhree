@@ -1,11 +1,10 @@
 import React from 'react'
-import { HeroWrapper, ImageContainer, Image, Overlay } from './hero.styled'
-import heroImage from '../../assets/hero-background.jpg'
+import { HeroWrapper, ImageContainer, Image } from './hero.styled'
+import heroImage from '../../assets/background-hero-image.png'
 
 const Hero = () => {
   return (
     <HeroWrapper className="wrapper">
-      <Overlay />
       <ImageContainer id="imageContainer">
         <Image src={heroImage} />
       </ImageContainer>

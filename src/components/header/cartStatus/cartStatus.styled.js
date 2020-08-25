@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { small, medium } from '../../breakpoints'
+import { medium } from '../../breakpoints'
 import { colors } from '../../../theme'
 
 export const Wrapper = styled.section`

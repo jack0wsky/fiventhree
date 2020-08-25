@@ -1,7 +1,6 @@
 import React from 'react'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import { colors } from '../../theme'
-import Img from 'gatsby-image'
 import {
   ProductWrapper,
   ImageSlider,

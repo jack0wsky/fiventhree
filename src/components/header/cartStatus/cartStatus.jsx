@@ -22,7 +22,7 @@ const CartStatus = () => {
   const activeBackground = useRef()
   const getProductsAmount = () => {
     if (typeof window !== 'undefined') {
-      const existingCart = JSON.parse(localStorage.getItem('cart'))
+      //const existingCart = JSON.parse(localStorage.getItem('cart'))
       if (cart.length > 0) {
         return cart.reduce((acc, cur) => {
           return (acc += cur.quantity)
