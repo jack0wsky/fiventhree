@@ -20,7 +20,7 @@ import { toggleCart } from '../../actions/toggleCart'
 import CartProduct from './cartProduct/cartProduct'
 import Summary from './summary/summary'
 import EmptyCart from '../../assets/empty cart.svg'
-import CheckoutFailed from './checkoutFailed/checkoutFailed'
+//import CheckoutFailed from './checkoutFailed/checkoutFailed'
 
 gsap.registerPlugin(CSSPlugin, EasePack, Power2)
 
@@ -35,7 +35,6 @@ class Cart extends Component {
     this.state = {
       quantityUpdate: false,
       inPostData: null,
-      checkoutFailed: false,
     }
     this.cart = createRef()
   }
@@ -128,9 +127,6 @@ class Cart extends Component {
     const { cart, toggleCart } = this.props
     return (
       <CartWrapper ref={this.cart} toggle={toggleCart}>
-        {this.state.checkoutFailed ? (
-          <CheckoutFailed handleCloseInfo={this.handleCloseInfo} />
-        ) : null}
         <Header>
           <Exit onClick={() => this.closeCart()}>
             <Line />
