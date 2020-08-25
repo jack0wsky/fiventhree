@@ -9,8 +9,9 @@ import {
   OpeningHours,
 } from './points.styled'
 import { useDispatch } from 'react-redux'
-import { provideInPostLocker } from '../../../actions/provideInPostLocker'
+//import { provideInPostLocker } from '../../../actions/provideInPostLocker'
 import { handleInPostModal } from '../../../actions/handleInPostModal'
+import { selectLocker } from '../../../actions/selectLocker'
 import Pin from '../pinIcon/pinIcon'
 import { colors } from '../../../theme'
 
@@ -25,15 +26,13 @@ const InPostPoints = ({ point }) => {
       street: point.address.line1,
       city: point.address.line2,
     }
-    //TODO handling data about selected point
-    //TODO Caching this data
     if (exist) {
       localStorage.removeItem('deliveryPoint')
       localStorage.setItem('deliveryPoint', JSON.stringify(data))
-      dispatch(provideInPostLocker(point))
+      dispatch(selectLocker(point))
     } else {
       localStorage.setItem('deliveryPoint', JSON.stringify(data))
-      dispatch(provideInPostLocker(point))
+      dispatch(selectLocker(point))
     }
     dispatch(handleInPostModal())
   }

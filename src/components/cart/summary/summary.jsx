@@ -64,7 +64,8 @@ const Summary = ({ total, handleCloseInfo }) => {
     await client.checkout
       .updateAttributes(checkoutId, inPostLocker)
       .then((checkout) => {
-        window.open(checkout.webUrl)
+        //window.open(checkout.webUrl)
+        window.location.replace(checkout.webUrl)
         handleRequest()
         setTimeout(() => {
           handleCloseInfo()
