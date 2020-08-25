@@ -221,12 +221,24 @@ class InPostModal extends Component {
       return <FetchPlaceholder>Pobieranie lokalizacji...</FetchPlaceholder>
     } else {
       return this.state.inPostPoints.map((point) => {
-        return <InPostPoints key={point.href} point={point} />
+        return (
+          <InPostPoints
+            selectPointOnMap={this.selectPointOnMap}
+            key={point.href}
+            point={point}
+          />
+        )
       })
     }
     if (this.state.searchInput !== '') {
       return this.state.inPostPoints.map((point) => {
-        return <InPostPoints key={point.href} point={point} />
+        return (
+          <InPostPoints
+            selectPointOnMap={this.selectPointOnMap}
+            key={point.href}
+            point={point}
+          />
+        )
       })
     }
     return (

@@ -15,7 +15,7 @@ import { selectLocker } from '../../../actions/selectLocker'
 import Pin from '../pinIcon/pinIcon'
 import { colors } from '../../../theme'
 
-const InPostPoints = ({ point }) => {
+const InPostPoints = ({ point, selectPointOnMap }) => {
   const [toggle, setToggle] = useState(false)
   const dispatch = useDispatch()
 
@@ -51,7 +51,7 @@ const InPostPoints = ({ point }) => {
         <Description>{point.location_description}</Description>
         <OpeningHours>{point.opening_hours}</OpeningHours>
       </DataWrapper>
-      <ChooseBtn onClick={() => choosePoint(point)}>Wybierz</ChooseBtn>
+      <ChooseBtn onClick={() => selectPointOnMap(point)}>Wybierz</ChooseBtn>
     </PointWrapper>
   )
 }

@@ -3,7 +3,7 @@ import { colors } from '../../../theme'
 
 export const PointWrapper = styled.div`
   width: 100%;
-  height: ${({ toggle }) => (toggle ? '15vh' : '10vh')};
+  height: 10vh;
   padding: 20px;
   border-bottom: 1px solid #ccc;
   cursor: pointer;
