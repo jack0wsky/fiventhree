@@ -21,45 +21,35 @@ import gsap from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
 gsap.registerPlugin(CSSPlugin)
 
-let init
-
-if (typeof window !== 'undefined') {
-  window.addEventListener('scroll', () => {
-    setTimeout(() => {
-      init = window.pageYOffset
-    }, 100)
-  })
-}
-
 const Header = () => {
   const [scrolled, setScrolled] = useState(false)
-  const [minify, setMinified] = useState(false)
-  const [background, setBackground] = useState(false)
   const dispatch = useDispatch()
   const backgroundRef = useRef()
 
   useEffect(() => {
+    let init = window.pageYOffset
+    // TODO fix fucking header
     if (typeof window !== 'undefined') {
-      if (window.location.href.includes('/produkty')) {
-        setMinified(true)
-        setBackground(true)
-      } else {
-        setMinified(false)
-        setBackground(false)
-      }
       window.addEventListener('scroll', () => {
-        const curScroll = window.pageYOffset
-        if (init < curScroll) {
-          setScrolled(true)
-        } else {
-          setScrolled(false)
-        }
+        init = window.pageYOffset
+        setTimeout(() => {
+          const curScroll = window.pageYOffset
+          if (init < curScroll) {
+            setScrolled(true)
+            console.log(init, curScroll)
+          } else if (init === curScroll) {
+            setScrolled(false)
+          } else {
+            setScrolled(false)
+            console.log(init, curScroll)
+          }
+        }, 250)
       })
     }
   }, [])
 
   return (
-    <Wrapper background={background} minify={minify} scrolled={scrolled}>
+    <Wrapper scrolled={scrolled}>
       <MobileBurger onClick={() => dispatch(toggleMenu())}>
         <BurgerIcon src={burgerIcon} />
       </MobileBurger>

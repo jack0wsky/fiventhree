@@ -4,8 +4,7 @@ import { medium, large, xlarge } from '../breakpoints'
 export const Wrapper = styled.header`
   height: 100px;
   width: 100vw;
-  background-color: ${({ background }) =>
-    background ? '#000' : 'transparent'};
+  background-color: #000;
   display: flex;
   align-items: center;
   -webkit-align-items: center;
