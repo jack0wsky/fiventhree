@@ -27,23 +27,22 @@ const Header = () => {
   const backgroundRef = useRef()
 
   useEffect(() => {
-    let init = window.pageYOffset
-    // TODO fix fucking header
+    let init
     if (typeof window !== 'undefined') {
       window.addEventListener('scroll', () => {
         init = window.pageYOffset
+
         setTimeout(() => {
           const curScroll = window.pageYOffset
+          console.log(init, curScroll)
           if (init < curScroll) {
+            console.log('down')
             setScrolled(true)
-            console.log(init, curScroll)
-          } else if (init === curScroll) {
+          } else if (init > curScroll || window.pageYOffset < 50) {
+            console.log('up')
             setScrolled(false)
-          } else {
-            setScrolled(false)
-            console.log(init, curScroll)
           }
-        }, 250)
+        }, 150)
       })
     }
   }, [])
