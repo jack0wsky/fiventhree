@@ -39,6 +39,7 @@ const ProductTemplate = ({ pageContext: { product, variant } }) => {
           {product.images.map(({ originalSrc }) => {
             return (
               <ClickableImage
+                key={originalSrc}
                 onClick={() => openModal(originalSrc, '85vh', '50vw')}
               >
                 <Image src={originalSrc} alt="zdjęcia produktu" />

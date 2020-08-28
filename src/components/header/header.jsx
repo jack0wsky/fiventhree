@@ -34,12 +34,12 @@ const Header = () => {
 
         setTimeout(() => {
           const curScroll = window.pageYOffset
-          console.log(init, curScroll)
+          //console.log(init, curScroll)
           if (init < curScroll) {
-            console.log('down')
+            //console.log('down')
             setScrolled(true)
           } else if (init > curScroll || window.pageYOffset < 50) {
-            console.log('up')
+            //console.log('up')
             setScrolled(false)
           }
         }, 150)

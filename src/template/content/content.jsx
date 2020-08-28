@@ -29,6 +29,8 @@ import {
   MobileIncrement,
   MobileSizes,
   BasicsWrapper,
+  ReviewsButton,
+  Icon,
 } from './content.styled'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import Size from './size/size'
@@ -179,6 +181,10 @@ class Content extends Component {
             />
           )}
         </Description>
+        <ReviewsButton>
+          Opinie
+          <Icon src="" />
+        </ReviewsButton>
         <Shipping inPostLocker={this.state.inPostLocker} />
         <AddToCart>
           <DecrementQuantity
@@ -213,7 +219,7 @@ class Content extends Component {
                 return (
                   <Link
                     to={`/produkty/${sku}`}
-                    available={available}
+                    available={available.toString()}
                     key={sku}
                     activeStyle={ifActive}
                   >

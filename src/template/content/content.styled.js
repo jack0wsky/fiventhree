@@ -363,3 +363,25 @@ export const MobileSizes = styled.div`
     color: #000;
   }
 `
+export const ReviewsButton = styled.button`
+  padding: 15px 30px 15px;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  font-size: 1em;
+  display: flex;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  align-items: center;
+  -webkit-align-items: center;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+`
+export const Icon = styled.img`
+  height: 50px;
+  width: 50px;
+  background-color: #ccc;
+`

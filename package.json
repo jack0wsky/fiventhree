@@ -8,6 +8,7 @@
     "node": "12.x"
   },
   "dependencies": {
+    "@apollo/client": "^3.1.4",
     "@emotion/core": "^10.0.22",
     "@emotion/styled": "^10.0.22",
     "axios": "^0.19.2",
@@ -16,6 +17,7 @@
     "gatsby": "^2.17.4",
     "gatsby-cli": "^2.12.62",
     "gatsby-image": "^2.2.29",
+    "gatsby-plugin-apollo": "^3.0.1",
     "gatsby-plugin-google-analytics": "^2.0.13",
     "gatsby-plugin-layout": "^1.0.11",
     "gatsby-plugin-manifest": "^2.2.23",

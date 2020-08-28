@@ -16,6 +16,7 @@ import { handleInPostModal } from '../reducers/inPostReducer'
 import { SelectedInPostLocker } from '../reducers/inPostLockerReducer'
 import { shippingMethod } from '../reducers/shippingMethodReducer'
 import { TemporaryLockerHolder } from '../reducers/temporaryLockerHolderReducer'
+import { reviewsModalReducer } from '../reducers/reviewsModalReducer'
 import styled from 'styled-components'
 
 const combine = combineReducers({
@@ -30,6 +31,7 @@ const combine = combineReducers({
   locker: SelectedInPostLocker,
   shippingMethod,
   temporaryInPostHolder: TemporaryLockerHolder,
+  reviewsModal: reviewsModalReducer,
 })
 
 //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

@@ -78,6 +78,13 @@ module.exports = {
       },
     },
     {
+      resolve: 'gatsby-plugin-apollo',
+      options: {
+        uri:
+          'https://api-eu-central-1.graphcms.com/v2/ckee1oau879gb01wf5z0o3dsn/master',
+      },
+    },
+    {
       resolve: 'gatsby-source-graphql',
       options: {
         // Arbitrary name for the remote schema Query type
@@ -91,3 +98,8 @@ module.exports = {
     },
   ],
 }
+
+/*
+
+
+     */
