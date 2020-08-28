@@ -32,9 +32,19 @@ const Overview = ({ reviews }) => {
       setAverangeRate(sum / averange.length)
     })
   }
+  // TODO get number of next rates
+  const getAmountOfCurrentReview = () => {
+    return reviews.forEach(({ rate }) => {
+      const found = rate.filter(({ checked }) => {
+        return checked === true
+      })
+      console.log(found)
+    })
+  }
 
   useEffect(() => {
     getReviewsAverange()
+    getAmountOfCurrentReview()
   }, [])
   return (
     <ReviewOverview>
