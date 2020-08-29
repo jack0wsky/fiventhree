@@ -12,6 +12,7 @@ import {
 
 const Overview = ({ reviews }) => {
   const [averangeRate, setAverangeRate] = useState(0)
+  const [rates, setRates] = useState([])
   const [visualRate] = useState([
     { key: 1, value: 5 },
     { key: 2, value: 4 },
@@ -34,11 +35,24 @@ const Overview = ({ reviews }) => {
   }
   // TODO get number of next rates
   const getAmountOfCurrentReview = () => {
+    let ratesArr = []
+    let key = 0
+    let value = 6
     return reviews.forEach(({ rate }) => {
+      console.log(rate)
       const found = rate.filter(({ checked }) => {
         return checked === true
       })
-      console.log(found)
+      key += 1
+      value -= 1
+      ratesArr.push({
+        key: key,
+        value: value,
+        rate: found.length,
+        quantity: 1,
+      })
+      setRates(ratesArr)
+      //console.log('new rate', ratesArr)
     })
   }
 
@@ -53,11 +67,11 @@ const Overview = ({ reviews }) => {
         <TotalRates>{reviews.length} opinie</TotalRates>
       </Values>
       <Visual>
-        {visualRate.map(({ key, value }) => {
+        {rates.map(({ key, value, rate, quantity }) => {
           return (
             <Record key={key}>
               <Value>{value}</Value>
-              <Line />
+              <Line quantity={quantity} arrayLength={rates.length} />
             </Record>
           )
         })}

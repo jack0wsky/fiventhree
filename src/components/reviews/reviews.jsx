@@ -1,30 +1,37 @@
 import React from 'react'
-import { Wrapper, ReviewsGrid } from './reviews.styled'
-import { graphql, useStaticQuery } from 'gatsby'
+import { Wrapper, Header, ReviewsGrid, ReturnBtn } from './reviews.styled'
 import Overview from './overview/overview'
 import Review from './review/review'
+import { useQuery } from '@apollo/client'
+import gql from 'graphql-tag'
+
+const REVIEWS = gql`
+  query Reviews {
+    reviews {
+      rate
+      shopifyId
+      id
+      author
+      caption
+    }
+  }
+`
 
 const Reviews = () => {
   const {
-    reviews: { reviews },
-  } = useStaticQuery(graphql`
-    query Reviews {
-      reviews {
-        reviews {
-          shopifyId
-          author
-          caption
-          rate
-          id
-        }
-      }
-    }
-  `)
+    loading,
+    data: { reviews },
+  } = useQuery(REVIEWS)
   return (
     <Wrapper>
+      <Header>
+        <ReturnBtn>Powrót</ReturnBtn>
+      </Header>
       <Overview reviews={reviews} />
       <ReviewsGrid>
-        {reviews.map(({ shopifyId, author, caption, rate, id }) => {
+        {loading ? <p>loading...</p> : null}
+
+        {reviews.map(({ id, shopifyId, author, caption, rate }) => {
           return (
             <Review
               key={id}

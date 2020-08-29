@@ -51,7 +51,8 @@ export const Line = styled.span`
   &:before {
     content: '';
     display: block;
-    width: 50%;
+    width: ${({ quantity, arrayLength }) =>
+      `${(quantity / arrayLength) * 100}%`};
     height: 100%;
     top: 0;
     left: 0;

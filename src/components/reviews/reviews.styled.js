@@ -10,6 +10,16 @@ export const Wrapper = styled.main`
   z-index: 120;
   padding: 20px;
 `
+export const Header = styled.div`
+  width: 100%;
+  height: 5vh;
+  display: flex;
+  justify-content: flex-start;
+  -webkit-justify-content: flex-start;
+  align-items: center;
+  -webkit-align-items: center;
+`
+export const ReturnBtn = styled.button``
 export const ReviewsGrid = styled.section`
   width: 100%;
   height: auto;
