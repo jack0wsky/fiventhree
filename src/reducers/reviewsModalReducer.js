@@ -1,4 +1,4 @@
-export const reviewsModalReducer = (state = false, action) => {
+export const reviewsModalReducer = (state = true, action) => {
   if (action.type === 'HANDLE_REVIEWS') {
     return !state
   } else {

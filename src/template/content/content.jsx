@@ -36,9 +36,12 @@ import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import Size from './size/size'
 import { setCheckoutId } from '../../actions/setCheckoutId'
 import SizesTable from './sizesTable/sizesTable'
+import ProductReview from './review/review'
 import gsap from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
 import { colors } from '../../theme'
+import addIcon from '../../assets/add-icon.svg'
+import { handleReviewsAside } from '../../actions/reviews/handleReviewsAside'
 import { Link } from 'gatsby'
 gsap.registerPlugin(CSSPlugin)
 
@@ -130,7 +133,7 @@ class Content extends Component {
   }
 
   render() {
-    const { product, variant } = this.props
+    const { product, variant, dispatch } = this.props
     return (
       <ContentWrapper>
         <CartHeader>
@@ -138,6 +141,7 @@ class Content extends Component {
             Powrót
           </AniLink>
         </CartHeader>
+        <ProductReview />
         <BasicsWrapper>
           <Head>
             <Type>{product.productType}</Type>
@@ -181,10 +185,6 @@ class Content extends Component {
             />
           )}
         </Description>
-        <ReviewsButton>
-          Opinie
-          <Icon src="" />
-        </ReviewsButton>
         <Shipping inPostLocker={this.state.inPostLocker} />
         <AddToCart>
           <DecrementQuantity
@@ -211,6 +211,10 @@ class Content extends Component {
             +
           </IncrementQuantity>
         </AddToCart>
+        <ReviewsButton>
+          Dodaj opinię
+          <Icon src={addIcon} size={'35px'} />
+        </ReviewsButton>
 
         <MobileAddToCart>
           <MobileSizes>

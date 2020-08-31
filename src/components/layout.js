@@ -14,6 +14,7 @@ import '../fonts/bold.css'
 import '../fonts/xbold.css'
 import { Helmet } from 'react-helmet/es/Helmet'
 import Reviews from './reviews/reviews'
+import AddReviewForm from '../template/content/addReview/addReviewForm'
 
 const GlobalStyle = createGlobalStyle`
   *, *:before, *:after {
@@ -68,6 +69,7 @@ const Layout = ({ children }) => {
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
       <Header />
+      <AddReviewForm />
       {!reviewsModal ? <Reviews /> : null}
       {inpost ? <InPostModal /> : null}
       <Menu />

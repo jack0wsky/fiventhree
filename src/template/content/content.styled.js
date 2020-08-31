@@ -366,9 +366,9 @@ export const MobileSizes = styled.div`
 export const ReviewsButton = styled.button`
   padding: 15px 30px 15px;
   border: none;
-  background-color: #000;
-  color: #fff;
   font-size: 1em;
+  background: none;
+  border-bottom: 1px solid #000;
   display: flex;
   justify-content: space-between;
   -webkit-justify-content: space-between;
@@ -381,7 +381,6 @@ export const ReviewsButton = styled.button`
   }
 `
 export const Icon = styled.img`
-  height: 50px;
-  width: 50px;
-  background-color: #ccc;
+  height: ${({ size }) => size};
+  width: ${({ size }) => size};
 `

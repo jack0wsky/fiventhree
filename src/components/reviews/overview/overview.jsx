@@ -22,38 +22,48 @@ const Overview = ({ reviews }) => {
   ])
   const getReviewsAverange = () => {
     const averange = []
-    return reviews.forEach(({ rate }) => {
-      const found = rate.filter((val) => {
-        return val.checked === true
+    if (reviews) {
+      return reviews.forEach(({ rate }) => {
+        const found = rate.filter((val) => {
+          return val.checked === true
+        })
+        averange.push(found.length)
+        const sum = averange.reduce((acc, cur) => {
+          return (acc += cur)
+        }, 0)
+        setAverangeRate(sum / averange.length)
       })
-      averange.push(found.length)
-      const sum = averange.reduce((acc, cur) => {
-        return (acc += cur)
-      }, 0)
-      setAverangeRate(sum / averange.length)
-    })
+    }
   }
   // TODO get number of next rates
   const getAmountOfCurrentReview = () => {
     let ratesArr = []
+    let allRates = [5, 4, 3, 2, 1]
     let key = 0
     let value = 6
-    return reviews.forEach(({ rate }) => {
+    let tempKey = 0
+    let tempValue = 6
+    allRates.forEach((rate) => {
       console.log(rate)
-      const found = rate.filter(({ checked }) => {
-        return checked === true
-      })
-      key += 1
-      value -= 1
-      ratesArr.push({
-        key: key,
-        value: value,
-        rate: found.length,
-        quantity: 1,
-      })
-      setRates(ratesArr)
-      //console.log('new rate', ratesArr)
     })
+    if (reviews) {
+      return reviews.forEach(({ rate }) => {
+        const found = rate.filter(({ checked }) => {
+          return checked === true
+        })
+        console.log(found.length)
+        key += 1
+        value -= 1
+        ratesArr.push({
+          key: key,
+          value: value,
+          rate: found.length,
+          quantity: 1,
+        })
+        setRates(ratesArr)
+        //console.log('new rate', ratesArr)
+      })
+    }
   }
 
   useEffect(() => {
