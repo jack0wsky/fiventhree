@@ -43,7 +43,9 @@ const ProductReview = () => {
   ])
   const [averangeSum, setAverange] = useState(0)
   const { loading, data } = useQuery(REVIEWS)
+
   const getAverange = () => {
+    const { reviews } = data
     const averange = new Array(5)
     const total = [
       { value: 5 },
@@ -52,16 +54,16 @@ const ProductReview = () => {
       { value: 2 },
       { value: 2 },
     ]
-    const { reviews } = data
     return reviews.forEach(({ rate }) => {
       const found = rate.filter(({ checked }) => checked === true)
       averange.push(found.length)
       const sum = averange.reduce((acc, cur) => {
         return (acc += cur)
       }, 0)
-      setAverange((sum / found.length).toFixed(1))
+      setAverange((sum / reviews.length).toFixed(1))
     })
   }
+
   const setStars = () => {
     const lessThan = averangeRate.filter(({ key }) => {
       return key <= averangeSum
@@ -82,9 +84,11 @@ const ProductReview = () => {
   return (
     <Wrapper>
       <StarsWrapper>
-        {averangeRate.map(({ key, checked }) => {
-          return <Star key={key} height={'25px'} checked={checked} />
-        })}
+        {averangeRate.length > 0
+          ? averangeRate.map(({ key, checked }) => {
+              return <Star key={key} height={'25px'} checked={checked} />
+            })
+          : null}
         {!loading ? (
           <RatesAmount>
             {averangeSum} ({data.reviews.length})

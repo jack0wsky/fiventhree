@@ -54,7 +54,8 @@
     "set-value": "^2.0.1",
     "shopify-buy": "^2.8.0",
     "styled-components": "^5.1.1",
-    "vercel": "^19.2.0"
+    "vercel": "^19.2.0",
+    "webpack-graphql-loader": "^1.0.2"
   },
   "keywords": [
     "gatsby",

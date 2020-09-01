@@ -4,7 +4,7 @@ export const ReviewWrapper = styled.div`
   width: 100%;
   height: auto;
   min-height: 15vh;
-  border: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   display: flex;
   flex-flow: column;
   justify-content: space-between;

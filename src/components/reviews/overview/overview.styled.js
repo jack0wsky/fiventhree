@@ -6,6 +6,8 @@ export const ReviewOverview = styled.section`
   display: flex;
   align-items: center;
   -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
 `
 export const Values = styled.div`
   height: 100%;

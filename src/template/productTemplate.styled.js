@@ -87,7 +87,7 @@ export const ClickableImage = styled.button`
   }
 
   @media all and (max-width: ${small}) {
-    height: 60vh;
+    height: 80vh;
   }
   @media all and (min-width: ${small}) and (max-width: ${medium}) {
     height: 70vh;

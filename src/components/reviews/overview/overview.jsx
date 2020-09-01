@@ -31,27 +31,29 @@ const Overview = ({ reviews }) => {
         const sum = averange.reduce((acc, cur) => {
           return (acc += cur)
         }, 0)
-        setAverangeRate(sum / averange.length)
+        setAverangeRate((sum / averange.length).toFixed(1))
       })
     }
   }
-  // TODO get number of next rates
   const getAmountOfCurrentReview = () => {
     let ratesArr = []
-    let allRates = [5, 4, 3, 2, 1]
+    let allRates = []
     let key = 0
     let value = 6
-    let tempKey = 0
-    let tempValue = 6
     allRates.forEach((rate) => {
       console.log(rate)
     })
     if (reviews) {
+      reviews.forEach(({ rate }) => {
+        const selected = rate.filter(({ checked }) => {
+          return checked === true
+        })
+        console.log(selected.length)
+      })
       return reviews.forEach(({ rate }) => {
         const found = rate.filter(({ checked }) => {
           return checked === true
         })
-        console.log(found.length)
         key += 1
         value -= 1
         ratesArr.push({
@@ -61,7 +63,6 @@ const Overview = ({ reviews }) => {
           quantity: 1,
         })
         setRates(ratesArr)
-        //console.log('new rate', ratesArr)
       })
     }
   }
@@ -76,7 +77,14 @@ const Overview = ({ reviews }) => {
         <AverangeRate>{averangeRate}</AverangeRate>
         <TotalRates>{reviews.length} opinie</TotalRates>
       </Values>
-      <Visual>
+    </ReviewOverview>
+  )
+}
+
+export default Overview
+
+/*
+<Visual>
         {rates.map(({ key, value, rate, quantity }) => {
           return (
             <Record key={key}>
@@ -86,8 +94,4 @@ const Overview = ({ reviews }) => {
           )
         })}
       </Visual>
-    </ReviewOverview>
-  )
-}
-
-export default Overview
+ */

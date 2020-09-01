@@ -180,7 +180,7 @@ export const Description = styled.section`
   @media all and (max-width: ${small}) {
     width: 100%;
     height: auto;
-    padding: 0 0 10vh;
+    padding: 0 0 4vh;
   }
   @media all and (min-width: ${medium}) and (max-width: ${large}) {
     width: 100%;
@@ -378,6 +378,10 @@ export const ReviewsButton = styled.button`
 
   &:focus {
     outline: none;
+  }
+
+  @media all and (max-width: ${small}) {
+    margin: 0 0 10vh;
   }
 `
 export const Icon = styled.img`

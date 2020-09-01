@@ -1,5 +1,13 @@
-import React, { useEffect, useRef } from 'react'
-import { Wrapper, Header, ReviewsGrid, ReturnBtn } from './reviews.styled'
+import React, { useEffect, useRef, useState } from 'react'
+import {
+  Wrapper,
+  Header,
+  ReviewsGrid,
+  ReturnBtn,
+  IfNoReviews,
+  Text,
+  AddReview,
+} from './reviews.styled'
 import { useDispatch } from 'react-redux'
 import Overview from './overview/overview'
 import Review from './review/review'
@@ -26,6 +34,7 @@ const Reviews = () => {
   const { loading, data } = useQuery(REVIEWS)
   const dispatch = useDispatch()
   const reviewsWrapper = useRef()
+  const [array] = useState([])
 
   useEffect(() => {
     gsap.from(reviewsWrapper.current, {
@@ -48,24 +57,29 @@ const Reviews = () => {
       <Header>
         <ReturnBtn onClick={() => componentUnmounted()}>Powrót</ReturnBtn>
       </Header>
-      {!loading ? <Overview reviews={data.reviews} /> : null}
-      <ReviewsGrid>
-        {loading ? (
-          <p>loading...</p>
-        ) : (
-          data.reviews.map(({ id, shopifyId, author, caption, rate }) => {
-            return (
-              <Review
-                key={id}
-                shopifyId={shopifyId}
-                author={author}
-                caption={caption}
-                rate={rate}
-              />
-            )
-          })
-        )}
-      </ReviewsGrid>
+      {loading ? null : data.reviews.length > 0 ? (
+        <>
+          <Overview reviews={data.reviews} />
+          <ReviewsGrid>
+            {data.reviews.map(({ id, shopifyId, author, caption, rate }) => {
+              return (
+                <Review
+                  key={id}
+                  shopifyId={shopifyId}
+                  author={author}
+                  caption={caption}
+                  rate={rate}
+                />
+              )
+            })}
+          </ReviewsGrid>
+        </>
+      ) : (
+        <IfNoReviews>
+          <Text>Nikt jeszcze nie napisał opinii. Badź pierwszy!</Text>
+          <AddReview>Dodaj opinię</AddReview>
+        </IfNoReviews>
+      )}
     </Wrapper>
   )
 }

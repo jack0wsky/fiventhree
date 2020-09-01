@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { small, medium } from '../../../components/breakpoints'
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -8,6 +9,14 @@ export const Wrapper = styled.div`
   -webkit-align-items: center;
   justify-content: space-between;
   -webkit-justify-content: space-between;
+
+  @media all and (max-width: ${small}) {
+    flex-flow: column;
+    -webkit-flex-flow: column;
+    align-items: flex-start;
+    height: auto;
+    margin: 20px 0 20px;
+  }
 `
 export const StarsWrapper = styled.div`
   width: 50%;
@@ -17,6 +26,9 @@ export const StarsWrapper = styled.div`
 
   svg {
     margin: 0 5px 0 0;
+  }
+  @media all and (max-width: ${small}) {
+    width: 100%;
   }
 `
 export const RatesAmount = styled.p`

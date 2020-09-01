@@ -11,12 +11,20 @@ const StarButton = styled.button`
   }
 `
 
-const StarSelect = ({ height, handleStars, value, checked, resetStars }) => {
+const StarSelect = ({
+  height,
+  hoverStars,
+  value,
+  checked,
+  resetStars,
+  handleStars,
+}) => {
   return (
     <StarButton
-      onMouseEnter={(e) => handleStars(e)}
+      onMouseEnter={(e) => hoverStars(e)}
       value={value}
       onMouseLeave={() => resetStars()}
+      onClick={(e) => handleStars(e)}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

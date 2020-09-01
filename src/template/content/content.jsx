@@ -41,7 +41,7 @@ import gsap from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
 import { colors } from '../../theme'
 import addIcon from '../../assets/add-icon.svg'
-import { handleReviewsAside } from '../../actions/reviews/handleReviewsAside'
+import { handleReviewForm } from '../../actions/reviews/handleReviewForm'
 import { Link } from 'gatsby'
 gsap.registerPlugin(CSSPlugin)
 
@@ -165,7 +165,7 @@ class Content extends Component {
             )}
           </Sizes>
           {this.state.checkIfAvailable ? null : (
-            <Error>Size isn't available</Error>
+            <Error>Rozmiar jest niedostępny</Error>
           )}
         </BasicsWrapper>
         <Description>
@@ -211,7 +211,7 @@ class Content extends Component {
             +
           </IncrementQuantity>
         </AddToCart>
-        <ReviewsButton>
+        <ReviewsButton onClick={() => dispatch(handleReviewForm())}>
           Dodaj opinię
           <Icon src={addIcon} size={'35px'} />
         </ReviewsButton>
@@ -269,21 +269,3 @@ class Content extends Component {
 }
 
 export default connect(mapStateToProps)(Content)
-
-/*
-<MobileDecrement
-            onClick={() =>
-              this.setState((prevState) => ({
-                quantity: Math.max(prevState.quantity - 1, 1),
-              }))
-            }
-          >
-
-<MobileIncrement
-            onClick={() =>
-              this.setState((prevState) => ({
-                quantity: Math.max(prevState.quantity + 1, 1),
-              }))
-            }
-          >
- */
