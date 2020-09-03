@@ -15,37 +15,12 @@ import {
   SubmitBtn,
 } from './addReviewForm.styled'
 import StarSelect from './star/starSelect'
-import { useMutation, gql } from '@apollo/client'
 import { useDispatch } from 'react-redux'
 import { handleReviewForm } from '../../../actions/reviews/handleReviewForm'
-
-const ADD_REVIEW = gql`
-  mutation AddReview(
-    $name: String!
-    $caption: String!
-    $shopifyId: String!
-    $rate: [Json!]
-  ) {
-    createReview(
-      data: {
-        author: $name
-        caption: $caption
-        shopifyId: $shopifyId
-        rate: $rate
-      }
-    ) {
-      id
-      author
-      caption
-      rate
-      shopifyId
-    }
-  }
-`
+import axios from 'axios'
 
 const AddReviewForm = () => {
   const dispatch = useDispatch()
-  const [addReview, { data }] = useMutation(ADD_REVIEW)
   const [name, setName] = useState('')
   const [clicked, setClicked] = useState(false)
   const [valid, setValid] = useState(false)
@@ -93,14 +68,17 @@ const AddReviewForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    let shopifyId = 'new od'
-    console.log(stars)
     if (name === '' || caption === '') {
       console.error('fill fields')
     } else {
-      addReview({
-        variables: { name, caption, shopifyId, stars },
-      }).then((res) => console.log(res, data))
+      axios
+        .post('https://boiling-everglades-34125.herokuapp.com/reviews/add', {
+          author: name,
+          caption: caption,
+          shopifyId: 'new id',
+          rate: stars,
+        })
+        .then((res) => console.log(res))
     }
   }
 

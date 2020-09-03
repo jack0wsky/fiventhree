@@ -11,36 +11,33 @@ import {
 import { useDispatch } from 'react-redux'
 import Overview from './overview/overview'
 import Review from './review/review'
-import { useQuery } from '@apollo/client'
-import gql from 'graphql-tag'
 import { handleReviewsAside } from '../../actions/reviews/handleReviewsAside'
+import axios from 'axios'
 import gsap from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
 gsap.registerPlugin(CSSPlugin)
 
-const REVIEWS = gql`
-  query Reviews {
-    reviews {
-      rate
-      shopifyId
-      id
-      author
-      caption
-    }
-  }
-`
-
 const Reviews = () => {
-  const { loading, data } = useQuery(REVIEWS)
   const dispatch = useDispatch()
   const reviewsWrapper = useRef()
-  const [array] = useState([])
+  const [reviews, setReviews] = useState([])
 
-  useEffect(() => {
+  const getReviews = async () => {
+    await axios
+      .get('https://boiling-everglades-34125.herokuapp.com/reviews')
+      .then((res) => {
+        setReviews(res.data)
+      })
+      .catch((err) => console.log(err))
+  }
+
+  useEffect(async () => {
     gsap.from(reviewsWrapper.current, {
       translateX: '100%',
       duration: 0.3,
     })
+
+    await getReviews()
   }, [])
 
   const componentUnmounted = () => {
@@ -57,31 +54,42 @@ const Reviews = () => {
       <Header>
         <ReturnBtn onClick={() => componentUnmounted()}>Powrót</ReturnBtn>
       </Header>
-      {loading ? null : data.reviews.length > 0 ? (
-        <>
-          <Overview reviews={data.reviews} />
-          <ReviewsGrid>
-            {data.reviews.map(({ id, shopifyId, author, caption, rate }) => {
-              return (
-                <Review
-                  key={id}
-                  shopifyId={shopifyId}
-                  author={author}
-                  caption={caption}
-                  rate={rate}
-                />
-              )
-            })}
-          </ReviewsGrid>
-        </>
-      ) : (
-        <IfNoReviews>
-          <Text>Nikt jeszcze nie napisał opinii. Badź pierwszy!</Text>
-          <AddReview>Dodaj opinię</AddReview>
-        </IfNoReviews>
-      )}
+      <Overview reviews={reviews} />
+      <ReviewsGrid>
+        {reviews.map(({ id, shopifyId, author, caption, rate }) => {
+          return (
+            <Review
+              key={id}
+              shopifyId={shopifyId}
+              author={author}
+              caption={caption}
+              rate={rate}
+            />
+          )
+        })}
+      </ReviewsGrid>
     </Wrapper>
   )
 }
 
 export default Reviews
+
+/*
+  <IfNoReviews>
+    <Text>Nikt jeszcze nie napisał opinii. Badź pierwszy!</Text>
+    <AddReview>Dodaj opinię</AddReview>
+  </IfNoReviews>
+  <Overview reviews={.reviews} />
+
+  {array.map(({ id, shopifyId, author, caption, rate }) => {
+          return (
+            <Review
+              key={id}
+              shopifyId={shopifyId}
+              author={author}
+              caption={caption}
+              rate={rate}
+            />
+          )
+        })}
+ */
