@@ -1,8 +1,8 @@
 const React = require('react')
 const { store } = require('./src/pages/index')
 const { Provider } = require('react-redux')
-const { ApolloProvider } = require('@apollo/client')
-const client = require('./src/apollo/index')
+const { ApolloProvider } = require('react-apollo')
+const client = require('./src/apollo/client')
 
 exports.wrapRootElement = ({ element }) => {
   return (

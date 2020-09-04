@@ -12,32 +12,35 @@ import { useDispatch } from 'react-redux'
 import Overview from './overview/overview'
 import Review from './review/review'
 import { handleReviewsAside } from '../../actions/reviews/handleReviewsAside'
-import axios from 'axios'
+import { useQuery, gql } from '@apollo/client'
 import gsap from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
 gsap.registerPlugin(CSSPlugin)
 
+const REVIEWS = gql`
+  query Review {
+    reviews {
+      author
+      rate
+      shopifyId
+      caption
+      id
+    }
+  }
+`
+
 const Reviews = () => {
   const dispatch = useDispatch()
   const reviewsWrapper = useRef()
+  const { loading, data } = useQuery(REVIEWS)
   const [reviews, setReviews] = useState([])
 
-  const getReviews = async () => {
-    await axios
-      .get('https://boiling-everglades-34125.herokuapp.com/reviews')
-      .then((res) => {
-        setReviews(res.data)
-      })
-      .catch((err) => console.log(err))
-  }
-
-  useEffect(async () => {
+  useEffect(() => {
     gsap.from(reviewsWrapper.current, {
       translateX: '100%',
       duration: 0.3,
     })
-
-    await getReviews()
+    console.log(loading, data)
   }, [])
 
   const componentUnmounted = () => {
@@ -56,17 +59,19 @@ const Reviews = () => {
       </Header>
       <Overview reviews={reviews} />
       <ReviewsGrid>
-        {reviews.map(({ id, shopifyId, author, caption, rate }) => {
-          return (
-            <Review
-              key={id}
-              shopifyId={shopifyId}
-              author={author}
-              caption={caption}
-              rate={rate}
-            />
-          )
-        })}
+        {!loading
+          ? data.reviews.map(({ id, shopifyId, author, caption, rate }) => {
+              return (
+                <Review
+                  key={id}
+                  shopifyId={shopifyId}
+                  author={author}
+                  caption={caption}
+                  rate={rate}
+                />
+              )
+            })
+          : null}
       </ReviewsGrid>
     </Wrapper>
   )

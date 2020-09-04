@@ -4,11 +4,24 @@ import Star from '../../../components/reviews/review/star/star'
 import { handleReviewsAside } from '../../../actions/reviews/handleReviewsAside'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
+import { useQuery } from '@apollo/client'
+import gql from 'graphql-tag'
+
+const REVIEWS = gql`
+  query OverviewReviews {
+    reviews {
+      rate
+      shopifyId
+      id
+    }
+  }
+`
 
 const ProductReview = () => {
   const dispatch = useDispatch()
   const [values, setValues] = useState([])
   const [fetching, setFetching] = useState(false)
+  const { loading, data } = useQuery(REVIEWS)
   const [averangeRate, setAverangeRate] = useState([
     {
       key: 1,
@@ -33,17 +46,8 @@ const ProductReview = () => {
   ])
   const [averangeSum, setAverange] = useState(0)
 
-  const getReviews = async () => {
-    await axios
-      .get('https://boiling-everglades-34125.herokuapp.com/reviews')
-      .then((res) => {
-        setAverangeRate(res.data)
-        console.log(res.data)
-        setFetching(true)
-      })
-  }
-
   const getAverange = () => {
+    const { reviews } = data
     const averange = new Array(5)
     const total = [
       { value: 5 },
@@ -52,18 +56,14 @@ const ProductReview = () => {
       { value: 2 },
       { value: 2 },
     ]
-    if (fetching) {
-      console.log(averangeRate)
-      return averangeRate.forEach((rate) => {
-        const found = rate.filter(({ checked }) => checked === true)
-        averange.push(found.length)
-        const sum = averange.reduce((acc, cur) => {
-          return (acc += cur)
-        }, 0)
-        setAverange((sum / averangeRate.length).toFixed(1))
-      })
-    }
-    console.log(averangeSum)
+    return reviews.forEach(({ rate }) => {
+      const found = rate.filter(({ checked }) => checked === true)
+      averange.push(found.length)
+      const sum = averange.reduce((acc, cur) => {
+        return (acc += cur)
+      }, 0)
+      setAverange((sum / reviews.length).toFixed(1))
+    })
   }
 
   const setStars = () => {
@@ -79,12 +79,10 @@ const ProductReview = () => {
     const merged = lessThan.concat(moreThan)
     setAverangeRate(merged)
   }
-  useEffect(async () => {
-    await getReviews().then(() => {
-      getAverange()
-      setStars()
-    })
-  }, [averangeSum])
+  useEffect(() => {
+    if (!loading) getAverange()
+    setStars()
+  }, [loading, averangeSum])
   return (
     <Wrapper>
       <StarsWrapper>
@@ -93,9 +91,11 @@ const ProductReview = () => {
               return <Star key={key} height={'25px'} checked={checked} />
             })
           : null}
-        <RatesAmount>
-          {averangeSum} ({averangeRate.length})
-        </RatesAmount>
+        {!loading ? (
+          <RatesAmount>
+            {averangeSum} ({data.reviews.length})
+          </RatesAmount>
+        ) : null}
       </StarsWrapper>
       <SeeAllBtn onClick={() => dispatch(handleReviewsAside())}>
         Zobacz wszystkie
