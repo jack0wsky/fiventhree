@@ -5,3 +5,11 @@ export const reviewsModalReducer = (state = false, action) => {
     return state
   }
 }
+
+export const getProductData = (state = null, action) => {
+  if (action.type === 'GET_PRODUCT_DATA') {
+    return action.payload
+  } else {
+    return state
+  }
+}

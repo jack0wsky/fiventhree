@@ -43,11 +43,16 @@ import { colors } from '../../theme'
 import addIcon from '../../assets/add-icon.svg'
 import { handleReviewForm } from '../../actions/reviews/handleReviewForm'
 import { Link } from 'gatsby'
+import Reviews from '../../components/reviews/reviews'
+import AddReviewForm from './addReview/addReviewForm'
 gsap.registerPlugin(CSSPlugin)
 
 const mapStateToProps = (state) => ({
   cart: state.handleCart,
   checkoutId: state.id,
+  reviewsModal: state.reviewsModal,
+  reviewsForm: state.reviewsForm,
+  productData: state.getProductData,
 })
 
 const ifActive = {
@@ -133,15 +138,26 @@ class Content extends Component {
   }
 
   render() {
-    const { product, variant, dispatch } = this.props
+    const {
+      product,
+      variant,
+      dispatch,
+      reviewsModal,
+      reviewsForm,
+      productData,
+    } = this.props
     return (
       <ContentWrapper>
+        {reviewsModal ? <Reviews product={product} /> : null}
+        {reviewsForm ? (
+          <AddReviewForm product={product} size={variant} />
+        ) : null}
         <CartHeader>
           <AniLink cover to="/">
             Powrót
           </AniLink>
         </CartHeader>
-        <ProductReview />
+        {productData ? <ProductReview productData={productData} /> : null}
         <BasicsWrapper>
           <Head>
             <Type>{product.productType}</Type>

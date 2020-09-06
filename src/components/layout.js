@@ -14,7 +14,6 @@ import '../fonts/bold.css'
 import '../fonts/xbold.css'
 import { Helmet } from 'react-helmet/es/Helmet'
 import Reviews from './reviews/reviews'
-import AddReviewForm from '../template/content/addReview/addReviewForm'
 
 const GlobalStyle = createGlobalStyle`
   *, *:before, *:after {
@@ -34,7 +33,6 @@ const Layout = ({ children }) => {
   const toggleCart = useSelector((state) => state.toggleCart)
   const toggleMenu = useSelector((state) => state.handleMenu)
   const reviewsModal = useSelector((state) => state.reviewsModal)
-  const reviewsForm = useSelector((state) => state.reviewsForm)
   const inpost = useSelector((state) => state.inpost)
   const [cartAnimation, setCartAnimation] = useState(false)
   const data = useStaticQuery(graphql`
@@ -70,7 +68,6 @@ const Layout = ({ children }) => {
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
       <Header />
-      {reviewsForm ? <AddReviewForm /> : null}
       {reviewsModal ? <Reviews /> : null}
       {inpost ? <InPostModal /> : null}
       <Menu />

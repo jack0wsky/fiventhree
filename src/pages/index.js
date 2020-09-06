@@ -16,7 +16,10 @@ import { handleInPostModal } from '../reducers/inPostReducer'
 import { SelectedInPostLocker } from '../reducers/inPostLockerReducer'
 import { shippingMethod } from '../reducers/shippingMethodReducer'
 import { TemporaryLockerHolder } from '../reducers/temporaryLockerHolderReducer'
-import { reviewsModalReducer } from '../reducers/reviewsModalReducer'
+import {
+  reviewsModalReducer,
+  getProductData,
+} from '../reducers/reviewsModalReducer'
 import { handleReviewForm } from '../reducers/reviewFormReducer'
 import styled from 'styled-components'
 
@@ -34,6 +37,7 @@ const combine = combineReducers({
   temporaryInPostHolder: TemporaryLockerHolder,
   reviewsModal: reviewsModalReducer,
   reviewsForm: handleReviewForm,
+  getProductData,
 })
 
 //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

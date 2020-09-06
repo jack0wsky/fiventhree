@@ -22,6 +22,7 @@ const StarSelect = ({
   return (
     <StarButton
       value={value}
+      onMouseEnter={(e) => hoverStars(e)}
       onMouseLeave={() => resetStars()}
       onClick={(e) => handleStars(e)}
     >

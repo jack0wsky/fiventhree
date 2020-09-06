@@ -13,9 +13,13 @@ import {
   Footer,
   CloseModalBtn,
   SubmitBtn,
+  SetNameCheckboxWrapper,
+  Checkbox,
+  Error,
 } from './addReviewForm.styled'
 import StarSelect from './star/starSelect'
 import Confirm from './confirm/confirm'
+import ReviewContext from './reviewContext/reviewContext'
 import { useDispatch } from 'react-redux'
 import { handleReviewForm } from '../../../actions/reviews/handleReviewForm'
 import { useMutation, gql } from '@apollo/client'
@@ -44,10 +48,11 @@ const ADD_REVIEW = gql`
   }
 `
 
-const AddReviewForm = () => {
+const AddReviewForm = ({ product, size }) => {
   const dispatch = useDispatch()
-  const [addReview, { data }] = useMutation(ADD_REVIEW)
+  const [addReview] = useMutation(ADD_REVIEW)
   const [name, setName] = useState('')
+  const [allowName, setAllowName] = useState(true)
   const [clicked, setClicked] = useState(false)
   const [valid, setValid] = useState(false)
   const [caption, setCaption] = useState('')
@@ -75,31 +80,66 @@ const AddReviewForm = () => {
   ])
   const [less, setLess] = useState([])
   const [more, setMore] = useState([])
+  const [nameError, setNameError] = useState(false)
+  const [rateError, setRateError] = useState(false)
+  const [captionError, setCaptionError] = useState(false)
 
   const resetAndSplit = (e) => {
-    console.log(e.currentTarget)
-    rate.forEach((star) => {
-      star.checked = false
-    })
-    console.log(rate)
-    /*
+    const value = e.currentTarget.value
     const less = rate.filter(({ key }) => {
       return key <= value
     })
     const more = rate.filter(({ key }) => {
       return key > value
     })
-    less.forEach((star) => (star.checked = true))
+    less.forEach((star) => {
+      star.checked = true
+    })
     setLess(less)
-    setMore(more) */
+    setMore(more)
+  }
+  const validName = () => {
+    if (allowName) {
+      if (name === '') {
+        setNameError(true)
+      } else {
+        setNameError(false)
+      }
+    } else {
+      setNameError(false)
+    }
+  }
+  const validRate = () => {
+    rate.every((star) => {
+      if (star.checked === false) {
+        setRateError(true)
+      } else {
+        setRateError(false)
+      }
+    })
+  }
+  const validCaption = () => {
+    if (caption === '') {
+      setCaptionError(true)
+    } else {
+      setCaptionError(false)
+    }
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const shopifyId = 'new id'
-    if (name === '' || caption === '') {
-      console.error('fill fields')
-    } else {
+    const { shopifyId } = product
+    validName()
+    validRate()
+    validCaption()
+    console.log(nameError, captionError, rateError)
+
+    if (!nameError || !rateError || !captionError) {
+      console.log('send')
+      /*
+      setCaptionError(false)
+      setNameError(false)
+      setRateError(false)
       addReview({
         variables: { name, caption, shopifyId, rate },
       }).then((res) => {
@@ -132,14 +172,14 @@ const AddReviewForm = () => {
         setTimeout(() => {
           closeModal(e)
         }, 1500)
-      })
+      }) */
+    } else {
+      console.log('error')
     }
   }
 
   const hoverStars = (e) => {
-    e.preventDefault()
-    //if (!clicked) resetAndSplit(e)
-    setRate(less.concat(more))
+    if (!clicked) resetAndSplit(e)
   }
   const resetStars = () => {
     if (!clicked) {
@@ -177,20 +217,43 @@ const AddReviewForm = () => {
     dispatch(handleReviewForm())
   }
 
+  const parseName = () => {
+    const capital = name.slice(0, 1).toUpperCase()
+    const rest = name.slice(1, name.length + 1).toLowerCase()
+    const result = capital.concat(rest)
+    setName(result)
+  }
+
   useEffect(() => {}, [rate])
   return (
     <FormWrapper>
       {!valid ? (
         <Form onSubmit={(e) => handleSubmit(e)}>
           <Title>Co powiesz o tym produkcie?</Title>
-          <InputWrapper>
-            <Label>Imię i nazwisko lub pseudonim</Label>
-            <Input
-              type="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+          <ReviewContext product={product} size={size} />
+          {allowName ? (
+            <InputWrapper>
+              <Label>Imię i nazwisko lub pseudonim</Label>
+              <Input
+                type="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </InputWrapper>
+          ) : null}
+          <SetNameCheckboxWrapper>
+            <Checkbox
+              onChange={() => setAllowName(!allowName)}
+              size={'25px'}
+              name="name"
+              type="checkbox"
+              checked={allowName}
             />
-          </InputWrapper>
+            <Label htmlFor="name">Chce pokazać moje imię</Label>
+            {nameError ? (
+              <Error>Nie wpisałeś nazwy lub jest ona niepoprawna</Error>
+            ) : null}
+          </SetNameCheckboxWrapper>
           <ChooseStarsAmount>
             <Label>Na ile oceniasz produkt?</Label>
             <StarsGrid>
@@ -208,6 +271,7 @@ const AddReviewForm = () => {
                 )
               })}
             </StarsGrid>
+            {rateError ? <Error>Nie wybrałeś ilości gwiazdek</Error> : null}
           </ChooseStarsAmount>
           <CaptionWrapper>
             <Label>Opisz nam swoje doświadczenia</Label>
@@ -215,6 +279,9 @@ const AddReviewForm = () => {
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
             />
+            {captionError ? (
+              <Error>Musisz wypełnić to pole, aby zamieścić opinię</Error>
+            ) : null}
           </CaptionWrapper>
           <Footer>
             <CloseModalBtn onClick={(e) => closeModal(e)}>Anuluj</CloseModalBtn>

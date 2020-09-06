@@ -42,6 +42,8 @@ export const ReviewsGrid = styled.section`
   display: grid;
   grid-template-columns: 1fr;
   grid-row-gap: 2vw;
+  overflow: auto;
+  padding: 0 0 5vw;
 `
 export const IfNoReviews = styled.div`
   width: 100%;

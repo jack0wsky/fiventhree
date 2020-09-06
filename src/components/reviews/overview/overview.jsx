@@ -9,8 +9,25 @@ import {
   Value,
   Line,
 } from './overview.styled'
+import { useSelector } from 'react-redux'
+import { useQuery, gql } from '@apollo/client'
+
+const REVIEWS = gql`
+  query Review($shopifyId: String!) {
+    reviews(where: { _search: $shopifyId }) {
+      author
+      caption
+      rate
+      createdAt
+      id
+      shopifyId
+    }
+  }
+`
 
 const Overview = ({ reviews }) => {
+  const { shopifyId } = useSelector((state) => state.getProductData)
+  const { loading, data } = useQuery(REVIEWS, { variables: { shopifyId } })
   const [averangeRate, setAverangeRate] = useState(0)
   const [rates, setRates] = useState([])
   const [visualRate] = useState([
@@ -20,19 +37,32 @@ const Overview = ({ reviews }) => {
     { key: 4, value: 2 },
     { key: 5, value: 1 },
   ])
-  const getReviewsAverange = () => {
-    const averange = []
-    if (reviews) {
-      return reviews.forEach(({ rate }) => {
-        const found = rate.filter((val) => {
-          return val.checked === true
-        })
-        averange.push(found.length)
-        const sum = averange.reduce((acc, cur) => {
-          return (acc += cur)
-        }, 0)
-        setAverangeRate((sum / averange.length).toFixed(1))
+
+  const calculateReviewsAverange = () => {
+    const { reviews } = data
+    const tempArray = []
+    reviews.forEach(({ rate }) => {
+      const positive = rate.filter((star) => {
+        return star.checked === true
       })
+      tempArray.push(positive.length)
+      const sum = tempArray.reduce((acc, cur) => {
+        return (acc += cur)
+      }, 0)
+      const total = (sum / tempArray.length).toFixed(1)
+      setRates(total)
+    })
+  }
+
+  const parseReviewsLength = () => {
+    const length = data.reviews.length
+    switch (length) {
+      case length >= 2 && length < 5: {
+        return `${length} opinie`
+      }
+      default: {
+        return `${length} opinii`
+      }
     }
   }
   const getAmountOfCurrentReview = () => {
@@ -48,7 +78,6 @@ const Overview = ({ reviews }) => {
         const selected = rate.filter(({ checked }) => {
           return checked === true
         })
-        console.log(selected.length)
       })
       return reviews.forEach(({ rate }) => {
         const found = rate.filter(({ checked }) => {
@@ -68,15 +97,19 @@ const Overview = ({ reviews }) => {
   }
 
   useEffect(() => {
-    getReviewsAverange()
-    getAmountOfCurrentReview()
-  }, [])
+    if (!loading) {
+      calculateReviewsAverange()
+      getAmountOfCurrentReview()
+    }
+  }, [loading])
   return (
     <ReviewOverview>
-      <Values>
-        <AverangeRate>{averangeRate}</AverangeRate>
-        <TotalRates>{reviews.length} opinie</TotalRates>
-      </Values>
+      {!loading ? (
+        <Values>
+          <AverangeRate>{rates}</AverangeRate>
+          <TotalRates>{parseReviewsLength()}</TotalRates>
+        </Values>
+      ) : null}
     </ReviewOverview>
   )
 }

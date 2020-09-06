@@ -8,7 +8,7 @@ import {
   Text,
   AddReview,
 } from './reviews.styled'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Overview from './overview/overview'
 import Review from './review/review'
 import { handleReviewsAside } from '../../actions/reviews/handleReviewsAside'
@@ -18,21 +18,26 @@ import { CSSPlugin } from 'gsap/CSSPlugin'
 gsap.registerPlugin(CSSPlugin)
 
 const REVIEWS = gql`
-  query Review {
-    reviews {
+  query Review($shopifyId: String!) {
+    reviews(where: { _search: $shopifyId }) {
       author
-      rate
-      shopifyId
       caption
+      rate
+      createdAt
       id
+      shopifyId
     }
   }
 `
 
 const Reviews = () => {
   const dispatch = useDispatch()
+  const { image, shopifyId } = useSelector((state) => state.getProductData)
   const reviewsWrapper = useRef()
-  const { loading, data } = useQuery(REVIEWS)
+  const { loading, data } = useQuery(REVIEWS, {
+    variables: { shopifyId },
+    pollInterval: 500,
+  })
   const [reviews, setReviews] = useState([])
 
   useEffect(() => {
@@ -40,7 +45,6 @@ const Reviews = () => {
       translateX: '100%',
       duration: 0.3,
     })
-    console.log(loading, data)
   }, [])
 
   const componentUnmounted = () => {
@@ -50,7 +54,7 @@ const Reviews = () => {
     })
     setTimeout(() => {
       dispatch(handleReviewsAside())
-    }, 350)
+    }, 400)
   }
   return (
     <Wrapper ref={reviewsWrapper}>
@@ -60,17 +64,21 @@ const Reviews = () => {
       <Overview reviews={reviews} />
       <ReviewsGrid>
         {!loading
-          ? data.reviews.map(({ id, shopifyId, author, caption, rate }) => {
-              return (
-                <Review
-                  key={id}
-                  shopifyId={shopifyId}
-                  author={author}
-                  caption={caption}
-                  rate={rate}
-                />
-              )
-            })
+          ? data.reviews.map(
+              ({ id, shopifyId, author, caption, rate, createdAt }) => {
+                return (
+                  <Review
+                    image={image}
+                    key={id}
+                    shopifyId={shopifyId}
+                    author={author}
+                    caption={caption}
+                    rate={rate}
+                    createdAt={createdAt}
+                  />
+                )
+              }
+            )
           : null}
       </ReviewsGrid>
     </Wrapper>

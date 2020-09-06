@@ -3,13 +3,12 @@ import { Wrapper, StarsWrapper, RatesAmount, SeeAllBtn } from './review.styled'
 import Star from '../../../components/reviews/review/star/star'
 import { handleReviewsAside } from '../../../actions/reviews/handleReviewsAside'
 import { useDispatch } from 'react-redux'
-import axios from 'axios'
 import { useQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 
 const REVIEWS = gql`
-  query OverviewReviews {
-    reviews {
+  query OverviewReviews($shopifyId: String!) {
+    reviews(where: { _search: $shopifyId }) {
       rate
       shopifyId
       id
@@ -17,83 +16,58 @@ const REVIEWS = gql`
   }
 `
 
-const ProductReview = () => {
+const ProductReview = ({ productData: { shopifyId } }) => {
+  const [averangeSum, setSum] = useState(0)
   const dispatch = useDispatch()
-  const [values, setValues] = useState([])
-  const [fetching, setFetching] = useState(false)
-  const { loading, data } = useQuery(REVIEWS)
+  const { loading, data } = useQuery(REVIEWS, { variables: { shopifyId } })
   const [averangeRate, setAverangeRate] = useState([
-    {
-      key: 1,
-      checked: false,
-    },
-    {
-      key: 2,
-      checked: false,
-    },
-    {
-      key: 3,
-      checked: false,
-    },
-    {
-      key: 4,
-      checked: false,
-    },
-    {
-      key: 5,
-      checked: false,
-    },
+    { key: 1, checked: false },
+    { key: 2, checked: false },
+    { key: 3, checked: false },
+    { key: 4, checked: false },
+    { key: 5, checked: false },
   ])
-  const [averangeSum, setAverange] = useState(0)
-
-  const getAverange = () => {
-    const { reviews } = data
-    const averange = new Array(5)
-    const total = [
-      { value: 5 },
-      { value: 4 },
-      { value: 3 },
-      { value: 2 },
-      { value: 2 },
-    ]
-    return reviews.forEach(({ rate }) => {
-      const found = rate.filter(({ checked }) => checked === true)
-      averange.push(found.length)
-      const sum = averange.reduce((acc, cur) => {
+  const calculateRate = () => {
+    const tempArr = []
+    data.reviews.forEach(({ rate }) => {
+      const stars = rate.filter((star) => {
+        return star.checked === true
+      })
+      tempArr.push(stars.length)
+      const sum = tempArr.reduce((acc, cur) => {
         return (acc += cur)
       }, 0)
-      setAverange((sum / reviews.length).toFixed(1))
+      setSum((sum / tempArr.length).toFixed(1))
     })
   }
-
   const setStars = () => {
-    const lessThan = averangeRate.filter(({ key }) => {
-      return key <= averangeSum
+    data.reviews.forEach(({ rate }) => {
+      const positive = rate.filter((star) => {
+        return star.checked === true
+      })
+      if (positive.length === 5) {
+        setAverangeRate(positive)
+      }
     })
-    const moreThan = averangeRate.filter(({ key }) => {
-      return key > averangeSum
-    })
-    lessThan.forEach((rate) => {
-      rate.checked = true
-    })
-    const merged = lessThan.concat(moreThan)
-    setAverangeRate(merged)
   }
   useEffect(() => {
-    if (!loading) getAverange()
-    setStars()
-  }, [loading, averangeSum])
+    if (!loading) {
+      setStars()
+      calculateRate()
+    }
+  }, [loading])
+
   return (
     <Wrapper>
       <StarsWrapper>
-        {averangeRate.length > 0
+        {!loading
           ? averangeRate.map(({ key, checked }) => {
-              return <Star key={key} height={'25px'} checked={checked} />
+              return <Star key={key} checked={checked} height={'30px'} />
             })
           : null}
         {!loading ? (
           <RatesAmount>
-            {averangeSum} ({data.reviews.length})
+            {averangeSum > 0 ? averangeSum : 0} {`(${data.reviews.length})`}
           </RatesAmount>
         ) : null}
       </StarsWrapper>
@@ -113,4 +87,10 @@ export default ProductReview
               return <Star height={'30px'} checked={checked} />
             })
           : null}
+
+
+          return this.state.averangeRate.length > 0
+                  ? this.state.averangeRate.map(({key, checked}) => {
+                    return <Star key={key} height={'25px'} checked={checked}/>
+                  })
  */

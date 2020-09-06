@@ -111,3 +111,18 @@ export const SubmitBtn = styled(CloseModalBtn)`
     outline: none;
   }
 `
+export const SetNameCheckboxWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  height: auto;
+  width: 100%;
+  margin: 20px 0 20px;
+`
+export const Checkbox = styled.input`
+  height: ${({ size }) => size};
+  width: ${({ size }) => size};
+  margin: 0 10px 0 0;
+`
+export const Error = styled.p`
+  color: #ff3737;
+`
