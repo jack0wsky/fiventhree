@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { small } from '../../../components/breakpoints'
+import { small, medium, large, xlarge } from '../../../components/breakpoints'
 
 export const FormWrapper = styled.div`
   width: 100vw;
@@ -22,6 +22,15 @@ export const Form = styled.form`
   @media all and (max-width: ${small}) {
     width: 100vw;
     height: 100vh;
+  }
+  @media all and (min-width: ${small}) and (max-width: ${medium}) {
+    width: 70vw;
+  }
+  @media all and (min-width: ${medium}) and (max-width: ${large}) {
+    width: 60vw;
+  }
+  @media all and (min-width: ${large}) and (max-width: ${xlarge}) {
+    width: 50vw;
   }
 `
 export const Title = styled.h4`
@@ -71,7 +80,7 @@ export const TextArea = styled.textarea`
   }
 
   @media all and (max-width: ${small}) {
-    height: 30vh;
+    height: 20vh;
   }
 `
 export const Footer = styled.div`

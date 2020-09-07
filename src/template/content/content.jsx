@@ -149,7 +149,7 @@ class Content extends Component {
     return (
       <ContentWrapper>
         {reviewsModal ? <Reviews product={product} /> : null}
-        {reviewsForm ? (
+        {!reviewsForm ? (
           <AddReviewForm product={product} size={variant} />
         ) : null}
         <CartHeader>

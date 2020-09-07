@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { small, medium } from '../../../components/breakpoints'
+import { small, medium, large, xlarge } from '../../../components/breakpoints'
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -17,6 +17,13 @@ export const Wrapper = styled.div`
     height: auto;
     margin: 20px 0 20px;
   }
+
+  @media all and (min-width: ${large}) and (max-width: ${xlarge}) {
+    flex-flow: column;
+    -webkit-flex-flow: column;
+    align-items: flex-start;
+    height: auto;
+  }
 `
 export const StarsWrapper = styled.div`
   width: 50%;
@@ -29,6 +36,9 @@ export const StarsWrapper = styled.div`
   }
   @media all and (max-width: ${small}) {
     width: 100%;
+  }
+  @media all and (min-width: ${large}) and (max-width: ${xlarge}) {
+    width: auto;
   }
 `
 export const RatesAmount = styled.p`

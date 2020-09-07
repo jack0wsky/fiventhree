@@ -98,83 +98,108 @@ const AddReviewForm = ({ product, size }) => {
     setLess(less)
     setMore(more)
   }
-  const validName = () => {
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const { shopifyId } = product
+
+    const isRate = rate.every(({ checked }) => {
+      return checked === false
+    })
+
+    if (isRate === false) {
+      setRateError(false)
+    } else {
+      setRateError(true)
+    }
+    if (caption === '') {
+      setCaptionError(true)
+    } else {
+      setCaptionError(false)
+    }
+
     if (allowName) {
       if (name === '') {
         setNameError(true)
       } else {
         setNameError(false)
       }
-    } else {
-      setNameError(false)
-    }
-  }
-  const validRate = () => {
-    rate.every((star) => {
-      if (star.checked === false) {
-        setRateError(true)
-      } else {
+      if (name !== '' && isRate === false && caption !== '') {
+        setCaptionError(false)
+        setNameError(false)
         setRateError(false)
+        addReview({
+          variables: { name, caption, shopifyId, rate },
+        }).then((res) => {
+          console.log(res)
+          setName('')
+          setCaption('')
+          setRate([
+            {
+              key: 1,
+              checked: false,
+            },
+            {
+              key: 2,
+              checked: false,
+            },
+            {
+              key: 3,
+              checked: false,
+            },
+            {
+              key: 4,
+              checked: false,
+            },
+            {
+              key: 5,
+              checked: false,
+            },
+          ])
+          setValid(true)
+          setTimeout(() => {
+            closeModal(e)
+          }, 1500)
+        })
+      } else {
+        console.error('error')
       }
-    })
-  }
-  const validCaption = () => {
-    if (caption === '') {
-      setCaptionError(true)
     } else {
-      setCaptionError(false)
-    }
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const { shopifyId } = product
-    validName()
-    validRate()
-    validCaption()
-    console.log(nameError, captionError, rateError)
-
-    if (!nameError || !rateError || !captionError) {
-      console.log('send')
-      /*
-      setCaptionError(false)
       setNameError(false)
-      setRateError(false)
-      addReview({
-        variables: { name, caption, shopifyId, rate },
-      }).then((res) => {
-        console.log(res)
-        setName('')
-        setCaption('')
-        setRate([
-          {
-            key: 1,
-            checked: false,
-          },
-          {
-            key: 2,
-            checked: false,
-          },
-          {
-            key: 3,
-            checked: false,
-          },
-          {
-            key: 4,
-            checked: false,
-          },
-          {
-            key: 5,
-            checked: false,
-          },
-        ])
-        setValid(true)
-        setTimeout(() => {
-          closeModal(e)
-        }, 1500)
-      }) */
-    } else {
-      console.log('error')
+      if (!isRate && caption !== '') {
+        addReview({
+          variables: { name, caption, shopifyId, rate },
+        }).then((res) => {
+          console.log(res)
+          setName('')
+          setCaption('')
+          setRate([
+            {
+              key: 1,
+              checked: false,
+            },
+            {
+              key: 2,
+              checked: false,
+            },
+            {
+              key: 3,
+              checked: false,
+            },
+            {
+              key: 4,
+              checked: false,
+            },
+            {
+              key: 5,
+              checked: false,
+            },
+          ])
+        })
+      } else {
+        setRateError(true)
+        setCaptionError(true)
+      }
     }
   }
 

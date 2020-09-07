@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { medium, large } from '../../../../components/breakpoints'
 
 export const ProductShortcut = styled.div`
   width: 100%;
@@ -19,6 +20,10 @@ export const ShortcutImage = styled.div`
   align-items: center;
   -webkit-align-items: center;
   overflow: hidden;
+
+  @media all and (min-width: ${medium}) and (max-width: ${large}) {
+    width: 25%;
+  }
 `
 export const Image = styled.img`
   width: 100%;
