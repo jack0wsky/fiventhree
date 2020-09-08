@@ -33,7 +33,6 @@ const ProductReview = ({ reviews, loading }) => {
       const positive = rate.filter((star) => {
         return star.checked === true
       })
-      //setAverangeRate(positive)
       const stars = averangeRate.filter((star) => {
         return star.key <= positive.length
       })
