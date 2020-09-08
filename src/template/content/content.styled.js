@@ -180,7 +180,7 @@ export const Description = styled.section`
   @media all and (max-width: ${small}) {
     width: 100%;
     height: auto;
-    padding: 0 0 10vh;
+    padding: 0 0 4vh;
   }
   @media all and (min-width: ${medium}) and (max-width: ${large}) {
     width: 100%;
@@ -362,4 +362,29 @@ export const MobileSizes = styled.div`
     text-decoration: none;
     color: #000;
   }
+`
+export const ReviewsButton = styled.button`
+  padding: 15px 30px 15px;
+  border: none;
+  font-size: 1em;
+  background: none;
+  border-bottom: 1px solid #000;
+  display: flex;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  align-items: center;
+  -webkit-align-items: center;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  @media all and (max-width: ${small}) {
+    margin: 0 0 10vh;
+  }
+`
+export const Icon = styled.img`
+  height: ${({ size }) => size};
+  width: ${({ size }) => size};
 `

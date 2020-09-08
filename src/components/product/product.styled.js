@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { colors } from '../../theme'
-import { small, medium, large } from '../breakpoints'
+import { small, medium, large, xlarge } from '../breakpoints'
 
 export const Image = styled.img`
   height: 100%;
@@ -21,15 +21,17 @@ export const ProductWrapper = styled.div`
   -webkit-flex-flow: column;
   font-family: 'Aktiv Grotesk Ex', sans-serif;
 
-  &:hover ${Image} {
-    transform: scale(1.05);
-    transition: 0.3s ease-in-out;
-  }
   @media all and (max-width: ${small}) {
     width: 90vw;
   }
   @media all and (min-width: ${small}) and (max-width: ${large}) {
     width: 100%;
+  }
+  @media all and (min-width: ${large}) {
+    &:hover ${Image} {
+      transform: scale(1.05);
+      transition: 0.3s ease-in-out;
+    }
   }
 `
 export const OnHover = styled.div`
@@ -56,9 +58,11 @@ export const ImageSlider = styled.section`
     height: 100%;
   }
 
-  &:hover ${OnHover} {
-    transition: 0.3s ease-in-out;
-    opacity: 1;
+  @media all and (min-width: ${large}) {
+    &:hover ${OnHover} {
+      transition: 0.3s ease-in-out;
+      opacity: 1;
+    }
   }
 `
 export const Details = styled.section`

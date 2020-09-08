@@ -29,20 +29,42 @@ import {
   MobileIncrement,
   MobileSizes,
   BasicsWrapper,
+  ReviewsButton,
+  Icon,
 } from './content.styled'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import Size from './size/size'
 import { setCheckoutId } from '../../actions/setCheckoutId'
 import SizesTable from './sizesTable/sizesTable'
+import ProductReview from './review/review'
 import gsap from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
 import { colors } from '../../theme'
+import addIcon from '../../assets/add-icon.svg'
+import gql from 'graphql-tag'
+import { Query } from '@apollo/client/react/components'
+import { handleReviewForm } from '../../actions/reviews/handleReviewForm'
 import { Link } from 'gatsby'
+import Reviews from '../../components/reviews/reviews'
+import AddReviewForm from './addReview/addReviewForm'
 gsap.registerPlugin(CSSPlugin)
+
+const REVIEWS = gql`
+  query OverviewReviews($shopifyId: String!) {
+    reviews(where: { _search: $shopifyId }) {
+      rate
+      shopifyId
+      id
+    }
+  }
+`
 
 const mapStateToProps = (state) => ({
   cart: state.handleCart,
   checkoutId: state.id,
+  reviewsModal: state.reviewsModal,
+  reviewsForm: state.reviewsForm,
+  productData: state.getProductData,
 })
 
 const ifActive = {
@@ -128,14 +150,37 @@ class Content extends Component {
   }
 
   render() {
-    const { product, variant } = this.props
+    const {
+      product,
+      variant,
+      dispatch,
+      reviewsModal,
+      reviewsForm,
+      productData,
+    } = this.props
     return (
       <ContentWrapper>
+        {reviewsModal ? <Reviews product={product} /> : null}
+        {reviewsForm ? (
+          <AddReviewForm product={product} size={variant} />
+        ) : null}
         <CartHeader>
           <AniLink cover to="/">
             Powrót
           </AniLink>
         </CartHeader>
+        {productData ? (
+          <Query
+            query={REVIEWS}
+            variables={{ shopifyId: productData.shopifyId }}
+          >
+            {({ loading, data }) => {
+              if (loading) return <p>loading...</p>
+              const { reviews } = data
+              return <ProductReview loading={loading} reviews={reviews} />
+            }}
+          </Query>
+        ) : null}
         <BasicsWrapper>
           <Head>
             <Type>{product.productType}</Type>
@@ -159,7 +204,7 @@ class Content extends Component {
             )}
           </Sizes>
           {this.state.checkIfAvailable ? null : (
-            <Error>Size isn't available</Error>
+            <Error>Rozmiar jest niedostępny</Error>
           )}
         </BasicsWrapper>
         <Description>
@@ -205,6 +250,10 @@ class Content extends Component {
             +
           </IncrementQuantity>
         </AddToCart>
+        <ReviewsButton onClick={() => dispatch(handleReviewForm())}>
+          Dodaj opinię
+          <Icon src={addIcon} size={'35px'} />
+        </ReviewsButton>
 
         <MobileAddToCart>
           <MobileSizes>
@@ -213,7 +262,7 @@ class Content extends Component {
                 return (
                   <Link
                     to={`/produkty/${sku}`}
-                    available={available}
+                    available={available.toString()}
                     key={sku}
                     activeStyle={ifActive}
                   >
@@ -261,19 +310,5 @@ class Content extends Component {
 export default connect(mapStateToProps)(Content)
 
 /*
-<MobileDecrement
-            onClick={() =>
-              this.setState((prevState) => ({
-                quantity: Math.max(prevState.quantity - 1, 1),
-              }))
-            }
-          >
-
-<MobileIncrement
-            onClick={() =>
-              this.setState((prevState) => ({
-                quantity: Math.max(prevState.quantity + 1, 1),
-              }))
-            }
-          >
+ {productData ? <ProductReview productData={productData} /> : null}
  */

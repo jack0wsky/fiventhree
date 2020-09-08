@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   TemplateWrapper,
   Gallery,
@@ -9,13 +9,19 @@ import {
 import Content from './content/content'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import ImageModal from './imageModal/imageModal'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { handleModal } from '../actions/handleModal'
+import { getProductData } from '../actions/reviews/getProductData'
+
 const ProductTemplate = ({ pageContext: { product, variant } }) => {
   const dispatch = useDispatch()
   const [toggleModal, setModal] = useState(false)
   const [height, setHeight] = useState(0)
   const [width, setWidth] = useState(0)
+
+  useEffect(() => {
+    dispatch(getProductData(product.images[0].originalSrc, product.shopifyId))
+  }, [dispatch])
 
   const openModal = (img, height, width) => {
     setHeight(height)
@@ -39,6 +45,7 @@ const ProductTemplate = ({ pageContext: { product, variant } }) => {
           {product.images.map(({ originalSrc }) => {
             return (
               <ClickableImage
+                key={originalSrc}
                 onClick={() => openModal(originalSrc, '85vh', '50vw')}
               >
                 <Image src={originalSrc} alt="zdjęcia produktu" />
