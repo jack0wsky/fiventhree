@@ -3,23 +3,10 @@ import { Wrapper, StarsWrapper, RatesAmount, SeeAllBtn } from './review.styled'
 import Star from '../../../components/reviews/review/star/star'
 import { handleReviewsAside } from '../../../actions/reviews/handleReviewsAside'
 import { useDispatch } from 'react-redux'
-import { useQuery } from '@apollo/client'
-import gql from 'graphql-tag'
 
-const REVIEWS = gql`
-  query OverviewReviews($shopifyId: String!) {
-    reviews(where: { _search: $shopifyId }) {
-      rate
-      shopifyId
-      id
-    }
-  }
-`
-
-const ProductReview = ({ productData: { shopifyId } }) => {
+const ProductReview = ({ reviews, loading }) => {
   const [averangeSum, setSum] = useState(0)
   const dispatch = useDispatch()
-  const { loading, data } = useQuery(REVIEWS, { variables: { shopifyId } })
   const [averangeRate, setAverangeRate] = useState([
     { key: 1, checked: false },
     { key: 2, checked: false },
@@ -29,7 +16,7 @@ const ProductReview = ({ productData: { shopifyId } }) => {
   ])
   const calculateRate = () => {
     const tempArr = []
-    data.reviews.forEach(({ rate }) => {
+    reviews.forEach(({ rate }) => {
       const stars = rate.filter((star) => {
         return star.checked === true
       })
@@ -41,39 +28,49 @@ const ProductReview = ({ productData: { shopifyId } }) => {
     })
   }
   const setStars = () => {
-    data.reviews.forEach(({ rate }) => {
+    let tempArr
+    reviews.forEach(({ rate }) => {
       const positive = rate.filter((star) => {
         return star.checked === true
       })
-      if (positive.length === 5) {
-        setAverangeRate(positive)
-      }
+      //setAverangeRate(positive)
+      const stars = averangeRate.filter((star) => {
+        return star.key <= positive.length
+      })
+      stars.forEach((star) => {
+        star.checked = true
+      })
+      const rest = averangeRate.filter((star) => {
+        return star.key > positive.length
+      })
+      tempArr = stars.concat(rest)
     })
+    setAverangeRate(tempArr)
   }
   useEffect(() => {
-    if (!loading) {
-      setStars()
-      calculateRate()
-    }
+    setStars()
+    calculateRate()
   }, [loading])
 
   return (
     <Wrapper>
-      <StarsWrapper>
-        {!loading
-          ? averangeRate.map(({ key, checked }) => {
-              return <Star key={key} checked={checked} height={'30px'} />
-            })
-          : null}
-        {!loading ? (
+      {reviews.length > 0 ? (
+        <StarsWrapper>
+          {averangeRate.length > 0
+            ? averangeRate.map(({ key, checked }) => {
+                return <Star key={key} checked={checked} height={'30px'} />
+              })
+            : null}
           <RatesAmount>
-            {averangeSum > 0 ? averangeSum : 0} {`(${data.reviews.length})`}
+            {averangeSum > 0 ? averangeSum : 0} {`(${reviews.length})`}
           </RatesAmount>
-        ) : null}
-      </StarsWrapper>
-      <SeeAllBtn onClick={() => dispatch(handleReviewsAside())}>
-        Zobacz wszystkie
-      </SeeAllBtn>
+        </StarsWrapper>
+      ) : null}
+      {reviews.length > 0 ? (
+        <SeeAllBtn onClick={() => dispatch(handleReviewsAside())}>
+          Zobacz wszystkie
+        </SeeAllBtn>
+      ) : null}
     </Wrapper>
   )
 }

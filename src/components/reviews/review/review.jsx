@@ -29,7 +29,7 @@ const Review = ({ author, caption, rate, image, createdAt }) => {
         <Image src={image} />
       </ReviewImage>
       <Content>
-        <Author>{author}</Author>
+        <Author>{author !== '' ? author : 'Klient Fiventhree'}</Author>
         <Rate>
           {rate.map(({ value, checked }) => {
             return <Star key={value} checked={checked} height={'20px'} />

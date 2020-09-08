@@ -41,11 +41,23 @@ import gsap from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
 import { colors } from '../../theme'
 import addIcon from '../../assets/add-icon.svg'
+import gql from 'graphql-tag'
+import { Query } from '@apollo/client/react/components'
 import { handleReviewForm } from '../../actions/reviews/handleReviewForm'
 import { Link } from 'gatsby'
 import Reviews from '../../components/reviews/reviews'
 import AddReviewForm from './addReview/addReviewForm'
 gsap.registerPlugin(CSSPlugin)
+
+const REVIEWS = gql`
+  query OverviewReviews($shopifyId: String!) {
+    reviews(where: { _search: $shopifyId }) {
+      rate
+      shopifyId
+      id
+    }
+  }
+`
 
 const mapStateToProps = (state) => ({
   cart: state.handleCart,
@@ -149,7 +161,7 @@ class Content extends Component {
     return (
       <ContentWrapper>
         {reviewsModal ? <Reviews product={product} /> : null}
-        {!reviewsForm ? (
+        {reviewsForm ? (
           <AddReviewForm product={product} size={variant} />
         ) : null}
         <CartHeader>
@@ -157,7 +169,18 @@ class Content extends Component {
             Powrót
           </AniLink>
         </CartHeader>
-        {productData ? <ProductReview productData={productData} /> : null}
+        {productData ? (
+          <Query
+            query={REVIEWS}
+            variables={{ shopifyId: productData.shopifyId }}
+          >
+            {({ loading, data }) => {
+              if (loading) return <p>loading...</p>
+              const { reviews } = data
+              return <ProductReview loading={loading} reviews={reviews} />
+            }}
+          </Query>
+        ) : null}
         <BasicsWrapper>
           <Head>
             <Type>{product.productType}</Type>
@@ -285,3 +308,7 @@ class Content extends Component {
 }
 
 export default connect(mapStateToProps)(Content)
+
+/*
+ {productData ? <ProductReview productData={productData} /> : null}
+ */

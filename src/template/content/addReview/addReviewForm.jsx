@@ -102,6 +102,8 @@ const AddReviewForm = ({ product, size }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     const { shopifyId } = product
+    parseName()
+    console.log(name)
 
     const isRate = rate.every(({ checked }) => {
       return checked === false
@@ -195,6 +197,10 @@ const AddReviewForm = ({ product, size }) => {
               checked: false,
             },
           ])
+          setValid(true)
+          setTimeout(() => {
+            closeModal(e)
+          }, 1500)
         })
       } else {
         setRateError(true)
