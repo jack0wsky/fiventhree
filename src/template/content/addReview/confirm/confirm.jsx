@@ -26,8 +26,8 @@ const Confirm = () => {
             />
           </g>
         </svg>
-        Twoja opinia została dodana i oczekuje na akceptację. Wkrótce pojawi się
-        na stronie.
+        Twoja opinia została dodana i oczekuje na weryfikację. Wkrótce pojawi
+        się na stronie.
       </Message>
     </ConfirmWrapper>
   )
