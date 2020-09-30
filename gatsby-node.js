@@ -70,3 +70,37 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 }
+
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+  const result = await graphql(`
+    query Drops {
+      reviews {
+        drops {
+          name
+          number
+          date
+          id
+          image {
+            url
+            fileName
+          }
+          path
+          clients {
+            createdAt
+          }
+        }
+      }
+    }
+  `)
+
+  result.data.reviews.drops.forEach((drop) => {
+    createPage({
+      path: `/drops/${drop.path}`,
+      component: path.resolve(`./src/dropTemplate/dropTemplate.jsx`),
+      context: {
+        drop,
+      },
+    })
+  })
+}

@@ -13,15 +13,4 @@ const client = new ApolloClient({
   }),
 })
 
-client
-  .query({
-    query: gql`
-      query Reviews {
-        author
-        rate
-      }
-    `,
-  })
-  .then((result) => console.log(result))
-
 export default client
