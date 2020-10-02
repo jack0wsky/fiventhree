@@ -103,7 +103,6 @@ const AddReviewForm = ({ product, size }) => {
     e.preventDefault()
     const { shopifyId } = product
     parseName()
-    console.log(name)
 
     const isRate = rate.every(({ checked }) => {
       return checked === false

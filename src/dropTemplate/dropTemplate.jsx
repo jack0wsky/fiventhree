@@ -28,7 +28,7 @@ const DropTemplate = ({ pageContext }) => {
           {getCurrentClients()}
         </p>
       </CurrentClientsAmount>
-      <SignForm />
+      <SignForm id={drop.id} />
     </TemplateWrapper>
   )
 }

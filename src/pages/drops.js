@@ -29,6 +29,9 @@ const Drops = () => {
     const curDate = new Date()
     const dropDate = new Date(date)
     const month = curDate.getMonth()
+    if (month === dropDate.getMonth()) {
+      return dropDate.getDate() - curDate.getDate()
+    }
     if (month % 2) {
       return 31 - curDate.getDate() + dropDate.getDate()
     } else {
