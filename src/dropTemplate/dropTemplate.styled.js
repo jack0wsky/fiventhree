@@ -7,6 +7,7 @@ export const TemplateWrapper = styled.main`
   padding: 10vh 0 0;
   flex-flow: column;
   -webkit-flex-flow: column;
+  align-items: center;
 `
 export const CollectionImage = styled.div`
   width: 100%;

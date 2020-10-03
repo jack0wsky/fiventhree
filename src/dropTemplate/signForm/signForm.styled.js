@@ -134,3 +134,9 @@ export const Results = styled.div`
   height: ${({ points }) => (points.length > 0 ? '25vh' : '50px')};
   overflow: scroll;
 `
+export const SelectedPoint = styled.div`
+  width: 100%;
+  height: 15vh;
+  background-color: #fff;
+  margin: 5px 0 5px;
+`

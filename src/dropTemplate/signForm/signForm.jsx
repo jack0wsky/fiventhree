@@ -13,6 +13,7 @@ import {
   GetLocationButton,
   Point,
   Results,
+  SelectedPoint,
 } from './signForm.styled'
 import axios from 'axios'
 import Submit from './submit/submit'
@@ -25,7 +26,7 @@ class SignForm extends Component {
       surName: '',
       email: '',
       sizes: ['S', 'M', 'L', 'XL', 'XXL', '3XL'],
-      size: '',
+      size: 'S',
       search: '',
       currentPage: 1,
       points: [],
@@ -165,11 +166,13 @@ class SignForm extends Component {
             </Results>
           </LockerSearch>
         </Grid>
+        {this.state.point ? <SelectedPoint></SelectedPoint> : null}
         <Submit
           id={this.props.id}
           name={this.state.name}
           surname={this.state.surName}
-          locker={this.state.point}
+          selectedLocker={this.state.point}
+          size={this.state.size}
         />
       </FormWrapper>
     )

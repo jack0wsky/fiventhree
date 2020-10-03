@@ -10,6 +10,7 @@ import SignForm from './signForm/signForm'
 const DropTemplate = ({ pageContext }) => {
   const { drop } = pageContext
   const getCurrentClients = () => {
+    console.log(drop)
     const amount = drop.clients.length
     if (amount < 20) {
       return 20 - amount
