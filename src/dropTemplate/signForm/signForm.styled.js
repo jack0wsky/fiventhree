@@ -4,7 +4,6 @@ import { small } from '../../components/breakpoints'
 export const FormWrapper = styled.form`
   width: 40vw;
   height: auto;
-  background-color: #ccc;
   padding: 20px;
   display: flex;
   flex-flow: column;
@@ -18,8 +17,9 @@ export const Grid = styled.section`
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-areas: 'name surname' 'size .' 'locker locker';
+  grid-template-areas: 'name surname' 'phone email' 'size .' 'locker locker';
   grid-column-gap: 30px;
+  grid-row-gap: 20px;
 
   div:nth-child(1) {
     grid-area: name;
@@ -65,12 +65,17 @@ export const SelectInput = styled.select`
   height: 40px;
   font-size: 1em;
 `
+export const MapContainer = styled.div`
+  width: 100%;
+  height: 30vh;
+  background-color: #fff;
+  margin: 0 0 30px;
+`
 export const LockerSearch = styled.div`
   width: 100%;
   height: auto;
   min-height: 10vh;
   grid-area: locker;
-  background-color: #fff;
 `
 export const SearchHeader = styled.div`
   width: 100%;
@@ -83,7 +88,7 @@ export const Search = styled.input`
   width: 60%;
   height: 50px;
   font-size: 1em;
-  background-color: #eeeeee;
+  background-color: #ffffff;
   padding: 10px;
   border: none;
 
@@ -110,9 +115,11 @@ export const Point = styled.button`
   border: none;
   background-color: #fff;
   text-align: left;
-  padding: 10px 10px 10px 30px;
   cursor: pointer;
   position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px 10px 10px 20px;
 
   &:before {
     content: '';
@@ -133,10 +140,24 @@ export const Results = styled.div`
   grid-row-gap: 10px;
   height: ${({ points }) => (points.length > 0 ? '25vh' : '50px')};
   overflow: scroll;
+  background-color: #fff;
 `
 export const SelectedPoint = styled.div`
   width: 100%;
   height: 15vh;
   background-color: #fff;
   margin: 5px 0 5px;
+  padding: 10px;
+`
+export const MapPoint = styled.button`
+  width: 20px;
+  height: 20px;
+  background-color: #000;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
 `

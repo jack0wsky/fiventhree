@@ -7,6 +7,7 @@ import {
   SizeSelector,
   SelectInput,
   Grid,
+  MapContainer,
   LockerSearch,
   SearchHeader,
   Search,
@@ -14,9 +15,15 @@ import {
   Point,
   Results,
   SelectedPoint,
+  MapPoint,
 } from './signForm.styled'
 import axios from 'axios'
+import ReactMapboxGl, { Marker } from 'react-mapbox-gl'
 import Submit from './submit/submit'
+
+const Map = ReactMapboxGl({
+  accessToken: process.env.GATSBY_MAPBOXGL_TOKEN,
+})
 
 class SignForm extends Component {
   constructor() {
@@ -29,11 +36,13 @@ class SignForm extends Component {
       size: 'S',
       search: '',
       currentPage: 1,
+      phone: '',
       points: [],
-      latitude: '',
-      longitude: '',
+      latitude: '52.237049',
+      longitude: '21.017532',
       locationDenied: false,
       point: null,
+      zoom: 4,
     }
   }
   chooseSize = (size) => {
@@ -63,7 +72,7 @@ class SignForm extends Component {
   getInPostByLocation = async () => {
     await axios
       .get(
-        `https://api-shipx-pl.easypack24.net/v1/points/?relative_point=${this.state.latitude},${this.state.longitude}&page=${this.state.currentPage}&per_page=10&sort_by=distance_to_relative_point`,
+        `https://api-shipx-pl.easypack24.net/v1/points/?relative_point=${this.state.latitude},${this.state.longitude}&page=${this.state.currentPage}&per_page=10&sort_by=distance_to_relative_point&fields=href,name,location,location_description,address`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -83,6 +92,7 @@ class SignForm extends Component {
           {
             longitude: position.coords.longitude,
             latitude: position.coords.latitude,
+            zoom: 13,
           },
           async () => this.getInPostByLocation()
         )
@@ -129,6 +139,27 @@ class SignForm extends Component {
               onChange={(e) => this.handleInput(e)}
             />
           </InputWrapper>
+          <InputWrapper>
+            <Label>Nr telefonu</Label>
+            <Input
+              type="tel"
+              value={this.state.phone}
+              name="phone"
+              onChange={(e) => this.handleInput(e)}
+              maxLength="11"
+              placeholder="123 456 789"
+              pattern="[0-9]{3} [0-9]{3} [0-9]{3}"
+            />
+          </InputWrapper>
+          <InputWrapper>
+            <Label>Adres e-mail</Label>
+            <Input
+              type="email"
+              value={this.state.email}
+              name="email"
+              onChange={(e) => this.handleInput(e)}
+            />
+          </InputWrapper>
           <SizeSelector>
             <Label>Wybierz rozmiar</Label>
             <SelectInput>
@@ -142,6 +173,34 @@ class SignForm extends Component {
             </SelectInput>
           </SizeSelector>
           <LockerSearch>
+            <MapContainer>
+              <Map
+                style="mapbox://styles/mapbox/streets-v9"
+                containerStyle={{
+                  height: '100%',
+                  width: '100%',
+                }}
+                zoom={[this.state.zoom]}
+                center={[this.state.longitude, this.state.latitude]}
+              >
+                {points.length > 0
+                  ? points.map((point) => {
+                      const {
+                        href,
+                        location: { longitude, latitude },
+                      } = point
+                      return (
+                        <Marker coordinates={[longitude, latitude]}>
+                          <MapPoint
+                            key={href}
+                            onClick={() => this.handlePoint(point)}
+                          />
+                        </Marker>
+                      )
+                    })
+                  : null}
+              </Map>
+            </MapContainer>
             <SearchHeader>
               <Search
                 type="search"
@@ -157,7 +216,10 @@ class SignForm extends Component {
               {points.length > 0
                 ? points.map((point) => {
                     return (
-                      <Point onClick={() => this.handlePoint(point)}>
+                      <Point
+                        key={point.href}
+                        onClick={() => this.handlePoint(point)}
+                      >
                         {point.address.line1} {point.address.line2}
                       </Point>
                     )
@@ -166,13 +228,19 @@ class SignForm extends Component {
             </Results>
           </LockerSearch>
         </Grid>
-        {this.state.point ? <SelectedPoint></SelectedPoint> : null}
+        {this.state.point ? (
+          <SelectedPoint>
+            <p>Wybrany paczkomat</p>
+          </SelectedPoint>
+        ) : null}
         <Submit
           id={this.props.id}
           name={this.state.name}
           surname={this.state.surName}
           selectedLocker={this.state.point}
           size={this.state.size}
+          phone={this.state.phone}
+          email={this.state.email}
         />
       </FormWrapper>
     )

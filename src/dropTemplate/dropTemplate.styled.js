@@ -2,12 +2,13 @@ import styled from 'styled-components'
 
 export const TemplateWrapper = styled.main`
   width: 100vw;
-  height: 100vh;
+  height: auto;
   display: flex;
-  padding: 10vh 0 0;
+  padding: 10vh 0 10vh;
   flex-flow: column;
   -webkit-flex-flow: column;
   align-items: center;
+  background-color: #efefef;
 `
 export const CollectionImage = styled.div`
   width: 100%;
