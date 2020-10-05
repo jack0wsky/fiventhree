@@ -5,6 +5,7 @@ import {
   Label,
   Input,
   SizeSelector,
+  QuantitySelector,
   SelectInput,
   Grid,
   MapContainer,
@@ -16,10 +17,15 @@ import {
   Results,
   SelectedPoint,
   MapPoint,
+  QuantityControl,
+  QDecrement,
+  Qtity,
+  QIncrement,
 } from './signForm.styled'
 import axios from 'axios'
 import ReactMapboxGl, { Marker } from 'react-mapbox-gl'
 import Submit from './submit/submit'
+import SuccessPopup from './successPopup/successPopup'
 
 const Map = ReactMapboxGl({
   accessToken: process.env.GATSBY_MAPBOXGL_TOKEN,
@@ -43,15 +49,18 @@ class SignForm extends Component {
       locationDenied: false,
       point: null,
       zoom: 4,
+      quantity: 1,
+      toggleResults: false,
     }
   }
-  chooseSize = (size) => {
-    this.setState({ size: size })
+  chooseSize = (e) => {
+    e.preventDefault()
+    this.setState({ size: e.target.value })
   }
   getInPostLockers = async () => {
     await axios
       .get(
-        `https://api-shipx-pl.easypack24.net/v1/points/?city=${this.state.search}&page=${this.state.currentPage}`,
+        `https://api-shipx-pl.easypack24.net/v1/points/?city=${this.state.search}&page=${this.state.currentPage}&per_page=10&fields=href,name,location,location_description,address`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -60,12 +69,13 @@ class SignForm extends Component {
         }
       )
       .then((res) => {
-        this.setState(
-          {
-            points: res.data.items,
-          },
-          () => console.log(this.state.points)
-        )
+        this.setState({
+          points: res.data.items,
+          zoom: 13,
+          longitude: res.data.items[0].location.longitude,
+          latitude: res.data.items[0].location.latitude,
+          toggleResults: true,
+        })
       })
       .catch((err) => console.log(err))
   }
@@ -81,7 +91,7 @@ class SignForm extends Component {
         }
       )
       .then((res) => {
-        this.setState({ points: res.data.items })
+        this.setState({ points: res.data.items, toggleResults: true })
       })
   }
   getGeolocation = (e) => {
@@ -106,20 +116,32 @@ class SignForm extends Component {
       await this.getInPostLockers()
     }, 1000)
   }
-  handlePoint = (point) => {
-    this.setState({ point: point }, () => {
-      console.log(this.state.point)
-      this.setState({ points: [] })
-    })
+  handlePoint = (point, e) => {
+    e.preventDefault()
+    this.setState({ point: point, toggleResults: false })
   }
-  handleInput = (e) => {
-    this.setState({ [e.target.name]: e.target.value })
+  handleInput = (e) => this.setState({ [e.target.name]: e.target.value })
+  handleQuantity = (e) => {
+    e.preventDefault()
+    switch (e.target.id) {
+      case 'decrement': {
+        this.setState((prevState) => ({
+          quantity: Math.max(1, prevState.quantity - 1),
+        }))
+        return
+      }
+      case 'increment': {
+        this.setState((prevState) => ({ quantity: prevState.quantity + 1 }))
+        return
+      }
+    }
   }
 
   render() {
-    const { sizes, search, points } = this.state
+    const { sizes, search, points, point, toggleResults } = this.state
     return (
       <FormWrapper>
+        {point ? <SuccessPopup point={point} /> : null}
         <Grid>
           <InputWrapper>
             <Label>Imię</Label>
@@ -160,12 +182,32 @@ class SignForm extends Component {
               onChange={(e) => this.handleInput(e)}
             />
           </InputWrapper>
+          <QuantitySelector>
+            <Label>Wybierz ilość</Label>
+            <QuantityControl>
+              <QDecrement
+                id="decrement"
+                onClick={(e) => this.handleQuantity(e)}
+                qtity={this.state.quantity}
+                disabled={this.state.quantity === 1}
+              >
+                -
+              </QDecrement>
+              <Qtity>{this.state.quantity}</Qtity>
+              <QIncrement
+                id="increment"
+                onClick={(e) => this.handleQuantity(e)}
+              >
+                +
+              </QIncrement>
+            </QuantityControl>
+          </QuantitySelector>
           <SizeSelector>
             <Label>Wybierz rozmiar</Label>
-            <SelectInput>
+            <SelectInput onChange={(e) => this.chooseSize(e)}>
               {sizes.map((size) => {
                 return (
-                  <option onChange={(size) => this.chooseSize(size)} key={size}>
+                  <option value={size} key={size}>
                     {size}
                   </option>
                 )
@@ -190,10 +232,9 @@ class SignForm extends Component {
                         location: { longitude, latitude },
                       } = point
                       return (
-                        <Marker coordinates={[longitude, latitude]}>
+                        <Marker key={href} coordinates={[longitude, latitude]}>
                           <MapPoint
-                            key={href}
-                            onClick={() => this.handlePoint(point)}
+                            onClick={(e) => this.handlePoint(point, e)}
                           />
                         </Marker>
                       )
@@ -207,18 +248,19 @@ class SignForm extends Component {
                 value={search}
                 onChange={(e) => this.handleSearch(e)}
                 placeholder="Wpisz miasto..."
+                onFocus={() => this.setState({ toggleResults: true })}
               />
               <GetLocationButton onClick={(e) => this.getGeolocation(e)}>
                 Użyj mojej lokalizacji
               </GetLocationButton>
             </SearchHeader>
-            <Results points={points}>
-              {points.length > 0
+            <Results points={points} toggleResults={toggleResults}>
+              {toggleResults
                 ? points.map((point) => {
                     return (
                       <Point
                         key={point.href}
-                        onClick={() => this.handlePoint(point)}
+                        onClick={(e) => this.handlePoint(point, e)}
                       >
                         {point.address.line1} {point.address.line2}
                       </Point>
@@ -228,9 +270,13 @@ class SignForm extends Component {
             </Results>
           </LockerSearch>
         </Grid>
-        {this.state.point ? (
+        {point ? (
           <SelectedPoint>
-            <p>Wybrany paczkomat</p>
+            <p>Wybrany paczkomat:</p>
+            <h3>
+              {point.address.line1}, {point.address.line2}
+            </h3>
+            <p>{point.name}</p>
           </SelectedPoint>
         ) : null}
         <Submit
@@ -241,6 +287,7 @@ class SignForm extends Component {
           size={this.state.size}
           phone={this.state.phone}
           email={this.state.email}
+          quantity={this.state.quantity}
         />
       </FormWrapper>
     )

@@ -24,4 +24,5 @@ export const Image = styled.img`
 `
 export const CurrentClientsAmount = styled.div`
   display: flex;
+  padding: 0 5vw 0;
 `

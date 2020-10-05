@@ -8,6 +8,7 @@ export const FormWrapper = styled.form`
   display: flex;
   flex-flow: column;
   -webkit-flex-flow: column;
+  position: relative;
 
   @media all and (max-width: ${small}) {
     width: 100vw;
@@ -17,7 +18,7 @@ export const Grid = styled.section`
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-areas: 'name surname' 'phone email' 'size .' 'locker locker';
+  grid-template-areas: 'name surname' 'phone email' 'size quantity' 'locker locker';
   grid-column-gap: 30px;
   grid-row-gap: 20px;
 
@@ -60,22 +61,50 @@ export const Input = styled.input`
 export const SizeSelector = styled(InputWrapper)`
   grid-area: size;
 `
+export const QuantitySelector = styled(SizeSelector)`
+  grid-area: quantity;
+`
 export const SelectInput = styled.select`
-  width: 50px;
+  width: 120px;
   height: 40px;
   font-size: 1em;
+`
+export const QuantityControl = styled.div`
+  display: flex;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  align-items: center;
+  -webkit-align-items: center;
+  width: 100px;
+`
+export const QDecrement = styled.button`
+  cursor: pointer;
+  font-size: 1em;
+  border: none;
+  background-color: ${({ qtity }) => (qtity === 1 ? '#949494' : '#000')};
+  color: #fff;
+  width: 30px;
+  height: 30px;
+
+  &:focus {
+    outline: none;
+  }
+`
+export const QIncrement = styled(QDecrement)``
+export const Qtity = styled.p`
+  font-size: 1.2em;
 `
 export const MapContainer = styled.div`
   width: 100%;
   height: 30vh;
   background-color: #fff;
-  margin: 0 0 30px;
 `
 export const LockerSearch = styled.div`
   width: 100%;
   height: auto;
   min-height: 10vh;
   grid-area: locker;
+  margin: 0 0 5vh;
 `
 export const SearchHeader = styled.div`
   width: 100%;
@@ -83,6 +112,12 @@ export const SearchHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media all and (max-width: ${small}) {
+    height: auto;
+    flex-flow: column-reverse;
+    -webkit-flex-flow: column-reverse;
+  }
 `
 export const Search = styled.input`
   width: 60%;
@@ -95,9 +130,13 @@ export const Search = styled.input`
   &:focus {
     outline: none;
   }
+  @media all and (max-width: ${small}) {
+    width: 100%;
+  }
 `
 export const GetLocationButton = styled.button`
-  width: auto;
+  width: 40%;
+  height: 100%;
   padding: 10px 20px 10px;
   font-size: 0.8em;
   cursor: pointer;
@@ -107,6 +146,10 @@ export const GetLocationButton = styled.button`
 
   &:focus {
     outline: none;
+  }
+  @media all and (max-width: ${small}) {
+    width: 100%;
+    height: 50px;
   }
 `
 export const Point = styled.button`
@@ -133,12 +176,15 @@ export const Point = styled.button`
   &:hover:before {
     display: block;
   }
+  @media all and (max-width: ${small}) {
+    height: 40px;
+  }
 `
 export const Results = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-row-gap: 10px;
-  height: ${({ points }) => (points.length > 0 ? '25vh' : '50px')};
+  height: ${({ points, toggleResults }) => (toggleResults ? '25vh' : 0)};
   overflow: scroll;
   background-color: #fff;
 `
