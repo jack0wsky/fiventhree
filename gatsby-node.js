@@ -74,12 +74,13 @@ exports.createPages = async ({ graphql, actions }) => {
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
   const result = await graphql(`
-    query Drops {
+    query DROPS {
       reviews {
         drops {
           name
           number
-          date
+          startDate
+          endDate
           id
           image {
             url
