@@ -59,14 +59,6 @@ const Header = () => {
         <AniLink
           cover
           bg={'#000000'}
-          to="/products"
-          activeStyle={{ color: colors.action }}
-        >
-          Produkty
-        </AniLink>
-        <AniLink
-          cover
-          bg={'#000000'}
           activeStyle={{ color: colors.action }}
           to="/drops"
         >

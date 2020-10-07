@@ -12,7 +12,6 @@
     "@apollo/react-hooks": "^4.0.0",
     "@emotion/core": "^10.0.22",
     "@emotion/styled": "^10.0.22",
-    "@stripe/stripe-js": "^1.9.0",
     "apollo-boost": "^0.4.9",
     "apollo-link": "^1.2.14",
     "axios": "^0.19.2",
@@ -54,7 +53,6 @@
     "redux": "^4.0.5",
     "set-value": "^2.0.1",
     "shopify-buy": "^2.8.0",
-    "stripe": "^8.107.0",
     "styled-components": "^5.1.1",
     "vercel": "^19.2.0",
     "webpack-graphql-loader": "^1.0.2"

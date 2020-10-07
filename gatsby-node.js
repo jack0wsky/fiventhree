@@ -2,6 +2,7 @@ const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
+  console.log(node.internal.type)
   const { createNodeField } = actions
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({ node, getNode, basePath: `pages` })
@@ -17,39 +18,38 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
   const result = await graphql(`
     query {
-      allShopifyProduct {
+      allShopifyCollection(filter: { title: { eq: "Basic" } }) {
         edges {
           node {
             id
             title
-            handle
-            options {
-              values
-            }
-            images {
-              id
-              originalSrc
-              localFile {
-                childImageSharp {
-                  fluid {
-                    base64
-                    src
-                    srcSet
-                    tracedSVG
-                    presentationWidth
-                    presentationHeight
+            products {
+              handle
+              images {
+                id
+                originalSrc
+                localFile {
+                  childImageSharp {
+                    fluid {
+                      base64
+                      src
+                      srcSet
+                      tracedSVG
+                      presentationWidth
+                      presentationHeight
+                    }
                   }
                 }
               }
-            }
-            descriptionHtml
-            productType
-            shopifyId
-            variants {
-              sku
-              price
-              title
+              descriptionHtml
+              productType
               shopifyId
+              variants {
+                sku
+                price
+                title
+                shopifyId
+              }
             }
           }
         }
@@ -57,15 +57,17 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
 
-  result.data.allShopifyProduct.edges.forEach(({ node }) => {
-    node.variants.forEach((variant) => {
-      createPage({
-        path: `/produkty/${variant.sku}`,
-        component: path.resolve(`./src/template/productTemplate.jsx`),
-        context: {
-          product: node,
-          variant: variant,
-        },
+  result.data.allShopifyCollection.edges.forEach(({ node }) => {
+    node.products.forEach((product) => {
+      product.variants.forEach((variant) => {
+        createPage({
+          path: `/products/${variant.shopifyId}`,
+          component: path.resolve(`./src/template/productTemplate.jsx`),
+          context: {
+            product: product,
+            variant: variant,
+          },
+        })
       })
     })
   })

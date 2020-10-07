@@ -134,7 +134,9 @@ class InPostModal extends Component {
             .get(
               `https://api-shipx-pl.easypack24.net/v1/points/?city=${this.formatCityName(
                 this.state.searchInput
-              )}&page=${this.state.currentPage}`,
+              )}&page=${
+                this.state.currentPage
+              }&fields=name,openingHours,street,city,location`,
               {
                 headers: {
                   'Content-Type': 'application/json',

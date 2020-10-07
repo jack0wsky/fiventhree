@@ -24,6 +24,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { handleInPostModal } from '../../../actions/handleInPostModal'
 import { resetLocker } from '../../../actions/resetLocker'
 import Pin from '../../inPost/pinIcon/pinIcon'
+import { setCheckoutId } from '../../../actions/setCheckoutId'
 
 let client
 
@@ -40,6 +41,10 @@ const Summary = ({ total, handleCloseInfo }) => {
       storefrontAccessToken: process.env.GATSBY_STOREFRONT_ACCESS_TOKEN,
       domain: `${process.env.GATSBY_SHOP_NAME}.myshopify.com`,
     })
+    client.checkout.create().then((checkout) => {
+      dispatch(setCheckoutId(checkout.attrs.id.value))
+    })
+    console.log(checkoutId)
   }, [cart])
   const handleRequest = () => {
     setRequest(!request)
@@ -57,13 +62,15 @@ const Summary = ({ total, handleCloseInfo }) => {
       ],
     }
     handleRequest()
-    await client.checkout.addLineItems(checkoutId, lineItems).then(() => {
+    await client.checkout.addLineItems(checkoutId, lineItems).then((res) => {
+      console.log('line items', res)
       handleRequest()
     })
 
     await client.checkout
       .updateAttributes(checkoutId, inPostLocker)
       .then((checkout) => {
+        console.log(checkout)
         window.location.replace(checkout.webUrl)
         handleRequest()
       })
