@@ -16,39 +16,35 @@ const Products = () => {
         <StaticQuery
           query={graphql`
             query Products {
-              allShopifyProduct {
+              allShopifyCollection(filter: { title: { eq: "Basic" } }) {
                 edges {
                   node {
                     title
-                    productType
-                    shopifyId
-                    handle
-                    images {
-                      id
-                      originalSrc
-                      localFile {
-                        childImageSharp {
-                          fluid {
-                            tracedSVG
-                            base64
-                          }
-                        }
-                      }
-                    }
-                    variants {
-                      sku
-                      price
+                    products {
                       title
+                      title
+                      productType
                       shopifyId
+                      handle
+                      images {
+                        id
+                        originalSrc
+                      }
+                      variants {
+                        price
+                        sku
+                        title
+                        shopifyId
+                      }
                     }
                   }
                 }
               }
             }
           `}
-          render={({ allShopifyProduct: { edges } }) => {
-            return edges.map(({ node }) => {
-              return <Product key={node.shopifyId} product={node} />
+          render={({ allShopifyCollection: { edges } }) => {
+            return edges[0].node.products.map((product) => {
+              return <Product key={product.shopifyId} product={product} />
             })
           }}
         />

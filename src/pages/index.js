@@ -1,6 +1,5 @@
 import React from 'react'
 import Hero from '../components/hero/hero'
-import Products from '../products/products'
 import { createStore, combineReducers } from 'redux'
 import { useSelector } from 'react-redux'
 import {
@@ -58,7 +57,6 @@ const IndexPage = () => {
   return (
     <MainWrapper toggleCart={toggleCart}>
       <Hero />
-      <Products />
     </MainWrapper>
   )
 }

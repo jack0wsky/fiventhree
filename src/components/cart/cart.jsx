@@ -20,6 +20,7 @@ import { toggleCart } from '../../actions/toggleCart'
 import CartProduct from './cartProduct/cartProduct'
 import Summary from './summary/summary'
 import EmptyCart from '../../assets/empty cart.svg'
+import { setCheckoutId } from '../../actions/setCheckoutId'
 //import CheckoutFailed from './checkoutFailed/checkoutFailed'
 
 gsap.registerPlugin(CSSPlugin, EasePack, Power2)

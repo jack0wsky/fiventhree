@@ -96,9 +96,6 @@ class Content extends Component {
       storefrontAccessToken: process.env.GATSBY_STOREFRONT_ACCESS_TOKEN,
       domain: `${process.env.GATSBY_SHOP_NAME}.myshopify.com`,
     })
-    this.client.checkout.create().then((checkout) => {
-      dispatch(setCheckoutId(checkout.attrs.id.value))
-    })
     await this.fetchSizes(product)
   }
 

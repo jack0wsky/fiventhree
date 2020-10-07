@@ -26,7 +26,7 @@ const Product = ({ product }) => {
           <AniLink
             cover
             bg={colors.darkRed}
-            to={`/produkty/${product.variants[0].sku}`}
+            to={`/products/${product.variants[0].shopifyId}`}
           >
             <Name>{product.title}</Name>
             <AddToCart>Kup teraz</AddToCart>

@@ -3,7 +3,7 @@ import { small, xlarge } from '../breakpoints'
 
 export const HeroWrapper = styled.main`
   width: 100vw;
-  height: 90vh;
+  height: 100vh;
   position: relative;
 
   @media all and (max-width: ${small}) {
@@ -12,7 +12,7 @@ export const HeroWrapper = styled.main`
 `
 export const ImageContainer = styled.div`
   width: 100%;
-  height: 80vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   -webkit-justify-content: center;

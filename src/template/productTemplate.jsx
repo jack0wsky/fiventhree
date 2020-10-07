@@ -21,6 +21,7 @@ const ProductTemplate = ({ pageContext: { product, variant } }) => {
 
   useEffect(() => {
     dispatch(getProductData(product.images[0].originalSrc, product.shopifyId))
+    console.log(props.pageContext)
   }, [dispatch])
 
   const openModal = (img, height, width) => {
